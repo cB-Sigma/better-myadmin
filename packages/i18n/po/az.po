@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 601690888679e2fb5574ba7acd499812ddc9160a resources/po/az.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 6f240a8f64d0a4c62a02b0ef484568fe39017480 resources/po/az.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2026-01-03 06:36+0000\nLast-Translator: liviuconcioiu <liviu.concioiu@gmail.com>\nLanguage-Team: Azerbaijani <https://hosted.weblate.org/projects/phpmyadmin/master/az/>\nLanguage: az\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.15.1\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-01 00:29+0000\nPO-Revision-Date: 2026-01-03 06:36+0000\nLast-Translator: liviuconcioiu <liviu.concioiu@gmail.com>\nLanguage-Team: Azerbaijani <https://hosted.weblate.org/projects/phpmyadmin/master/az/>\nLanguage: az\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.15.1\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Bu hissəni keçmək üçün Javascript aktiv olmalıdır!"
@@ -3642,12 +3642,6 @@ msgstr "Stünlar silinə bilmədi!"
 msgid "Invalid routine type: \"%s\""
 msgstr "Səhv tip prosedurları: \"%s\""
 
-msgid "The following query has failed: \"%s\""
-msgstr "Aşağıdakı sorğu yerinə yetirilə bilmədi: \"%s\""
-
-msgid "MySQL said: "
-msgstr "MySQL deyir: "
-
 msgid "Routine %1$s has been created."
 msgstr "Prosedura %1$s yaradıldı."
 
@@ -3660,11 +3654,17 @@ msgstr "Bağışlayın, silinmiş(dropped) proseduraların bərpa edilməsi uğu
 msgid "The backed up query was:"
 msgstr "Saxlanılmış sorğu:"
 
+msgid "MySQL said: "
+msgstr "MySQL deyir: "
+
 msgid "Routine %1$s has been modified."
 msgstr "Prosedura %1$s dəyişdirildi."
 
 msgid "The definer must be in the \"username@hostname\" format!"
 msgstr "Təyinedici\"username@hostname\" formatında olmalıdır!"
+
+msgid "The following query has failed: \"%s\""
+msgstr "Aşağıdakı sorğu yerinə yetirilə bilmədi: \"%s\""
 
 msgid "The row has been deleted."
 msgstr "Sətir silindi."
@@ -3717,14 +3717,14 @@ msgstr "Çoxlu sayda xəta mesajı, bəziləri göstərilə bilmədi."
 msgid "Report"
 msgstr "Hesabat"
 
+msgid "Event %1$s has been created."
+msgstr "%1$s hadisəsi yaradıldı."
+
 msgid "Sorry, we failed to restore the dropped event."
 msgstr "Bağışlayın, yığışdırılmış(dropped) hadisəni bərpa eləmək mümkün deyil."
 
 msgid "Event %1$s has been modified."
 msgstr "%1$s hadisəsi dəyişdirildi."
-
-msgid "Event %1$s has been created."
-msgstr "%1$s hadisəsi yaradıldı."
 
 msgid "You must provide an event name!"
 msgstr "Bir hadisə adı vermək məcburiyyətindəsiniz!"

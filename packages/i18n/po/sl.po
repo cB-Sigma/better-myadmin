@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 601690888679e2fb5574ba7acd499812ddc9160a resources/po/sl.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 6f240a8f64d0a4c62a02b0ef484568fe39017480 resources/po/sl.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2025-09-22 11:47+0000\nLast-Translator: Domen <mitenem@outlook.com>\nLanguage-Team: Slovenian <https://hosted.weblate.org/projects/phpmyadmin/master/sl/>\nLanguage: sl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\nX-Generator: Weblate 5.14-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-01 00:29+0000\nPO-Revision-Date: 2025-09-22 11:47+0000\nLast-Translator: Domen <mitenem@outlook.com>\nLanguage-Team: Slovenian <https://hosted.weblate.org/projects/phpmyadmin/master/sl/>\nLanguage: sl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\nX-Generator: Weblate 5.14-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Po tej točki mora biti JavaScript omogočen!"
@@ -8635,12 +8635,6 @@ msgstr "Ne morem naložiti vtičnikov sheme, prosimo, preverite vašo namestitev
 msgid "Invalid routine type: \"%s\""
 msgstr "Neveljavna vrsta rutine: \"%s\""
 
-msgid "The following query has failed: \"%s\""
-msgstr "Naslednja poizvedba je spodletela: \"%s\""
-
-msgid "MySQL said: "
-msgstr "MySQL je vrnil: "
-
 msgid "Routine %1$s has been created."
 msgstr "Rutino %1$s smo ustvarili."
 
@@ -8652,6 +8646,9 @@ msgstr "Oprostite, zavržene rutine nam ni uspelo obnoviti."
 
 msgid "The backed up query was:"
 msgstr "Varnostno kopirana poizvedba je bila:"
+
+msgid "MySQL said: "
+msgstr "MySQL je vrnil: "
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Rutino %1$s smo spremenili. Privilegije smo prilagodili."
@@ -8692,6 +8689,9 @@ msgstr[0] "Zadnja izjava znotraj procedure je spremenila %d vrstico."
 msgstr[1] "Zadnja izjava znotraj procedure je spremenila %d vrstici."
 msgstr[2] "Zadnja izjava znotraj procedure je spremenila %d vrstice."
 msgstr[3] "Zadnja izjava znotraj procedure je spremenila %d vrstic."
+
+msgid "The following query has failed: \"%s\""
+msgstr "Naslednja poizvedba je spodletela: \"%s\""
 
 msgid "Unable to use timezone \"%1$s\" for server %2$d. Please check your configuration setting for [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. phpMyAdmin is currently using the default time zone of the database server."
 msgstr "Ne morem uporabiti čaovnega pasu \"%1$s\" na strežniku %2$d. Prosimo, preverite svojo nastavitev konfiguracije za [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. phpMyAdmin trenutno uporalja privzeti časovni pas strežnika zbirke podatkov."
@@ -8864,14 +8864,14 @@ msgstr "Preveč sporočil o napakah; nekatera zato niso prikazana."
 msgid "Report"
 msgstr "Poročaj"
 
+msgid "Event %1$s has been created."
+msgstr "Dogodek %1$s je ustvarjen."
+
 msgid "Sorry, we failed to restore the dropped event."
 msgstr "Oprostite, zavrženega dogodka nam ni uspelo obnoviti."
 
 msgid "Event %1$s has been modified."
 msgstr "Dogodek %1$s je bil spremenjen."
-
-msgid "Event %1$s has been created."
-msgstr "Dogodek %1$s je ustvarjen."
 
 msgid "You must provide an event name!"
 msgstr "Navesti morate ime dogodka!"
@@ -9015,11 +9015,11 @@ msgstr "možno izkoriščanje"
 msgid "The ini_get and/or ini_set functions are disabled in php.ini. phpMyAdmin requires these functions!"
 msgstr "Funkciji ini_get in/ali ini_set sta onemogočeni v php.ini. phpMyAdmin potrebuje ti funkciji!"
 
-msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
-msgstr "Nastavljanje piškotka seje je spodletelo. Morda uporabljate HTTP namesto HTTPS za dostop do phpMyAdmina."
-
 msgid "Error: Token mismatch"
 msgstr "Napaka: Neujemanje žetonov"
+
+msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
+msgstr "Nastavljanje piškotka seje je spodletelo. Morda uporabljate HTTP namesto HTTPS za dostop do phpMyAdmina."
 
 msgid "Ignoring unsupported language code."
 msgstr "Preskočili smo nepodprto kodo jezika."

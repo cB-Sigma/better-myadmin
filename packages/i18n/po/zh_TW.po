@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 601690888679e2fb5574ba7acd499812ddc9160a resources/po/zh_TW.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 6f240a8f64d0a4c62a02b0ef484568fe39017480 resources/po/zh_TW.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2024-07-03 07:27+0000\nLast-Translator: Ricky From Hong Kong <lamricky11@hotmail.com>\nLanguage-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/phpmyadmin/master/zh_Hant/>\nLanguage: zh_TW\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 5.7-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-01 00:29+0000\nPO-Revision-Date: 2024-07-03 07:27+0000\nLast-Translator: Ricky From Hong Kong <lamricky11@hotmail.com>\nLanguage-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/phpmyadmin/master/zh_Hant/>\nLanguage: zh_TW\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 5.7-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "必須啟用 Javascript 才能繼續！"
@@ -7956,12 +7956,6 @@ msgstr "無法載入綱要外掛程式，請檢查您的安裝！"
 msgid "Invalid routine type: \"%s\""
 msgstr "預存程序類型無效：「%s」"
 
-msgid "The following query has failed: \"%s\""
-msgstr "執行以下的查詢時發生錯誤：「%s」"
-
-msgid "MySQL said: "
-msgstr "MySQL 回應： "
-
 msgid "Routine %1$s has been created."
 msgstr "已建立預存程序 %1$s。"
 
@@ -7973,6 +7967,9 @@ msgstr "很抱歉，未能還原被刪除的預存程序。"
 
 msgid "The backed up query was:"
 msgstr "備份了的查詢是："
+
+msgid "MySQL said: "
+msgstr "MySQL 回應： "
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "已修改預存程序 %1$s 。已調整權限。"
@@ -8007,6 +8004,9 @@ msgstr "執行預存程序 %s 的結果"
 msgid "%d row affected by the last statement inside the procedure."
 msgid_plural "%d rows affected by the last statement inside the procedure."
 msgstr[0] "最後一句查詢敘述共影響 %d 筆資料。"
+
+msgid "The following query has failed: \"%s\""
+msgstr "執行以下的查詢時發生錯誤：「%s」"
 
 msgid "Unable to use timezone \"%1$s\" for server %2$d. Please check your configuration setting for [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. phpMyAdmin is currently using the default time zone of the database server."
 msgstr "無法於「%2$d」伺服器使用時區 %1$s。請檢查您於設定檔的 [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em] 設定。phpMyAdmin 目前使用資料庫伺服器的預設時區。"
@@ -8179,14 +8179,14 @@ msgstr "錯誤訊息過多，還有一些未有顯示出來。"
 msgid "Report"
 msgstr "報告"
 
+msgid "Event %1$s has been created."
+msgstr "建立了 %1$s 事件。"
+
 msgid "Sorry, we failed to restore the dropped event."
 msgstr "抱歉，系統未能還原被刪除的事件。"
 
 msgid "Event %1$s has been modified."
 msgstr "%1$s 事件已被修改。"
-
-msgid "Event %1$s has been created."
-msgstr "建立了 %1$s 事件。"
 
 msgid "You must provide an event name!"
 msgstr "必須填寫事件名稱！"
@@ -8327,11 +8327,11 @@ msgstr "可能被駭"
 msgid "The ini_get and/or ini_set functions are disabled in php.ini. phpMyAdmin requires these functions!"
 msgstr "在php.ini中停用了ini_get及／或ini_set函數。 phpMyAdmin需要這些函數！"
 
-msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
-msgstr "未能設定連線階段 cookie。可能正在以 HTTP 而非 HTTPS 存取 phpMyAdmin。"
-
 msgid "Error: Token mismatch"
 msgstr "錯誤：連線資訊失效，請重新連線"
+
+msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
+msgstr "未能設定連線階段 cookie。可能正在以 HTTP 而非 HTTPS 存取 phpMyAdmin。"
 
 msgid "Ignoring unsupported language code."
 msgstr "忽略不支援的語言代碼。"

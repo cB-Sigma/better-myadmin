@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 601690888679e2fb5574ba7acd499812ddc9160a resources/po/ca.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 6f240a8f64d0a4c62a02b0ef484568fe39017480 resources/po/ca.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2026-04-25 14:09+0000\nLast-Translator: blacx0 <josepd.capdevila@gmail.com>\nLanguage-Team: Catalan <https://hosted.weblate.org/projects/phpmyadmin/master/ca/>\nLanguage: ca\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.17.1-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-01 00:29+0000\nPO-Revision-Date: 2026-04-25 14:09+0000\nLast-Translator: blacx0 <josepd.capdevila@gmail.com>\nLanguage-Team: Catalan <https://hosted.weblate.org/projects/phpmyadmin/master/ca/>\nLanguage: ca\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.17.1-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "A partir d'aquest punt és necessari tenir el javascript activat!"
@@ -7382,12 +7382,6 @@ msgstr "No s'han pogut carregar els connectors d'esquema, comproveu la vostra in
 msgid "Invalid routine type: \"%s\""
 msgstr "tipus de rutina invàlid: \"%s\""
 
-msgid "The following query has failed: \"%s\""
-msgstr "Ha fallat la consulta següent: \"%s\""
-
-msgid "MySQL said: "
-msgstr "MySQL diu: "
-
 msgid "Routine %1$s has been created."
 msgstr "S'ha creat la rutina %1$s."
 
@@ -7399,6 +7393,9 @@ msgstr "Malauradament, no hem pogut recuperar la rutina eliminada."
 
 msgid "The backed up query was:"
 msgstr "La consulta a la còpia de seguretat era:"
+
+msgid "MySQL said: "
+msgstr "MySQL diu: "
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "S'ha modificat la rutina %1$s. S'han ajustat els privilegis."
@@ -7434,6 +7431,9 @@ msgid "%d row affected by the last statement inside the procedure."
 msgid_plural "%d rows affected by the last statement inside the procedure."
 msgstr[0] "%d fila afectada per l'última sentència dins el procediment."
 msgstr[1] "%d files afectades per l'última sentència dins el procediment."
+
+msgid "The following query has failed: \"%s\""
+msgstr "Ha fallat la consulta següent: \"%s\""
 
 msgid "Unable to use timezone \"%1$s\" for server %2$d. Please check your configuration setting for [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. phpMyAdmin is currently using the default time zone of the database server."
 msgstr "No es pot utilitzar la zona horària \"%1$s\" per al servidor %2$d. Comproveu els paràmetres de la vostra configuració per a [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. phpMyAdmin utilitza actualment la zona horària predeterminada del servidor de base de dades."
@@ -7597,14 +7597,14 @@ msgstr "Hi ha massa missatges d'error, alguns no es visualitzen."
 msgid "Report"
 msgstr "Informa"
 
+msgid "Event %1$s has been created."
+msgstr "S'ha creat l'esdeveniment %1$s."
+
 msgid "Sorry, we failed to restore the dropped event."
 msgstr "Ho sentim, no s'ha pogut restaurar l'esdeveniment eliminat."
 
 msgid "Event %1$s has been modified."
 msgstr "S'ha modificat l'esdeveniment %1$s."
-
-msgid "Event %1$s has been created."
-msgstr "S'ha creat l'esdeveniment %1$s."
 
 msgid "You must provide an event name!"
 msgstr "Heu de proporcionar un nom d'esdeveniment!"
@@ -7730,11 +7730,11 @@ msgstr "possible aprofitament"
 msgid "The ini_get and/or ini_set functions are disabled in php.ini. phpMyAdmin requires these functions!"
 msgstr "Les funcions ini_get i/o ini_set estan inhabilitades al fitxer php.ini. phpMyAdmin requereix aquestes funcions!"
 
-msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
-msgstr "Ha fallat l'establiment de la galeta de sessió. Potser esteu utilitzant HTTP en lloc de HTTPS per accedir a phpMyAdmin."
-
 msgid "Error: Token mismatch"
 msgstr "Error: no coincideix un testimoni"
+
+msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
+msgstr "Ha fallat l'establiment de la galeta de sessió. Potser esteu utilitzant HTTP en lloc de HTTPS per accedir a phpMyAdmin."
 
 msgid "Ignoring unsupported language code."
 msgstr "Ignorant codi d'idioma no suportat."

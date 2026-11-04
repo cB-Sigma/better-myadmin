@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 601690888679e2fb5574ba7acd499812ddc9160a resources/po/si.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 6f240a8f64d0a4c62a02b0ef484568fe39017480 resources/po/si.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Sinhala <https://hosted.weblate.org/projects/phpmyadmin/master/si/>\nLanguage: si\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.11-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-01 00:29+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Sinhala <https://hosted.weblate.org/projects/phpmyadmin/master/si/>\nLanguage: si\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.11-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "මෙම ස්ථානයයෙන් පසු JavaScript සක්‍රිය කර තිබීම අවශ්‍යය!"
@@ -4042,12 +4042,6 @@ msgstr "%s දිගුව සොයාගත නොහැක. කරුණා�
 msgid "Invalid routine type: \"%s\""
 msgstr "වලංගු නැති නෛත්‍යක වර්ගය: \"%s\""
 
-msgid "The following query has failed: \"%s\""
-msgstr "පහත විමසුම් අසමත් විය: \"%s\""
-
-msgid "MySQL said: "
-msgstr "MySQL පවසන ලදි: "
-
 msgid "Routine %1$s has been created."
 msgstr "%1$s නෛත්‍යකය සාදන ලදි."
 
@@ -4059,6 +4053,9 @@ msgstr "හලන ලද නෛත්‍යකය ප්‍රතිස්ථා
 
 msgid "The backed up query was:"
 msgstr "රක්ෂිත විමසුම වූයේ:"
+
+msgid "MySQL said: "
+msgstr "MySQL පවසන ලදි: "
 
 msgid "Routine %1$s has been modified."
 msgstr "%1$s නෛත්‍යකය වෙනස් කරන ලදී."
@@ -4086,6 +4083,9 @@ msgstr "ඔබ නෛත්‍යක අර්ථදක්වීමක් ලබ
 
 msgid "Execution results of routine %s"
 msgstr "%s නෛත්‍යකයේ ප්‍රතිදානය"
+
+msgid "The following query has failed: \"%s\""
+msgstr "පහත විමසුම් අසමත් විය: \"%s\""
 
 msgid "The row has been deleted."
 msgstr "පේළිය ඉවත් කරන ලදි."
@@ -4135,14 +4135,14 @@ msgstr "ලොග බෆරයේ විශාලත්වය"
 msgid "Too many error messages, some are not displayed."
 msgstr "දෝෂ පණිවුඩ ප්‍රමාණය ඉක්මවා ගොස් ඇත, ඇතැමෙක් ප්‍රදර්ශනය නොකෙරේ."
 
+msgid "Event %1$s has been created."
+msgstr "%1$s සිද්ධිය සාදන ලදි."
+
 msgid "Sorry, we failed to restore the dropped event."
 msgstr "හලන ලද සිද්ධිය ප්‍රතිස්ථාපනය කිරීම අසමත් විය."
 
 msgid "Event %1$s has been modified."
 msgstr "%1$s සිද්ධිය වෙනස් කරන ලදි."
-
-msgid "Event %1$s has been created."
-msgstr "%1$s සිද්ධිය සාදන ලදි."
 
 msgid "You must provide an event name!"
 msgstr "ඔබ සිද්ධිය සඳහා නමක් ලබාදිය යුතුයි!"
