@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
-    "referenceCommit": "6f240a8f64d0a4c62a02b0ef484568fe39017480",
+    "referenceCommit": "f2beb4ceee0cc5fbfee145ee4d88db8acdb01784",
     "source": "resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys)",
     "count": 3436
   },
@@ -11003,7 +11003,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Http/Middleware/TokenRequestParamChecking.php:46",
         "src/Http/Middleware/TokenRequestParamChecking.php:47"
       ]
     },
@@ -11902,8 +11901,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Http/Middleware/TokenRequestParamChecking.php:78",
-        "src/Http/Middleware/TokenRequestParamChecking.php:83"
+        "src/Http/Middleware/TokenRequestParamChecking.php:83",
+        "src/Http/Middleware/TokenRequestParamChecking.php:84"
       ]
     },
     {

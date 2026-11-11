@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 6f240a8f64d0a4c62a02b0ef484568fe39017480 resources/po/pt_BR.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin f2beb4ceee0cc5fbfee145ee4d88db8acdb01784 resources/po/pt_BR.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-01 00:29+0000\nPO-Revision-Date: 2026-09-09 18:51+0000\nLast-Translator: kx4x <abdalamasterpiece@proton.me>\nLanguage-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/phpmyadmin/master/pt_BR/>\nLanguage: pt_BR\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 2026.9.1\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-11-07 17:51+0000\nLast-Translator: Maurício Meneghini Fauth <mauriciofauth@users.noreply.hosted.weblate.org>\nLanguage-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/phpmyadmin/master/pt_BR/>\nLanguage: pt_BR\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 2026.11.2.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "O JavaScript deve estar ativo após este ponto!"
@@ -112,7 +112,7 @@ msgid "Table comments:"
 msgstr "Comentários de tabela:"
 
 msgid "Collation:"
-msgstr "Colação:"
+msgstr "Ordenação:"
 
 msgid "Storage Engine:"
 msgstr "Mecanismo de armazenamento:"
@@ -227,7 +227,7 @@ msgid "For default values, please enter just a single value, without backslash e
 msgstr "Para valores padrão, digite um único valor, sem barras invertidas de escape ou citações, usando este formato: a"
 
 msgid "Collation"
-msgstr "Colação"
+msgstr "Ordenação"
 
 msgid "Attributes"
 msgstr "Atributos"
@@ -822,10 +822,10 @@ msgid "Switch to copied database"
 msgstr "Mudar para o banco de dados copiado"
 
 msgid "Change all tables collations"
-msgstr "Mudar colação de todas as tabelas"
+msgstr "Mudar a ordenação de todas as tabelas"
 
 msgid "Change all tables columns collations"
-msgstr "Mudar colação das colunas de todas as tabelas"
+msgstr "Mudar a ordenação das colunas de todas as tabelas"
 
 msgid "Users having access to \"%s\""
 msgstr "Usuários que têm acesso à '%s'"
@@ -1396,6 +1396,9 @@ msgstr "Ligado"
 msgid "OFF"
 msgstr "Desligado"
 
+msgid "The event scheduler is disabled."
+msgstr "O agendador de eventos está desativado."
+
 msgid "Select a template"
 msgstr "Selecionar o modelo"
 
@@ -1590,7 +1593,7 @@ msgid "Change password"
 msgstr "Alterar a senha"
 
 msgid "Server connection collation:"
-msgstr "Collation de conexão do servidor MySQL:"
+msgstr "Ordenação de conexão do servidor:"
 
 msgid "More settings"
 msgstr "Mais configurações"
@@ -2135,7 +2138,7 @@ msgid "Information"
 msgstr "Informação"
 
 msgid "Character sets and collations"
-msgstr "Conjuntos de caracteres e collations"
+msgstr "Conjuntos de caracteres e ordenações"
 
 msgctxt "The collation is the default one"
 msgid "default"
@@ -3512,7 +3515,7 @@ msgid "Table comments"
 msgstr "Comentários da tabela"
 
 msgid "Change all column collations"
-msgstr "Mudar colação de todas as colunas"
+msgstr "Mudar a ordenação de todas as colunas"
 
 msgid "Copy table to (database.table)"
 msgstr "Copiar tabela para (database.table)"
@@ -4557,11 +4560,11 @@ msgstr "Unicode"
 
 msgctxt "Collation"
 msgid "West European"
-msgstr "Oeste Europeu"
+msgstr "Europeu Ocidental"
 
 msgctxt "Collation"
 msgid "Central European"
-msgstr "Centro-Europeu"
+msgstr "Centro-europeu"
 
 msgctxt "Collation"
 msgid "Russian"
@@ -4617,7 +4620,7 @@ msgstr "Grego"
 
 msgctxt "Collation"
 msgid "Czech-Slovak"
-msgstr "Tcheco-Eslováquio"
+msgstr "Tcheco-eslovaco"
 
 msgctxt "Collation"
 msgid "Ukrainian"
@@ -4677,7 +4680,7 @@ msgstr "Islandês"
 
 msgctxt "Collation"
 msgid "Classical Latin"
-msgstr "Latim Clássico"
+msgstr "Latim clássico"
 
 msgctxt "Collation"
 msgid "Latvian"
@@ -6293,7 +6296,7 @@ msgid "Order by"
 msgstr "Ordenar por"
 
 msgid "Server connection collation"
-msgstr "Collation de conexão do servidor MySQL"
+msgstr "Ordenação de conexão do servidor"
 
 msgid "Missing data for %s"
 msgstr "Dados faltando para %s"
@@ -6573,6 +6576,9 @@ msgstr "Exportação do evento %s"
 msgid "Error in processing request: No event with name %1$s found in database %2$s."
 msgstr "Erro ao processar requisição: Nenhum evento com o nome %1$s foi encontrado no banco de dados %2$s."
 
+msgid "The event was dropped immediately after creation."
+msgstr "O evento foi descartado imediatamente após a criação."
+
 msgid "Add event"
 msgstr "Adicionar evento"
 
@@ -6618,6 +6624,9 @@ msgstr "O diretório [code]config[/code], que é usado pelo script de configura�
 msgid "The $cfg['TempDir'] (%s) is not accessible. phpMyAdmin is not able to cache templates and will be slow because of this."
 msgstr "O $cfg['TempDir'](%s) não está acessível. phpMyAdmin não será capaz de cachear os modelos e deve ficar mais lento por causa disso."
 
+msgid "The [code]HTTP_HOST[/code] variable is missing, which might cause phpMyAdmin to not work properly. Please refer to [doc@faq1-46]documentation[/doc] for possible issues."
+msgstr "A variável [code]HTTP_HOST[/code] está ausente, o que pode fazer com que o phpMyAdmin não funcione corretamente. Por favor, consulte a [doc@faq1-46]documentação[/doc] para possíveis problemas."
+
 msgid "The mbstring PHP extension was not found and you seem to be using a multibyte charset. Without the mbstring extension phpMyAdmin is unable to split strings correctly and it may result in unexpected results."
 msgstr "A extensão mbstring do PHP não foi encontrada e você parece estar usando conjuntos de caracteres multibyte. Sem a extensão mbstring o phpMyAdmin não será capaz de dividir as strings corretamente e isso pode causar resultados inesperados."
 
@@ -6629,6 +6638,9 @@ msgstr "Você provavelmente tentou carregar um arquivo muito grande. Veja refer�
 
 msgid "Incorrect format parameter"
 msgstr "Parâmetro de formato incorreto"
+
+msgid "Sorry an unexpected error happened!"
+msgstr "Desculpe, aconteceu um erro inesperado!"
 
 msgid "Showing bookmark"
 msgstr "Exibindo marcadores"
@@ -6735,19 +6747,19 @@ msgid "Do you really want to reset the replica (RESET REPLICA)?"
 msgstr "Tem certeza de que deseja redefinir a réplica (RESET REPLICA)?"
 
 msgid "This operation will attempt to convert your data to the new collation. In rare cases, especially where a character doesn't exist in the new collation, this process could cause the data to appear incorrectly under the new collation; in this case we suggest you revert to the original collation and refer to the tips at "
-msgstr "Esta operação tentará converter seus dados para a nova collation. Em casos raros, especialmente onde um caractere não existe na nova collation, este processo poderia fazer com que os dados aparecessem incorretamente na nova collation; neste caso, sugerimos que você reverta à collation original e siga as dicas em "
+msgstr "Esta operação tentará converter seus dados para a nova ordenação. Em casos raros, especialmente onde um caractere não existe na nova ordenação, este processo poderia fazer com que os dados aparecessem incorretamente na nova ordenação; neste caso, sugerimos que você reverta à ordenação original e siga as dicas em "
 
 msgid "Garbled Data"
 msgstr "Dados Ilegíveis"
 
 msgid "Are you sure you wish to change the collation and convert the data?"
-msgstr "Tem certeza de que deseja mudar a collatin e converter os dados?"
+msgstr "Tem certeza de que deseja mudar a ordenação e converter os dados?"
 
 msgid "Through this operation, MySQL attempts to map the data values between collations. If the character sets are incompatible, there may be data loss and this lost data may <b>NOT</b> be recoverable simply by changing back the column collation(s). <b>To convert existing data, it is suggested to use the column(s) editing feature (the \"Change\" Link) on the table structure page. </b>"
-msgstr "Por meio desta operação, o MySQL tenta mapear os valores dos dados entre collations. Se os conjuntos de caracteres são incompatíveis, poderá haver perda de dados e esses dados <b>NÃO</b> poderão ser recuperados somente com a reversão de collation da coluna.<b> Para converter dados existentes, é sugerido que se use a funcionalidade de edição de coluna(s) (o link \"Alterar\") na página de estrutura da tabela. </b>"
+msgstr "Por meio desta operação, o MySQL tenta mapear os valores dos dados entre as ordenações. Se os conjuntos de caracteres são incompatíveis, poderá haver perda de dados e esses dados <b>NÃO</b> poderão ser recuperados somente com a reversão da ordenação da coluna.<b> Para converter dados existentes, é sugerido que se use a funcionalidade de edição de coluna(s) (o link \"Alterar\") na página de estrutura da tabela. </b>"
 
 msgid "Are you sure you wish to change all the column collations and convert the data?"
-msgstr "Você tem certeza que quer mudar todos os agrupamento de colunas e converter os dados?"
+msgstr "Você tem certeza que quer mudar a ordenação de todas as colunas e converter os dados?"
 
 msgid "Reset all"
 msgstr "Redefinir tudo"
@@ -7579,6 +7591,9 @@ msgstr "A tabela %s já existe!"
 msgid "Hide"
 msgstr "Ocultar"
 
+msgid "The fullscreen request was denied because the Fullscreen API is disabled by user preference in the browser."
+msgstr "A solicitação de tela cheia foi negada porque a API Fullscreen está desativada nas preferências do usuário no navegador."
+
 msgctxt "Month name"
 msgid "January"
 msgstr "Janeiro"
@@ -7880,7 +7895,7 @@ msgid "String"
 msgstr "String"
 
 msgid "No collation provided."
-msgstr "Nenhum agrupamento fornecido."
+msgstr "Nenhuma ordenação fornecida."
 
 msgid "Cannot copy database to the same name. Change the name and try again."
 msgstr "Não é possível copiar o banco de dados para o mesmo nome. Escolha outro nome e tente novamente."
@@ -8543,7 +8558,7 @@ msgid "Unable to use timezone \"%1$s\" for server %2$d. Please check your config
 msgstr "Não foi possível usar o fuso horário \"%1$s\" para o servidor %2$d. Por favor, verifique sua configuração em relação a [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. O phpMyAdmin está atualmente usando o fuso horário padrão do servidor de banco de dados."
 
 msgid "Failed to set configured collation connection!"
-msgstr "Falha ao definir conexão do agrupamento configurado!"
+msgstr "Falha ao definir a ordenação de conexão configurada!"
 
 msgid "Error 1045: Access denied for user. Additional error information may be available, but is being hidden by the %s configuration directive."
 msgstr "Erro 1045: Acesso negado ao usuário. Informações adicionais sobre erros podem estar disponíveis, mas estão sendo ocultadas pela diretiva de configuração %s."
@@ -10159,6 +10174,9 @@ msgstr "Uma data, o limite suportado é de %1$s até %2$s"
 msgid "A date and time combination, supported range is %1$s to %2$s"
 msgstr "Uma combinação de data e hora, o limite suportado vai de %1$s a %2$s"
 
+msgid "A timestamp, range is 1970-01-01 00:00:01 UTC to 2038-01-19 03:14:07 UTC on 32-bit platforms (MariaDB 11.3 and earlier), and up to 2106-02-07 06:28:15 UTC on 64-bit platforms (MariaDB 11.5 and later), stored as the number of seconds since the epoch (1970-01-01 00:00:00 UTC)"
+msgstr "Um timestamp, o intervalo é de 1970-01-01 00:00:01 UTC até 2038-01-19 03:14:07 UTC em plataformas de 32 bits (MariaDB 11.3 e anteriores), e até 2106-02-07 06:28:15 UTC em plataformas de 64 bits (MariaDB 11.5 e posteriores), armazenado como o número de segundos desde a epoch (1970-01-01 00:00:00 UTC)"
+
 msgid "A time, range is %1$s to %2$s"
 msgstr "Um horário, o limite suportado é de %1$s até %2$s"
 
@@ -10234,11 +10252,20 @@ msgstr "Uma coleção de objetos geométricos de qualquer tipo"
 msgid "Stores and enables efficient access to data in JSON (JavaScript Object Notation) documents"
 msgstr "Armazena e permite o acesso eficiente aos dados em documentos JSON (JavaScript Object Notation)"
 
+msgid "Intended for storage of IPv4 addresses"
+msgstr "Destinado ao armazenamento de endereços IPv4"
+
 msgid "Intended for storage of IPv6 addresses, as well as IPv4 addresses assuming conventional mapping of IPv4 addresses into IPv6 addresses"
 msgstr "Destinado ao armazenamento de endereços IPv6, bem como endereços IPv4, assumindo o mapeamento convencional de endereços IPv4 em endereços IPv6"
 
 msgid "128-bit UUID (Universally Unique Identifier)"
 msgstr "UUID de 128 bits (Identificador Único Universal)"
+
+msgid "Stores vector data optimized for operations such as similarity search and machine learning applications"
+msgstr "Armazena dados vetoriais otimizados para operações como busca por similaridade e aplicações de aprendizado de máquina"
+
+msgid "Intended for storage of XML data"
+msgstr "Destinado ao armazenamento de dados em XML"
 
 msgctxt "numeric types"
 msgid "Numeric"

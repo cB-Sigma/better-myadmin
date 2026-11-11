@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 6f240a8f64d0a4c62a02b0ef484568fe39017480 resources/po/fr.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin f2beb4ceee0cc5fbfee145ee4d88db8acdb01784 resources/po/fr.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin-docs 4.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-01 00:29+0000\nPO-Revision-Date: 2026-10-26 16:55+0000\nLast-Translator: kjo-sdds <kjo-sdds@users.noreply.hosted.weblate.org>\nLanguage-Team: French <https://hosted.weblate.org/projects/phpmyadmin/master/fr/>\nLanguage: fr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 2026.11.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin-docs 4.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-11-10 14:51+0000\nLast-Translator: Marc Delisle <lem9@users.noreply.hosted.weblate.org>\nLanguage-Team: French <https://hosted.weblate.org/projects/phpmyadmin/master/fr/>\nLanguage: fr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 2026.11.2.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "JavaScript doit être activé au-delà de ce point !"
@@ -7374,6 +7374,12 @@ msgstr "Supprimer (DROP) les colonnes %s de la table %s"
 msgid "Create the following table"
 msgstr "Créer la table suivante"
 
+msgid "Enter new table name"
+msgstr "Saisir le nouveau nom de table"
+
+msgid "Enter column name"
+msgstr "Saisir le nom de la colonne"
+
 msgid "Third step of normalization (3NF)"
 msgstr "Troisième étape de la normalisation (3FN)"
 
@@ -7427,6 +7433,9 @@ msgstr "Cliquer sur un point pour visualiser et possiblement éditer la ligne de
 
 msgid "The plot can be resized by dragging it along the bottom right corner."
 msgstr "L'image peut être redimensionnée en faisant glisser le coin inférieur droit."
+
+msgid "Zoom search instructions"
+msgstr "Instruction de recherche par zoom"
 
 msgid "Select two columns"
 msgstr "Sélectionner deux colonnes"

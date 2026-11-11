@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
-    "referenceCommit": "6f240a8f64d0a4c62a02b0ef484568fe39017480",
+    "referenceCommit": "f2beb4ceee0cc5fbfee145ee4d88db8acdb01784",
     "source": "resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys",
     "count": 964
   },

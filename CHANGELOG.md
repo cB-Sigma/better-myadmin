@@ -2,6 +2,13 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.28 (2026-11-11)
+
+### Upstream
+
+- Synced to phpMyAdmin f2beb4ceee (5 commits): Czech, Brazilian Portuguese, Spanish and French
+  translations and a po refresh. No behaviour changes.
+
 ## 1.0.27 (2026-11-04)
 
 ### Upstream
