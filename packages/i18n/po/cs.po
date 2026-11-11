@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 6f240a8f64d0a4c62a02b0ef484568fe39017480 resources/po/cs.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin f2beb4ceee0cc5fbfee145ee4d88db8acdb01784 resources/po/cs.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-01 00:29+0000\nPO-Revision-Date: 2026-08-21 11:52+0000\nLast-Translator: Adam Havránek <adamhavra@seznam.cz>\nLanguage-Team: Czech <https://hosted.weblate.org/projects/phpmyadmin/master/cs/>\nLanguage: cs\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\nX-Generator: Weblate 2026.9.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-11-06 14:51+0000\nLast-Translator: Adam Havránek <helak@users.noreply.hosted.weblate.org>\nLanguage-Team: Czech <https://hosted.weblate.org/projects/phpmyadmin/master/cs/>\nLanguage: cs\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\nX-Generator: Weblate 2026.11.2.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Pro použití phpMyAdmina musíte mít zapnutý Javascript!"
@@ -746,6 +746,9 @@ msgstr "Sestupně"
 msgid "Add as"
 msgstr "Přidat jako"
 
+msgid "Op"
+msgstr "Ot"
+
 msgid "Text"
 msgstr "Text"
 
@@ -1024,6 +1027,9 @@ msgstr "Odznačit vše"
 
 msgid "Inside column:"
 msgstr "Uvnitř sloupce:"
+
+msgid "Search results for \"%s\" %s:"
+msgstr "Výsledky vyhledávání pro „%s“ %s:"
 
 msgid "%1$s match in <strong>%2$s</strong>"
 msgid_plural "%1$s matches in <strong>%2$s</strong>"
@@ -1354,6 +1360,9 @@ msgstr "Převést na Kanu"
 msgid "Error"
 msgstr "Chyba"
 
+msgid "Backtrace"
+msgstr "Zpětné trasování"
+
 msgid "This report automatically includes data about the error and information about relevant configuration settings. It will be sent to the phpMyAdmin team for debugging the error."
 msgstr "Toto hlášení automaticky obsahuje data o chybě a informace o příslušných nastaveních konfigurace. Budou odeslány vývojářům phpMyAdmina k odladění chyby."
 
@@ -1424,6 +1433,9 @@ msgstr "Editor událostí"
 
 msgid "Export event"
 msgstr "Exportovat událost"
+
+msgid "The event scheduler is disabled."
+msgstr "Plánovač událostí je deaktivován."
 
 msgid "Select a template"
 msgstr "Zvolte šablonu"
@@ -6603,6 +6615,9 @@ msgstr "Zobrazeny záznamy %1$s - %2$s."
 msgid "There already exists a page named \"%s\" please rename it to something else."
 msgstr "Stránka s názvem \"%s\" již existuje. Přejmenuje ji na něco jiného."
 
+msgid "No database selected."
+msgstr "Není vybrána žádná databáze."
+
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Nepodařilo se nahrát pluginy pro export, zkontrolujte prosím vaší instalaci!"
 
@@ -6926,6 +6941,12 @@ msgstr "Hodnoty Y"
 
 msgid "Please enter the SQL query first."
 msgstr "Prosím, zadejte nejdříve SQL dotaz."
+
+msgid "Nothing selected"
+msgstr "Není nic vybráno"
+
+msgid "Enter an option"
+msgstr "Zadejte volbu"
 
 msgid "The host name is empty!"
 msgstr "Název počítače je prázdný!"
@@ -7360,6 +7381,12 @@ msgstr "ODSTRANIT sloupce %s z tabulky %s"
 msgid "Create the following table"
 msgstr "Vytvořit následující tabulku"
 
+msgid "Enter new table name"
+msgstr "Zadejte název nové tabulky"
+
+msgid "Enter column name"
+msgstr "Zadejte název sloupce"
+
 msgid "Third step of normalization (3NF)"
 msgstr "Třetí krok normalizace (3NF)"
 
@@ -7413,6 +7440,9 @@ msgstr "Klikněte na datový bod pro zobrazení a případnou úpravu řádku."
 
 msgid "The plot can be resized by dragging it along the bottom right corner."
 msgstr "Graf můžete zvětšit táhnutím za pravý dolní roh."
+
+msgid "Zoom search instructions"
+msgstr "Pokyny k vyhledávání v aplikaci Zoom"
 
 msgid "Select two columns"
 msgstr "Zvolte dva sloupce"

@@ -800,6 +800,41 @@
       "status": "not-applicable",
       "areas": ["docs"],
       "notes": "sync 6f240a8f64: ChangeLog entry for #20587: our own CHANGELOG."
+    },
+    {
+      "commit": "8f0a106f2ab8fcfdfac8847a8f704aead0b348a2",
+      "subject": "Translated using Weblate (Czech)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync f2beb4ceee: Czech translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "4e7a2ecbd95ab642807002be70bf665e1a369744",
+      "subject": "Translated using Weblate (Portuguese (Brazil))",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync f2beb4ceee: Brazilian Portuguese translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "1d0362d214490512967f1d1ec2a7d036269c787c",
+      "subject": "Update po files",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync f2beb4ceee: po/pot refresh: pnpm i18n:import; the same 3436 msgids (the pot's source references follow the TokenRequestParamChecking change of the previous sync)."
+    },
+    {
+      "commit": "a00710c390fe3e7ae22672b3ba9ff6bedd76944b",
+      "subject": "Translated using Weblate (Spanish)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync f2beb4ceee: Spanish translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "f2beb4ceee0cc5fbfee145ee4d88db8acdb01784",
+      "subject": "Translated using Weblate (French)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync f2beb4ceee: French translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
     }
   ]
 }
