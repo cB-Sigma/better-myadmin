@@ -9,7 +9,15 @@ import {
   PmaIcon,
 } from '@bettermyadmin/ui'
 import { useBlocker } from '@tanstack/react-router'
-import { type ReactNode, createContext, useContext, useEffect, useMemo, useState } from 'react'
+import {
+  type ReactNode,
+  createContext,
+  startTransition,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { t } from '../../lib/i18n'
 
 /**
@@ -120,7 +128,8 @@ export function useFormLock(editorDirty = false): (form: HTMLFormElement | null)
       if (old === undefined) return
       if (lockValue(el) !== old) targets.add(el)
       else targets.delete(el)
-      setLocked(targets.size > 0)
+      // raised after the event: a re-render here reverts the controlled field before React reads it
+      startTransition(() => setLocked(targets.size > 0))
     }
     // resetLock: the form's reset, and a submit (AJAX.requestHandler resets before the request)
     const release = () => {
