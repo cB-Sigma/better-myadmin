@@ -114,3 +114,13 @@ test('results show under the form, which hides; Show/Hide search criteria toggle
   await expect(toggle).toHaveText('Hide search criteria')
   await expect(row(page, 'qty')).toBeVisible()
 })
+
+test('the first operator change of a page is kept: the page lock must not swallow it', async ({ page }) => {
+  await searchPage(page)
+  // a real key press: a script-dispatched event never re-renders between the two change handlers
+  const operator = row(page, 'qty').getByLabel('Operator')
+  await operator.focus()
+  await page.keyboard.press('ArrowDown')
+  await expect(operator).toHaveValue('>')
+  await expect(page.locator('#lock_page_icon').locator('*').first()).toBeVisible()
+})
