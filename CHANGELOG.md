@@ -2,6 +2,14 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.29 (2026-11-11)
+
+### Fixes
+
+- The first change of a dropdown on a form that warns about unsaved changes (Table search, Find
+  and replace, SQL, the column editor, Database search) snapped back to its old value; only the
+  second change stuck. It is now kept the first time (#2).
+
 ## 1.0.28 (2026-11-11)
 
 ### Upstream
