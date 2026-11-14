@@ -92,16 +92,18 @@ export function homeWarnings(
     if (n < KEY_BYTES) {
       out.push({
         severity: 'warning',
+        // i18n-new: the wording of phpMyAdmin 324551a104, its catalogue not refreshed yet
         message: tr.gettext(
-          'The configuration file needs a valid key for query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc].',
+          'The configuration file needs a valid key for URL query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc].',
         ),
       })
     } else if (n > KEY_BYTES) {
       out.push({
         severity: 'warning',
         message: sprintf(
+          // i18n-new: the wording of phpMyAdmin 324551a104, its catalogue not refreshed yet
           tr.gettext(
-            'The query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc].',
+            'The URL query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc].',
           ),
           KEY_BYTES,
         ),
@@ -179,10 +181,10 @@ export async function homeData(ctx: ShellCtx, env: HomeEnv): Promise<HomeRespons
   )
   const collationSql =
     isMariaDb && versionInt >= 101000
-      ? 'SELECT `collapp`.`FULL_COLLATION_NAME` AS `Collation`, `collapp`.`CHARACTER_SET_NAME` AS `Charset`, `collapp`.`ID` AS `Id`, `collapp`.`IS_DEFAULT` AS `Default`, `coll`.`IS_COMPILED` AS `Compiled`, `coll`.`SORTLEN` AS `Sortlen` FROM `information_schema`.`COLLATION_CHARACTER_SET_APPLICABILITY` `collapp` LEFT JOIN `information_schema`.`COLLATIONS` `coll` ON `collapp`.`COLLATION_NAME`=`coll`.`COLLATION_NAME`'
+      ? 'SELECT `FULL_COLLATION_NAME` AS `Collation`, `CHARACTER_SET_NAME` AS `Charset`, `IS_DEFAULT` AS `Default` FROM `information_schema`.`COLLATION_CHARACTER_SET_APPLICABILITY`'
       : disableIs
         ? 'SHOW COLLATION'
-        : 'SELECT `COLLATION_NAME` AS `Collation`, `CHARACTER_SET_NAME` AS `Charset`, `ID` AS `Id`, `IS_DEFAULT` AS `Default`, `IS_COMPILED` AS `Compiled`, `SORTLEN` AS `Sortlen` FROM `information_schema`.`COLLATIONS`'
+        : 'SELECT `COLLATION_NAME` AS `Collation`, `CHARACTER_SET_NAME` AS `Charset`, `IS_DEFAULT` AS `Default` FROM `information_schema`.`COLLATIONS`'
   const collationRows = await conn.rows(collationSql, 'home.collations')
   const byteSort = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0)
   const charsetDesc = new Map(charsetRows.map((r) => [r.Charset ?? '', r.Description ?? '']))

@@ -835,6 +835,313 @@
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync f2beb4ceee: French translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "9f736d15d40cef4a6447c71b1e9de8cf0dbb215d",
+      "subject": "Translated using Weblate (Czech)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync f4aeb7801c: Czech translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "324551a1049553a8ba4cbaf6a12884da208ca4a2",
+      "subject": "Specify that the query in query encryption is the URL query",
+      "status": "ported",
+      "areas": ["tooling"],
+      "notes": "sync f4aeb7801c: The home page warnings say \"URL query encryption\" (apps/server/src/shell/home.ts and its int test); the old msgids are mapped n/a as stale catalogue entries until the po refresh."
+    },
+    {
+      "commit": "822de796ab95e9f048d9d254d09e38f64d9c5646",
+      "subject": "Translated using Weblate (Portuguese (Brazil))",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync f4aeb7801c: Portuguese (Brazil) translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "7183338d58ed53842959021a254bf47aaa411e9c",
+      "subject": "Update po files",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync f4aeb7801c: po/pot refresh: pnpm i18n:import; the same 3436 msgids."
+    },
+    {
+      "commit": "8cbcc43fafe38fce49ecb32b27e3dfb3b260455d",
+      "subject": "Translated using Weblate (Dutch)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync f4aeb7801c: Dutch translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "ab6c826c70dff44fbc2eb1ef437837c093da288d",
+      "subject": "Translated using Weblate (Portuguese (Brazil))",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync f4aeb7801c: Portuguese (Brazil) translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "f80b055de44d0803a9b762c256ecd9eb394a63b2",
+      "subject": "Translated using Weblate (Turkish)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync f4aeb7801c: Turkish translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "7470c9844976150dbcb62918cede76257159e103",
+      "subject": "Translated using Weblate (Ukrainian)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync f4aeb7801c: Ukrainian translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "27996b3076b51fb02e41db91a3b8419ecd4d04f6",
+      "subject": "Translated using Weblate (Spanish)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync f4aeb7801c: Spanish translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "0e01a17cb1f6228252d9467e868a9c7625e62d4c",
+      "subject": "Translated using Weblate (French)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync f4aeb7801c: French translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "594fcfe3ec0badeff9d7d1bb1e027138480ca1ac",
+      "subject": "Upgrading vimeo/psalm (7.0.0 => 7.2.0)",
+      "status": "not-applicable",
+      "areas": ["dependencies", "tooling", "features/09-sql-editor-query-pipeline"],
+      "notes": "sync f4aeb7801c: Psalm 7.2 and its baseline: static analysis only."
+    },
+    {
+      "commit": "0744a2eff49f7bff22ae0c42204ff91aa4a8a00d",
+      "subject": "Narrow return type of getUiProp()",
+      "status": "not-applicable",
+      "areas": ["tooling", "features/09-sql-editor-query-pipeline", "features/04-table-level"],
+      "notes": "sync f4aeb7801c: Table::getUiProp() return type narrowed: refactor, our TableUiPrefs already returns typed values."
+    },
+    {
+      "commit": "aee2cbdee1bf86a440bc50ab7637f9df96aa0a83",
+      "subject": "Refactor getColumnParams()",
+      "status": "ported",
+      "areas": ["tooling", "features/04-table-level", "features/02-browse-results-grid"],
+      "notes": "sync f4aeb7801c: Results::getColumnParams: a col_order without one entry per field, or with an index < 0 or >= the field count, is now removed and not applied (before, an out-of-range entry was removed but still used). apps/server/src/browse/grid.ts; docs/features/02."
+    },
+    {
+      "commit": "a2598a8d52ab6baafbe29c1e0d611eb32fb3a077",
+      "subject": "Create UiPreferences VO",
+      "status": "ported",
+      "areas": [
+        "tooling",
+        "features/02-browse-results-grid",
+        "features/04-table-level",
+        "features/09-sql-editor-query-pipeline",
+        "tests"
+      ],
+      "notes": "sync f4aeb7801c: UiPreferences VO: prefs are read through fromArray (a non-string sorted_col / CREATE_TIME and a non-list or non-scalar column list are dropped, items cast to int, unknown keys gone) and written by toArray in the fixed order sorted_col, col_order, col_visib, CREATE_TIME. packages/metadata/src/uiprefs.ts normalizeUiPrefs; the unit, golden and int tests follow the new key order; docs/features/08."
+    },
+    {
+      "commit": "6112f42f2fa31e869893cf6d4243dddd3e77ccc2",
+      "subject": "Add sortedColumnExists",
+      "status": "ported",
+      "areas": ["features/04-table-level", "tests"],
+      "notes": "sync f4aeb7801c: Table::sortedColumnExists: the remembered sort is parsed as SELECT * FROM t ORDER BY <sorted_col> and every item must be a column of the table, unqualified or qualified by the table, never by a database (before: the first word only, matched as a suffix of db.table.col). packages/metadata/src/uiprefs.ts with @bettermyadmin/sql-lexer; the table info columns() returns bare names (apps/server/src/metadata/table-info.ts); unit test; docs/features/02 and 08."
+    },
+    {
+      "commit": "3bd9ebe86884a972de915ab9a4202bda090b8dba",
+      "subject": "Update Composer dependencies",
+      "status": "not-applicable",
+      "areas": ["dependencies"],
+      "notes": "sync f4aeb7801c: Composer dependency refresh (symfony, phpstan, psalm, guzzle, league/uri, …): phpmyadmin/sql-parser, motranslator, twig and mariadb-mysql-kbs did not move, so nothing to port to packages/sql-lexer or packages/kbs; the reference checkout was reinstalled."
+    },
+    {
+      "commit": "cd5cf48843c4b25d165a93726c60316821b7d070",
+      "subject": "Refactoring of Triggers and bug fix",
+      "status": "not-applicable",
+      "areas": ["tooling", "features/04-table-level", "tests"],
+      "notes": "sync f4aeb7801c: Triggers::getQueryFromRequest reads the body through ServerRequest; its bug fix (empty() rejected a name, table or definition \"0\") never applied to us: our checks compare with the empty string."
+    },
+    {
+      "commit": "c0b799f02907025f014402d6edfb02d76a138296",
+      "subject": "Refactor Triggers/IndexController",
+      "status": "ported",
+      "areas": [
+        "features/01-shell-navigation-auth",
+        "tooling",
+        "features/05-database-level",
+        "features/04-table-level",
+        "tests"
+      ],
+      "notes": "sync f4aeb7801c: Triggers IndexController refactor; the export of a missing trigger now builds its error from \"Error in processing request:\" and \"No trigger with name %1$s found in database %2$s.\", like the editor (apps/server/src/database/triggers.ts exportTrigger). The combined msgid is mapped n/a as a stale catalogue entry."
+    },
+    {
+      "commit": "3b603728559cc99d3f183484b8a38853b2904123",
+      "subject": "Add not found error message",
+      "status": "ported",
+      "areas": ["tooling", "features/04-table-level", "features/05-database-level"],
+      "notes": "sync f4aeb7801c: Editing a trigger or an event whose original no longer exists: \"Trigger not found.\" / \"Event not found.\" in the error list and nothing is dropped (apps/server/src/database/triggers.ts, events.ts; i18n-new until the catalogue refresh). Golden parity cases in tests/parity/database-programs.parity.test.ts; docs/features/04 and 05."
+    },
+    {
+      "commit": "6709c38231095ba9a384218f340f7572b86e2fd8",
+      "subject": "Clear Collation::$suffixesCache in CollationTest",
+      "status": "not-applicable",
+      "areas": ["tests"],
+      "notes": "sync f4aeb7801c: PHPUnit: the Collation suffix cache is cleared between tests."
+    },
+    {
+      "commit": "dab9f6b68b1d0f3ce8e529f6e3e7c29626b6d746",
+      "subject": "Make StatusController final",
+      "status": "not-applicable",
+      "areas": ["features/07-export-import"],
+      "notes": "sync f4aeb7801c: StatusController made final: PHP class modifier."
+    },
+    {
+      "commit": "3082709b0c21d7a791e0826210e96f1e05a9b17c",
+      "subject": "Add typed Ajax::getHandler()",
+      "status": "not-applicable",
+      "areas": ["tooling", "features/07-export-import", "tests"],
+      "notes": "sync f4aeb7801c: Ajax::getHandlerFromSession: typed lookup of the upload progress handler; our chunked upload has no PHP upload progress handlers."
+    },
+    {
+      "commit": "8fd2cbdcb2cb54fe21a476d1ef4987af4d51cd1d",
+      "subject": "Extract shared import page logic to ImportForm",
+      "status": "not-applicable",
+      "areas": [
+        "features/01-shell-navigation-auth",
+        "tooling",
+        "features/05-database-level",
+        "features/06-server-level",
+        "features/04-table-level",
+        "features/07-export-import",
+        "tests"
+      ],
+      "notes": "sync f4aeb7801c: ImportForm extracts the shared server / database / table import page logic: refactor, the rendered page is unchanged (the import parity cases pass against the new reference)."
+    },
+    {
+      "commit": "68cb4ae87b0447b0534fcad8ee7bac91de4a5c8a",
+      "subject": "Report error message on Browse",
+      "status": "not-applicable",
+      "areas": ["features/09-sql-editor-query-pipeline"],
+      "notes": "sync f4aeb7801c: Sql::handleQueryExecuteError: a goto-file request that is not AJAX now gets the mysqlDie error card instead of an empty JSON body. Our pipeline has no goto file and always answers with the error card."
+    },
+    {
+      "commit": "3e46bcca8a61f8ef2f68611c46bca4ba45dac749",
+      "subject": "Revert bf9fc416fe5 and keep the dual check",
+      "status": "ported",
+      "areas": ["features/03-insert-edit-transformations", "tests"],
+      "notes": "sync f4aeb7801c: DbTableExists::hasTable asks SHOW TABLES FROM `db` LIKE '<table>' first (metadata only, so a broken view still counts) and falls back to SELECT 1 for temporary tables. apps/server/src/metadata/service.ts tableExists; the regenerated repository fixtures replay the new statements; docs/features/03."
+    },
+    {
+      "commit": "b6143f28ab06a720ab76feedf90b01525a1d9572",
+      "subject": "Move duplicated setStringValue() to ExportPlugin",
+      "status": "not-applicable",
+      "areas": ["features/07-export-import"],
+      "notes": "sync f4aeb7801c: setStringValue() moved to ExportPlugin with the same result (the request value, else the configuration value); ours is already shared (packages/export/src/plugin.ts)."
+    },
+    {
+      "commit": "a9e2976019206ee26012b47906f3e29621d8d7f1",
+      "subject": "Report export plugin failures instead of ignoring them",
+      "status": "ported",
+      "areas": ["features/07-export-import"],
+      "notes": "sync f4aeb7801c: An ExportException is reported (Current::$message) instead of ignored: Save on server answers the plugin's error instead of \"Dump has been saved to file %s.\" (packages/export/src/export.ts run() returns the failure, apps/server/src/routes/export.ts); docs/features/07."
+    },
+    {
+      "commit": "d48ac88e8e5981cb860677e92d8c0b21f4a6633e",
+      "subject": "Move duplicated getIdParam() to SetupHelper::getServerId()",
+      "status": "not-applicable",
+      "areas": ["features/08-settings-preferences-pmadb", "tests"],
+      "notes": "sync f4aeb7801c: SetupHelper::getServerId(): the duplicated id parsing of the setup controllers, same result."
+    },
+    {
+      "commit": "ba4349f8198c4840ecac391f33ce23cb7955ceb4",
+      "subject": "Extract shared table search form logic to SearchForm",
+      "status": "not-applicable",
+      "areas": ["features/01-shell-navigation-auth", "tooling", "features/04-table-level", "tests"],
+      "notes": "sync f4aeb7801c: SearchForm extracts the shared table search / zoom search form logic: refactor (the table search parity cases pass against the new reference)."
+    },
+    {
+      "commit": "d352f990345ae520fc3bcb8d893ed8fcacb1f564",
+      "subject": "Extract duplicated formatVariable() to VariableFormatter",
+      "status": "not-applicable",
+      "areas": ["features/01-shell-navigation-auth", "tooling", "features/06-server-level", "tests"],
+      "notes": "sync f4aeb7801c: VariableFormatter extracts the duplicated formatVariable() of the server variables controllers: same output."
+    },
+    {
+      "commit": "4369fb800df68dd6b2973e0a14fd830831719c88",
+      "subject": "Update TriggersTest.php",
+      "status": "not-applicable",
+      "areas": ["tests"],
+      "notes": "sync f4aeb7801c: PHPUnit TriggersTest update; our golden parity cases cover the trigger editor."
+    },
+    {
+      "commit": "85950f94aa2a460e24eace8c53f6d9ca8f2bd3f6",
+      "subject": "Fix double escaped table name in the visual query builder",
+      "status": "not-applicable",
+      "areas": ["tooling"],
+      "notes": "sync f4aeb7801c: The designer template escaped the table name twice, so the visual query builder produced HTML entities. Our designer passes raw names and React escapes on render (history included): nothing was double-escaped."
+    },
+    {
+      "commit": "121f5064956ef30b7ea32915beb856aee352933f",
+      "subject": "Add change log entry for #20594",
+      "status": "not-applicable",
+      "areas": ["docs"],
+      "notes": "sync f4aeb7801c: ChangeLog entry for upstream #20594."
+    },
+    {
+      "commit": "be7a5ae8808c90dadaf5e3e0e23d07afb4ab2ff2",
+      "subject": "Update Yarn dependencies",
+      "status": "not-applicable",
+      "areas": ["dependencies"],
+      "notes": "sync f4aeb7801c: Yarn refresh (Bootstrap 5.3.9, Babel, autoprefixer) of phpMyAdmin's own front end; our UI has its own dependencies. The reference checkout was reinstalled."
+    },
+    {
+      "commit": "31959fa9e7114facb73b800366c0cbdbe507e576",
+      "subject": "Fix Collation descriptions for MariaDB",
+      "status": "ported",
+      "areas": ["features/04-table-level", "tests"],
+      "notes": "sync f4aeb7801c: Collation descriptions for MariaDB: a language after the variant is read (utf8mb4_uca1400_swedish_ai_ci → \"Swedish (UCA 14.0.0), …\"). packages/mysql-types/src/charsets.ts follows the rewritten buildDescription; fixtures regenerated (collations.json with the upstream test names, collation-descriptions.json, apps/server server-admin.json); docs/features/06."
+    },
+    {
+      "commit": "060fd18bf61bb06386803bcc16d4766d8b794bd5",
+      "subject": "Add MySQL languages",
+      "status": "ported",
+      "areas": ["features/04-table-level", "tests"],
+      "notes": "sync f4aeb7801c: MySQL 8 collation languages and scripts: Bosnian, Galician, Mongolian, Norwegian Bokmål / Nynorsk, Serbian, \" (Cyrillic)\" / \" (Latin)\", and cs right after the charset is Czech (packages/mysql-types/src/charsets.ts; the new msgids are annotated i18n-new until the catalogue refresh)."
+    },
+    {
+      "commit": "fb1bc7c3d917cdaac626035aacc458d93d2b23e0",
+      "subject": "Remove unused fields",
+      "status": "ported",
+      "areas": ["features/04-table-level", "tests"],
+      "notes": "sync f4aeb7801c: Charsets::loadCollations no longer reads ID, IS_COMPILED and SORTLEN (and MariaDB no longer joins COLLATIONS): the same trimmed query in apps/server/src/server-admin/charsets.ts, shell/home.ts and table/read.ts (the database structure, databases list and collations parity cases compare the reads)."
+    },
+    {
+      "commit": "3357821218fac971d1bcc8861416491276805066",
+      "subject": "Improve performance of Database/Structure",
+      "status": "not-applicable",
+      "areas": ["features/04-table-level"],
+      "notes": "sync f4aeb7801c: Collation: the description is built lazily (Database/Structure performance); same text."
+    },
+    {
+      "commit": "b6c7fe282e31288a45cd29e7ff4520aa4c696be4",
+      "subject": "Refactor collation parsing",
+      "status": "ported",
+      "areas": ["features/04-table-level"],
+      "notes": "sync f4aeb7801c: Collation parsing refactor (charset name, language and suffix lookups): ported together with 31959fa9e7 and 060fd18bf6."
+    },
+    {
+      "commit": "05d6e0e031c0ba1de6cdcbffbf7653cbfd749415",
+      "subject": "Refactor the parser loop",
+      "status": "ported",
+      "areas": ["features/04-table-level", "tests"],
+      "notes": "sync f4aeb7801c: Collation parser loop: the tokens are no longer read in fixed levels; ported with 31959fa9e7 and 060fd18bf6."
+    },
+    {
+      "commit": "3fbc737733bd3dd2b34f9d770839e206bd4eb25a",
+      "subject": "Inline buildName() again",
+      "status": "not-applicable",
+      "areas": ["features/04-table-level"],
+      "notes": "sync f4aeb7801c: Collation buildName() inlined again: refactor."
     }
   ]
 }

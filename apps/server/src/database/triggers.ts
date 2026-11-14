@@ -91,8 +91,11 @@ export async function saveTrigger(
       const old = (await getTriggers(ctx, ctx.db, scopeTable)).find((t) => t.name === req.originalName)
       const backup = old !== undefined ? triggerCreateSql(old, '') : ''
       const drop = `DROP TRIGGER IF EXISTS ${backquote(req.originalName)}`
-      const e1 = await tryQuery(ctx, drop, 'triggers.drop')
-      if (e1 !== null) errors.push(failed(ctx, drop, e1))
+      // pma 3b60372855: the trigger was dropped or renamed meanwhile, nothing is touched
+      const e1 = old === undefined ? undefined : await tryQuery(ctx, drop, 'triggers.drop')
+      if (e1 === undefined)
+        errors.push(tr.gettext('Trigger not found.')) // i18n-new: phpMyAdmin 3b60372855, its catalogue not refreshed yet
+      else if (e1 !== null) errors.push(failed(ctx, drop, e1))
       else {
         const e2 = await tryQuery(ctx, query, 'triggers.create')
         if (e2 !== null) {
@@ -150,12 +153,13 @@ export async function triggerData(ctx: DbCtx, table: string, name: string): Prom
 export async function exportTrigger(ctx: DbCtx, table: string, name: string): Promise<DbExportResponse> {
   const t = (await getTriggers(ctx, ctx.db, table)).find((x) => x.name === name)
   if (t === undefined) {
+    // pma c0b799f029: the same two strings as the editor's message
     throw new NotFoundError(
-      sprintf(
-        ctx.tr.gettext('Error in processing request: No trigger with name %1$s found in database %2$s.'),
+      `${ctx.tr.gettext('Error in processing request:')} ${sprintf(
+        ctx.tr.gettext('No trigger with name %1$s found in database %2$s.'),
         backquote(name),
         backquote(ctx.db),
-      ),
+      )}`,
     )
   }
   return {

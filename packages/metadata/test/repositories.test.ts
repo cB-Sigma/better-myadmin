@@ -257,10 +257,10 @@ describe('table UI preferences (Table.php)', () => {
     ).toBe(true)
     expect(sqls(conn)).toEqual([
       "SELECT `prefs` FROM `pmadb`.`pma__table_uiprefs` WHERE `username` = 'u1' AND `db_name` = 'd' AND `table_name` = 't'",
-      "REPLACE INTO `pmadb`.`pma__table_uiprefs` (username, db_name, table_name, prefs) VALUES ('u1', 'd', 't', '{\\\"CREATE_TIME\\\":\\\"2026-10-08 10:00:00\\\",\\\"col_order\\\":[1,0]}')",
+      "REPLACE INTO `pmadb`.`pma__table_uiprefs` (username, db_name, table_name, prefs) VALUES ('u1', 'd', 't', '{\\\"col_order\\\":[1,0],\\\"CREATE_TIME\\\":\\\"2026-10-08 10:00:00\\\"}')",
       'SELECT COUNT(*) FROM `pmadb`.`pma__table_uiprefs`',
       'DELETE FROM `pmadb`.`pma__table_uiprefs` ORDER BY last_update ASC LIMIT 3',
-      'REPLACE INTO `pmadb`.`pma__table_uiprefs` (username, db_name, table_name, prefs) VALUES (\'u1\', \'d\', \'t\', \'{\\"CREATE_TIME\\":\\"2026-10-08 10:00:00\\",\\"col_order\\":[1,0],\\"col_visib\\":[1,1]}\')',
+      'REPLACE INTO `pmadb`.`pma__table_uiprefs` (username, db_name, table_name, prefs) VALUES (\'u1\', \'d\', \'t\', \'{\\"col_order\\":[1,0],\\"col_visib\\":[1,1],\\"CREATE_TIME\\":\\"2026-10-08 10:00:00\\"}\')',
       'SELECT COUNT(*) FROM `pmadb`.`pma__table_uiprefs`',
       'DELETE FROM `pmadb`.`pma__table_uiprefs` ORDER BY last_update ASC LIMIT 3',
     ])
@@ -289,6 +289,21 @@ describe('table UI preferences (Table.php)', () => {
     const { t } = make(conn)
     expect(await t.getUiProp('sorted_col')).toBe('`name` DESC')
     expect(await t.getUiProp('sorted_col', true)).toBe(false)
+  })
+
+  it('sorted_col: every ORDER BY item must name a column of this table (pma 6112f42f2f)', async () => {
+    const check = async (sorted: string) => {
+      const conn = new FakeConn(() => ok([{ prefs: JSON.stringify({ sorted_col: sorted }) }]))
+      return make(conn).t.getUiProp('sorted_col', false, true)
+    }
+    expect(await check('`id` ASC, `name` DESC')).toBe('`id` ASC, `name` DESC')
+    expect(await check('`t`.`name` DESC')).toBe('`t`.`name` DESC')
+    // the old check looked at the first word only
+    expect(await check('`id` ASC, `gone` DESC')).toBe(false)
+    expect(await check('`other`.`name` DESC')).toBe(false)
+    expect(await check('`d`.`t`.`name` DESC')).toBe(false)
+    // a column whose name merely ends with the stored one no longer counts
+    expect(await check('`ame` ASC')).toBe(false)
   })
 
   it('read-only reads report stale values as false without writing', async () => {

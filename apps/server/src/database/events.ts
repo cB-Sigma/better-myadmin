@@ -146,10 +146,14 @@ export async function saveEvent(ctx: DbCtx, req: EventSaveRequest): Promise<{ me
   let result: SqlMessage | null = null
   if (errors.length === 0) {
     if (req.originalName !== undefined) {
-      const backup = (await definition(ctx, req.originalName)) ?? ''
+      const found = await definition(ctx, req.originalName)
+      const backup = found ?? ''
       const drop = `DROP EVENT IF EXISTS ${backquote(req.originalName)};\n`
-      const e1 = await tryQuery(ctx, drop, 'events.drop')
-      if (e1 !== null) errors.push(failed(ctx, drop, e1))
+      // pma 3b60372855: the event was dropped or renamed meanwhile, nothing is touched
+      const e1 = found === null ? undefined : await tryQuery(ctx, drop, 'events.drop')
+      if (e1 === undefined)
+        errors.push(tr.gettext('Event not found.')) // i18n-new: phpMyAdmin 3b60372855, its catalogue not refreshed yet
+      else if (e1 !== null) errors.push(failed(ctx, drop, e1))
       else {
         const e2 = await tryQuery(ctx, query, 'events.create')
         if (e2 !== null) {

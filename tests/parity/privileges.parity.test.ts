@@ -1102,6 +1102,11 @@ describe.skipIf(!pmaReachable)('parity: table → privileges', () => {
         pattern: '^SELECT 1 FROM `f06u_db`\\.`t1` LIMIT 1$',
         why: 'DbTableExists::hasTable for the table-scope request; the SPA checks the scope with its own request.',
       },
+      {
+        tool: 'pma',
+        pattern: "^SHOW TABLES FROM `f06u_db` LIKE 't1';?$",
+        why: 'The SHOW TABLES half of the same DbTableExists::hasTable (upstream 3e46bcca8a).',
+      },
     ])
     const html = parse(pageHtml(r.p))
     const pmaUsers = $$(html, 'form#usersForm tbody tr input')

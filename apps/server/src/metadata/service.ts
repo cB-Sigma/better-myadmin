@@ -15,7 +15,7 @@ import {
   applyUserPreferences,
   getUserFormFields,
 } from '@bettermyadmin/metadata'
-import { backquote } from '@bettermyadmin/sql-gen'
+import { backquote, escapeMysqlWildcards, quoteString } from '@bettermyadmin/sql-gen'
 import type { Context } from 'hono'
 import { type AppConfig, type ServerConfig, getServer } from '../config.ts'
 import type { Conn } from '../db/connection.ts'
@@ -398,6 +398,17 @@ export class MetaRequest {
   /** DbTableExists::hasTable (user link). */
   async tableExists(db: string, table: string): Promise<boolean> {
     const conn = await this.userConn()
+    // SHOW TABLES reads only metadata, so a view whose definition is broken still counts
+    try {
+      const shown = await conn.query(
+        `SHOW TABLES FROM ${backquote(db)} LIKE ${quoteString(escapeMysqlWildcards(table))};`,
+        'table.exists.show',
+      )
+      if (shown.resultSets[0]?.rows.length === 1) return true
+    } catch {
+      // fall through to the SELECT, as tryQuery does
+    }
+    // SHOW TABLES doesn't show temporary tables, so try a SELECT
     try {
       await conn.query(`SELECT 1 FROM ${backquote(db)}.${backquote(table)} LIMIT 1;`, 'table.exists')
       return true
