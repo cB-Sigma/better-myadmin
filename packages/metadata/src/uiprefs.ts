@@ -1,4 +1,4 @@
-import { mbStrlen } from '@bettermyadmin/mysql-types'
+import { Parser, SelectStatement } from '@bettermyadmin/sql-lexer'
 import type { UiPrefsBackend } from './driver.ts'
 import { phpJsonDecode, phpJsonEncode } from './php.ts'
 
@@ -7,10 +7,37 @@ export type UiProperty = 'sorted_col' | 'col_order' | 'col_visib'
 
 /**
  * `table_uiprefs.prefs`: `{"sorted_col": "`id` DESC", "col_order": [..], "col_visib": [..],
- * "CREATE_TIME": "..."}` in insertion order (CREATE_TIME is the table's creation time when
+ * "CREATE_TIME": "..."}`, always in that key order (CREATE_TIME is the table's creation time when
  * col_order / col_visib were saved; a later ALTER invalidates them).
  */
 export type UiPrefs = Record<string, unknown>
+
+/**
+ * The stored preferences as phpMyAdmin reads them since a2598a8d52: a non-string `sorted_col` /
+ * `CREATE_TIME` and a column list that is not a list of scalars are dropped, list items become
+ * ints, unknown keys go, and the keys come out in the fixed order of `toArray()`.
+ * pma: src/Table/UiPreferences.php::fromArray / toArray
+ */
+export function normalizeUiPrefs(data: unknown): UiPrefs {
+  if (data === null || typeof data !== 'object' || Array.isArray(data)) return {}
+  const d = data as Record<string, unknown>
+  const str = (v: unknown) => (typeof v === 'string' ? v : null)
+  const ints = (v: unknown): number[] | null => {
+    if (!Array.isArray(v)) return null
+    const scalar = (x: unknown) => typeof x === 'string' || typeof x === 'number' || typeof x === 'boolean'
+    return v.every(scalar) ? v.map(phpIntval) : null
+  }
+  const out: UiPrefs = {}
+  const sorted = str(d.sorted_col)
+  const order = ints(d.col_order)
+  const visib = ints(d.col_visib)
+  const created = str(d.CREATE_TIME)
+  if (sorted !== null) out.sorted_col = sorted
+  if (order !== null) out.col_order = order
+  if (visib !== null) out.col_visib = visib
+  if (created !== null) out.CREATE_TIME = created
+  return out
+}
 
 export interface UiPrefsMessage {
   type: 'error'
@@ -27,7 +54,7 @@ export interface UiPrefsTableInfo {
   isView(): Promise<boolean>
   /** Table::getStatusInfo('CREATE_TIME') — information_schema.TABLES.CREATE_TIME text or null */
   createTime(): Promise<string | null>
-  /** Table::getColumns(false) — column names */
+  /** Table::getColumns(false, false) — the bare column names */
   columns(): Promise<string[]>
 }
 
@@ -77,7 +104,7 @@ export class TableUiPrefs {
       p = await this.#fromDb()
       this.sessionSlot.set(p)
     }
-    this.#prefs = p
+    this.#prefs = normalizeUiPrefs(p)
   }
 
   async #ensure(): Promise<void> {
@@ -89,11 +116,11 @@ export class TableUiPrefs {
     if (this.backend === null) return {}
     const raw = await this.backend.read(this.username, this.db, this.table)
     if (raw === null) return {}
-    const v = phpJsonDecode(raw)
-    return v !== null && typeof v === 'object' && !Array.isArray(v) ? (v as UiPrefs) : {}
+    return normalizeUiPrefs(phpJsonDecode(raw))
   }
 
   async #save(): Promise<true | UiPrefsMessage> {
+    this.#prefs = normalizeUiPrefs(this.#prefs)
     this.sessionSlot.set(this.#prefs)
     if (this.backend === null) return true
     const r = await this.backend.write(
@@ -126,13 +153,7 @@ export class TableUiPrefs {
     if (property === 'sorted_col') {
       const v = this.#prefs.sorted_col
       if (v === undefined || v === null) return false
-      if (!discardRememberedSort) {
-        // check if the column name exists in this table (the first word, backquotes removed)
-        const colname = String(v).split(' ')[0]?.replaceAll('`', '') ?? ''
-        for (const each of await this.info.columns()) {
-          if (endsWithAt(each, colname)) return String(v)
-        }
-      }
+      if (!discardRememberedSort && (await this.#sortedColumnExists(String(v)))) return String(v)
       // remove the property, since it no longer exists in database
       if (!readOnly) await this.removeUiProp(property)
       return false
@@ -141,13 +162,32 @@ export class TableUiPrefs {
       return false
     }
     // check if the table has not been modified
-    if ((await this.info.createTime()) === this.#prefs.CREATE_TIME) {
-      const arr = this.#prefs[property]
-      return (Array.isArray(arr) ? arr : Object.values(arr as object)).map((x) => phpIntval(x))
+    if ((await this.info.createTime()) === (this.#prefs.CREATE_TIME ?? null)) {
+      return this.#prefs[property] as number[]
     }
     // remove the property, since the table has been modified
     if (!readOnly) await this.removeUiProp(property)
     return false
+  }
+
+  /**
+   * Every ORDER BY expression names a column of this table, unqualified or qualified by the table.
+   * pma: Table::sortedColumnExists (6112f42f2f)
+   */
+  async #sortedColumnExists(sortedColumn: string): Promise<boolean> {
+    const statement = new Parser(`SELECT * FROM t ORDER BY ${sortedColumn}`).statements[0]
+    if (!(statement instanceof SelectStatement) || statement.order === null || statement.order.length === 0) {
+      return false
+    }
+    const columns = await this.info.columns()
+    return statement.order.every(
+      (o) =>
+        o.expr !== null &&
+        o.expr.column !== null &&
+        columns.includes(o.expr.column) &&
+        (o.expr.table === null || o.expr.table === this.table) &&
+        o.expr.database === null,
+    )
   }
 
   /** pma: Table::setUiProp */
@@ -183,16 +223,6 @@ export class TableUiPrefs {
     }
     return true
   }
-}
-
-/** `substr_compare($each, $colname, mb_strlen($each) - mb_strlen($colname)) === 0` */
-function endsWithAt(each: string, colname: string): boolean {
-  const offset = mbStrlen(each) - mbStrlen(colname)
-  if (offset < 0) return false
-  // PHP compares bytes from a code-point offset: the same as endsWith for ASCII names
-  const bytes = Buffer.from(each, 'utf8')
-  const start = Buffer.byteLength([...each].slice(0, offset).join(''), 'utf8')
-  return bytes.subarray(start).equals(Buffer.from(colname, 'utf8'))
 }
 
 /** PHP intval() for decoded JSON values. */

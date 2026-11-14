@@ -249,7 +249,7 @@ describe('with a configuration storage and a control user', () => {
     })
     expect(r.json).toEqual({ success: true, message: null })
     expect(await rows(`SELECT prefs FROM ${PMADB}.pma__table_uiprefs WHERE table_name = 't'`)).toEqual([
-      { prefs: `{"CREATE_TIME":"${createTime}","col_order":[1,0],"col_visib":[1,0]}` },
+      { prefs: `{"col_order":[1,0],"col_visib":[1,0],"CREATE_TIME":"${createTime}"}` },
     ])
     r = await t.req('GET', `/api/servers/1/databases/${DATA}/tables/t/uiprefs`)
     expect(r.json).toMatchObject({ sorted_col: false, col_order: [1, 0], col_visib: [1, 0] })

@@ -208,8 +208,8 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 |---|---|---|---|---|
 | ✅ | `GET, POST /database/export` | `Database/ExportController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:52)<br>UI /s/:server/db/:db/export (apps/web/src/routes/s/$server/db/$db/export.tsx) |  |
 | ✅ | `GET, POST /database/import` | `Database/ImportController` | API GET /api/servers/:s/import/page (apps/server/src/routes/import.ts:61)<br>UI /s/:server/db/:db/import (apps/web/src/routes/s/$server/db/$db/import.tsx) |  |
-| 🔀 | `GET, POST /export` | `Export/ExportController` | API POST /api/servers/:s/export (apps/server/src/routes/export.ts:46)<br>API GET /api/servers/:s/export/:id} (apps/server/src/routes/export.ts:130) | X10 — streaming (prepare + one-shot download) |
-| 🔀 | `GET /export/check-time-out` | `Export/CheckTimeOutController` | API GET /api/servers/:s/export/check-time-out (apps/server/src/routes/export.ts:172) | X10 — streaming |
+| 🔀 | `GET, POST /export` | `Export/ExportController` | API POST /api/servers/:s/export (apps/server/src/routes/export.ts:46)<br>API GET /api/servers/:s/export/:id} (apps/server/src/routes/export.ts:140) | X10 — streaming (prepare + one-shot download) |
+| 🔀 | `GET /export/check-time-out` | `Export/CheckTimeOutController` | API GET /api/servers/:s/export/check-time-out (apps/server/src/routes/export.ts:182) | X10 — streaming |
 | ✅ | `POST /export/tables` | `Export/TablesController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:52)<br>UI /s/:server/db/:db/export (apps/web/src/routes/s/$server/db/$db/export.tsx) | selected_tbl[] in the search params |
 | ✅ | `POST /export/template/create` | `Export/Template/CreateController` | API POST /api/servers/:s/export/templates (apps/server/src/export/page.ts:307) |  |
 | ✅ | `POST /export/template/delete` | `Export/Template/DeleteController` | API POST /api/servers/:s/export/templates/:id/delete (apps/server/src/export/page.ts:346) |  |

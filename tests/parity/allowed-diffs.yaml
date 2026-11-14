@@ -89,6 +89,9 @@
   pattern: "^SELECT 1 FROM `par_db`\\.`[^`]+` LIMIT 1$"
   why: DbTableExists::hasTable for a table-scope request; BetterMyAdmin validates scope lazily.
 - tool: pma
+  pattern: "^SHOW TABLES FROM `par_db` LIKE '[^']+';?$"
+  why: DbTableExists::hasTable asks SHOW TABLES first since upstream 3e46bcca8a, for a table-scope request; BetterMyAdmin validates scope lazily.
+- tool: pma
   pattern: "^SELECT `CATALOG_NAME` FROM `information_schema`\\.`SCHEMATA` WHERE `SCHEMA_NAME` = "
   why: phpMyAdmin probes the configuration storage database while rendering; pmadb discovery is cached per session.
 - tool: bma
@@ -115,6 +118,9 @@
 - tool: bma
   pattern: "^SELECT 1 FROM `par_db`\\.`[^`]+` LIMIT 1;?$"
   why: DbTableExists::hasTable before RecentTableHandling adds the table (phpMyAdmin checks the same table while rendering, allowed for pma above).
+- tool: bma
+  pattern: "^SHOW TABLES FROM `par_db` LIKE '[^']+';?$"
+  why: The SHOW TABLES half of the same DbTableExists::hasTable check (upstream 3e46bcca8a; allowed for pma above).
 - tool: bma
   pattern: "^SHOW TABLES FROM `par_db`$"
   why: ZeroConf configuration-storage discovery in the current database (Relation::fixPmaTables) when the user cannot use the `phpmyadmin` storage; phpMyAdmin runs it on every request (allowed for pma above), BetterMyAdmin once per session.

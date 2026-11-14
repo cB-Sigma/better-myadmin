@@ -161,7 +161,8 @@ export interface PreparedExport {
   postedAliases: Aliases | null
   /** the file name template when "Use this for future exports" is ticked */
   rememberTemplate: string | null
-  run(sink: OutputSink): Promise<void>
+  /** Resolves to the ExportException's message when a plugin failed (Current::$message ??=), else null. */
+  run(sink: OutputSink): Promise<string | null>
 }
 
 /**
@@ -331,7 +332,7 @@ export async function prepareExport(env: ExportEnvironment, params: Params): Pro
     throw new ExportRequestError(tr.gettext('No tables found in database.'), 'no_tables')
   }
 
-  const run = async (sink: OutputSink): Promise<void> => {
+  const run = async (sink: OutputSink): Promise<string | null> => {
     // the sink is known now
     const handler = new Output(sink, {
       asFile,
@@ -343,6 +344,7 @@ export async function prepareExport(env: ExportEnvironment, params: Params): Pro
     })
     ;(ctx as { out: OutputHandler }).out = handler
     const walker = new ExportWalker(ctx, handler, maxSize)
+    let failure: string | null = null
     try {
       // Re - initialize
       handler.clearBuffer()
@@ -400,8 +402,11 @@ export async function prepareExport(env: ExportEnvironment, params: Params): Pro
       await plugin.exportFooter()
     } catch (e) {
       if (!(e instanceof ExportError)) throw e
+      // pma a9e2976019: the failure is reported instead of ignored
+      failure = e.message
     }
     await handler.finish(separateFiles !== '', filename, now)
+    return failure
   }
 
   return {

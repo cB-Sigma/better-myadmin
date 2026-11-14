@@ -22,6 +22,12 @@ $names = [
     'utf8mb4_ja_0900_as_cs_ks', 'utf8mb4_0900_bin', 'utf16_unicode_520_nopad_ci', 'armscii8_general_ci',
     'koi8u_general_ci', 'utf8mb4_la_0900_ai_ci', 'utf8mb4_zh_0900_as_cs', 'latin1_general_w2', 'latin1_general_l2',
     '', 'utf8mb4', 'utf8mb4_', 'x_y_z_ci',
+    // MariaDB puts the language after the variant (pma 31959fa9e7)
+    'utf8mb4_uca1400_as_cs', 'utf8mb4_uca1400_nopad_ai_ci', 'utf8mb4_uca1400_swedish_ai_ci',
+    'utf8mb4_uca1400_swedish_nopad_as_cs', 'utf8mb4_uca1400_german2_ai_ci', 'utf8mb4_uca1400_spanish2_ai_ci',
+    // MySQL 8 languages and scripts (pma 060fd18bf6)
+    'utf8mb4_cs_0900_ai_ci', 'utf8mb4_cs_0900_as_cs', 'utf8mb4_bs_0900_ai_ci', 'utf8mb4_gl_0900_as_cs',
+    'utf8mb4_mn_cyrl_0900_ai_ci', 'utf8mb4_nb_0900_ai_ci', 'utf8mb4_nn_0900_as_cs', 'utf8mb4_sr_latn_0900_ai_ci',
 ];
 $m = $GLOBALS['bma_mysqli'];
 if ($m instanceof mysqli) {

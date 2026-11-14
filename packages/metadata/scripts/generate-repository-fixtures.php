@@ -237,9 +237,18 @@ foreach ($uiOps as [$t, $action, $prop, $value, $ct]) {
     $record('uiprefs', $action, [$db, $t, $prop, $value, $ct], static function () use ($dbi, $db, $t, $action, $prop, $value, $ct) {
         $table = $dbi->getTable($db, $t);
         $p = UiProperty::from($prop);
+        // the typed accessors of a2598a8d52 (getUiProp / setUiProp are gone)
         $r = match ($action) {
-            'set' => $table->setUiProp($p, $value, $ct),
-            'get' => $table->getUiProp($p),
+            'set' => match ($p) {
+                UiProperty::SortedColumn => $table->setSortedColumn($value),
+                UiProperty::ColumnOrder => $table->setColumnOrder($value, $ct),
+                UiProperty::ColumnVisibility => $table->setColumnVisibility($value, $ct),
+            },
+            'get' => match ($p) {
+                UiProperty::SortedColumn => $table->getSortedColumn() ?? false,
+                UiProperty::ColumnOrder => $table->getColumnOrder() ?? false,
+                UiProperty::ColumnVisibility => $table->getColumnVisibility() ?? false,
+            },
             'remove' => $table->removeUiProp($p),
         };
 
@@ -281,7 +290,7 @@ foreach (
 $record('userprefs', 'load', [], static fn () => array_diff_key($prefs->load(), ['mtime' => 1]));
 
 // --- navigation hiding ---------------------------------------------------------------------
-$nav = new Navigation(new Template($config), $relation, $dbi, $config);
+$nav = new Navigation(new Template($config), $relation, $dbi, $config, new \PhpMyAdmin\Theme\ThemeManager());
 $hidden = (new ReflectionMethod(Navigation::class, 'getHiddenItems'));
 $ncols = 'username, item_name, item_type, db_name, table_name';
 $record('navigation', 'hide', ['t', 'table', $db], static fn () => $nav->hideNavigationItem('t', 'table', $db), 'pma__navigationhiding', $ncols, 'item_name');

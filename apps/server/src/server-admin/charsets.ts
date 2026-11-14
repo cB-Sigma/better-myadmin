@@ -65,12 +65,12 @@ async function readCollations(ctx: AdminCtx): Promise<Map<string, Collation[]>> 
   let sql: string
   if (ctx.isMariaDb && ctx.versionInt >= 101000) {
     sql =
-      'SELECT `collapp`.`FULL_COLLATION_NAME` AS `Collation`, `collapp`.`CHARACTER_SET_NAME` AS `Charset`, `collapp`.`ID` AS `Id`, `collapp`.`IS_DEFAULT` AS `Default`, `coll`.`IS_COMPILED` AS `Compiled`, `coll`.`SORTLEN` AS `Sortlen` FROM `information_schema`.`COLLATION_CHARACTER_SET_APPLICABILITY` `collapp` LEFT JOIN `information_schema`.`COLLATIONS` `coll` ON `collapp`.`COLLATION_NAME`=`coll`.`COLLATION_NAME`'
+      'SELECT `FULL_COLLATION_NAME` AS `Collation`, `CHARACTER_SET_NAME` AS `Charset`, `IS_DEFAULT` AS `Default` FROM `information_schema`.`COLLATION_CHARACTER_SET_APPLICABILITY`'
   } else if (ctx.server.DisableIS) {
     sql = 'SHOW COLLATION'
   } else {
     sql =
-      'SELECT `COLLATION_NAME` AS `Collation`, `CHARACTER_SET_NAME` AS `Charset`, `ID` AS `Id`, `IS_DEFAULT` AS `Default`, `IS_COMPILED` AS `Compiled`, `SORTLEN` AS `Sortlen` FROM `information_schema`.`COLLATIONS`'
+      'SELECT `COLLATION_NAME` AS `Collation`, `CHARACTER_SET_NAME` AS `Charset`, `IS_DEFAULT` AS `Default` FROM `information_schema`.`COLLATIONS`'
   }
   const rows = await ctx.conn.rows(sql, 'charsets.collations')
   const byCharset = new Map<string, Map<string, Collation>>()

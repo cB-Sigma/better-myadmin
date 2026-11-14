@@ -652,8 +652,8 @@ export async function buildGrid(
     const o = await ui.getUiProp('col_order')
     if (Array.isArray(o)) {
       colOrder = o
-      if (o.some((v) => v >= fields.length)) await ui.removeUiProp('col_order')
-      if (o.length !== fields.length) {
+      // Results::isValidColumnOrder (pma aee2cbdee1): one entry per field, each a field index
+      if (o.length !== fields.length || o.some((v) => v < 0 || v >= fields.length)) {
         await ui.removeUiProp('col_order')
         colOrder = null
       }

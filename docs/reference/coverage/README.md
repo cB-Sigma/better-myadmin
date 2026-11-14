@@ -2,14 +2,14 @@
 
 # Parity coverage
 
-Mechanical inventories of phpMyAdmin `f2beb4ce` ([reference-commit.txt](../reference-commit.txt)) and how much of each BetterMyAdmin covers. Covered = implemented + exception + n/a. See [Testing and parity](../../architecture/11-testing-and-parity-strategy.md#mechanical-inventories-and-the-parity-gate) for how the numbers are computed and gated.
+Mechanical inventories of phpMyAdmin `f4aeb780` ([reference-commit.txt](../reference-commit.txt)) and how much of each BetterMyAdmin covers. Covered = implemented + exception + n/a. See [Testing and parity](../../architecture/11-testing-and-parity-strategy.md#mechanical-inventories-and-the-parity-gate) for how the numbers are computed and gated.
 
 | Inventory | Total | implemented | exception | n/a | planned | untested | failing | missing | broken | Covered | % |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | Routes | 200 | 186 | 13 | 1 | 0 | 0 | 0 | 0 | 0 | 200 | 100.0% |
 | Template controls | 1102 | 1093 | 3 | 6 | 0 | 0 | 0 | 0 | 0 | 1102 | 100.0% |
 | Config directives | 449 | 438 | 2 | 9 | 0 | 0 | 0 | 0 | 0 | 449 | 100.0% |
-| Messages (msgids) | 3436 | 3288 | 28 | 119 | 1 | 0 | 0 | 0 | 0 | 3435 | 100.0% |
+| Messages (msgids) | 3447 | 3296 | 28 | 122 | 1 | 0 | 0 | 0 | 0 | 3446 | 100.0% |
 | JS behaviours | 964 | 951 | 0 | 13 | 0 | 0 | 0 | 0 | 0 | 964 | 100.0% |
 | Checklist items | 707 | 702 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 707 | 100.0% |
 
@@ -21,17 +21,17 @@ Covered / total per inventory (directives are attributed to the feature doc that
 
 | Area | Milestone | Routes | Template controls | Config directives | Messages (msgids) | JS behaviours | Checklist items |
 |---|---|---|---|---|---|---|---|
-| [01 shell navigation auth](../../features/01-shell-navigation-auth.md) | M1 | 23/23 (100.0%) | 98/98 (100.0%) | 109/109 (100.0%) | 405/405 (100.0%) | 237/237 (100.0%) | 77/77 (100.0%) |
+| [01 shell navigation auth](../../features/01-shell-navigation-auth.md) | M1 | 23/23 (100.0%) | 98/98 (100.0%) | 109/109 (100.0%) | 407/407 (100.0%) | 237/237 (100.0%) | 77/77 (100.0%) |
 | [02 browse results grid](../../features/02-browse-results-grid.md) | M1 | 8/8 (100.0%) | 32/32 (100.0%) | 32/32 (100.0%) | 56/56 (100.0%) | 69/69 (100.0%) | 118/118 (100.0%) |
 | [03 insert edit transformations](../../features/03-insert-edit-transformations.md) | M2 | 7/7 (100.0%) | 28/28 (100.0%) | 16/16 (100.0%) | 79/79 (100.0%) | 22/22 (100.0%) | 59/59 (100.0%) |
-| [04 table level](../../features/04-table-level.md) | M2 | 64/64 (100.0%) | 306/306 (100.0%) | 5/5 (100.0%) | 547/547 (100.0%) | 178/178 (100.0%) | 100/100 (100.0%) |
+| [04 table level](../../features/04-table-level.md) | M2 | 64/64 (100.0%) | 306/306 (100.0%) | 5/5 (100.0%) | 548/548 (100.0%) | 178/178 (100.0%) | 100/100 (100.0%) |
 | [05 database level](../../features/05-database-level.md) | M3 | 33/33 (100.0%) | 240/240 (100.0%) | 31/31 (100.0%) | 305/305 (100.0%) | 180/180 (100.0%) | 112/112 (100.0%) |
-| [06 server level](../../features/06-server-level.md) | M3 | 31/31 (100.0%) | 243/243 (100.0%) | 17/17 (100.0%) | 917/917 (100.0%) | 131/131 (100.0%) | 49/49 (100.0%) |
+| [06 server level](../../features/06-server-level.md) | M3 | 31/31 (100.0%) | 243/243 (100.0%) | 17/17 (100.0%) | 924/924 (100.0%) | 131/131 (100.0%) | 49/49 (100.0%) |
 | [07 export import](../../features/07-export-import.md) | M4 | 16/16 (100.0%) | 63/63 (100.0%) | 138/138 (100.0%) | 293/293 (100.0%) | 66/66 (100.0%) | 67/67 (100.0%) |
 | [08 settings preferences pmadb](../../features/08-settings-preferences-pmadb.md) | M4 | 9/9 (100.0%) | 39/39 (100.0%) | 62/62 (100.0%) | 665/666 (99.8%) | 17/17 (100.0%) | 62/62 (100.0%) |
 | [09 sql editor query pipeline](../../features/09-sql-editor-query-pipeline.md) | M1 | 7/7 (100.0%) | 28/28 (100.0%) | 11/11 (100.0%) | 46/46 (100.0%) | 47/47 (100.0%) | 63/63 (100.0%) |
 | [16 agent api](../../features/16-agent-api.md) | — | — | — | — | — | — | — |
-| other | M5 | 2/2 (100.0%) | 25/25 (100.0%) | 28/28 (100.0%) | 122/122 (100.0%) | 17/17 (100.0%) | — |
+| other | M5 | 2/2 (100.0%) | 25/25 (100.0%) | 28/28 (100.0%) | 123/123 (100.0%) | 17/17 (100.0%) | — |
 
 ## Top 30 missing
 
@@ -69,7 +69,6 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `Close %s`
 - `CodeGen`
 - `Collation \| WITH `
-- `Collation variant \| WITH `
 - `Command palette`
 - `Config`
 - `Configuration saved to file %s`
@@ -244,7 +243,7 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 | [routes.json](../../../tools/parity/inventory/routes.json) | 200 | src/Routing/Routes.php::collect (FastRoute collector, executed) + Routing::callSetupController |
 | [controls.json](../../../tools/parity/inventory/controls.json) | 1102 | resources/templates/**/*.twig (HTML controls, links, link_or_button) + PHP helpers (tools/parity/php/helpers.php) |
 | [directives.json](../../../tools/parity/inventory/directives.json) | 471 | packages/config schema leaves, cross-checked with phpMyAdmin Settings::asArray() (packages/config/scripts/dump-pma-defaults.php) |
-| [messages.json](../../../tools/parity/inventory/messages.json) | 3436 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
+| [messages.json](../../../tools/parity/inventory/messages.json) | 3447 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 964 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 297 API endpoints, 89 SPA routes (3 placeholders/catch-alls), 2045 control claims, 2185 tests.
+Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 297 API endpoints, 89 SPA routes (3 placeholders/catch-alls), 2045 control claims, 2187 tests.

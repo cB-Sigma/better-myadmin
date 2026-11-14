@@ -88,8 +88,9 @@ exportRoutes.post('/', async (c) => {
         return c.json(fail('The web server does not have permission to save the file %s.'))
       }
       let complete = true
+      let failure: string | null = null
       try {
-        await prepared.run({
+        failure = await prepared.run({
           write(chunk) {
             if (complete && writeSync(fd, chunk) !== chunk.length) complete = false
           },
@@ -98,6 +99,15 @@ exportRoutes.post('/', async (c) => {
         complete = false
       } finally {
         closeSync(fd)
+      }
+      // ExportController: a plugin's failure (Current::$message) is reported instead of the save
+      if (failure !== null) {
+        return c.json({
+          filename: prepared.filename,
+          mimeType: prepared.mimeType,
+          asFile: true,
+          message: { type: 'error', text: failure },
+        } satisfies ExportResponse)
       }
       if (!complete) return c.json(fail('Insufficient space to save the file %s.'))
       return c.json({

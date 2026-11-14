@@ -2,6 +2,29 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.30 (2026-11-14)
+
+### Fixes
+
+- Collation names are described correctly for MariaDB's `uca1400` collations with a language
+  (`utf8mb4_uca1400_swedish_ai_ci` is "Swedish (UCA 14.0.0), …", not "Unicode") and for MySQL 8's
+  Bosnian, Galician, Mongolian, Norwegian, Serbian and Czech collations, scripts included
+  ("Serbian (Latin) (UCA 9.0.0), …").
+- Editing a trigger or an event that was dropped or renamed meanwhile says "Trigger not found." /
+  "Event not found." and changes nothing.
+- Export with **Save on server**: when the dump fails (for example a crashed table), the error is
+  shown instead of "Dump has been saved to file".
+- A remembered sort order is kept only while every column it sorts on still exists in the table;
+  a saved column order that no longer fits the table is discarded instead of being applied.
+- A view whose definition is broken is still recognised as an existing table when opened.
+
+### Upstream
+
+- Synced to phpMyAdmin f4aeb7801c (41 commits): the collation description rewrite, trigger and
+  event editor fixes, export failure reporting, the table UI preferences value object, Dutch,
+  Turkish, Ukrainian, Czech, Brazilian Portuguese, Spanish and French translations, and dependency
+  updates (no sql-parser change). Details per commit in `tools/upstream/ledger.json`.
+
 ## 1.0.29 (2026-11-11)
 
 ### Fixes

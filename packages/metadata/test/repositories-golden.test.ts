@@ -200,7 +200,7 @@ async function replayGroup(group: string) {
         const ui = m.uiPrefs(DB, table, {
           isView: async () => info.view,
           createTime: async () => (info.view ? null : fx.createTime),
-          columns: async () => info.cols.map((c) => `${DB}.${table}.${c.field}`),
+          columns: async () => info.cols.map((c) => c.field),
         })
         const r =
           o.op === 'set'

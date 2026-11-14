@@ -37,6 +37,11 @@ const diff = (_h: Harness, pmaLog: LogEntry[], bmaLog: LogEntry[]) =>
         pattern: `^SELECT 1 FROM \`${DB}\`\\.\`[^\`]+\` LIMIT 1$`,
         why: 'DbTableExists::hasTable of the request middleware (db + table parameters)',
       },
+      {
+        tool: 'pma',
+        pattern: `^SHOW TABLES FROM \`${DB}\` LIKE '[^']+';?$`,
+        why: 'The SHOW TABLES half of the same DbTableExists::hasTable (upstream 3e46bcca8a)',
+      },
     ],
     exclude: ['^SHOW TABLES FROM `[^`]+`$'],
   })

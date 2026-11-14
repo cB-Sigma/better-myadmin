@@ -8,7 +8,7 @@ export function selectDatabase(conn: Conn, db: string): Promise<boolean> {
   return conn.selectDb(db, 'favorite.select-db')
 }
 
-/** Table::isView / getStatusInfo('CREATE_TIME') / getColumns(false) on the user link. */
+/** Table::isView / getStatusInfo('CREATE_TIME') / getColumns(false, false) on the user link. */
 export function tableInfo(m: MetaRequest, db: string, table: string): UiPrefsTableInfo {
   let status: Promise<{ view: boolean; createTime: string | null }> | null = null
   const load = () => {
@@ -36,7 +36,7 @@ export function tableInfo(m: MetaRequest, db: string, table: string): UiPrefsTab
       const rows = await conn
         .rows(`SHOW COLUMNS FROM ${backquote(db)}.${backquote(table)}`, 'table.columns')
         .catch(() => [])
-      return rows.map((r) => `${db}.${table}.${r.Field ?? ''}`)
+      return rows.map((r) => r.Field ?? '')
     },
   }
 }

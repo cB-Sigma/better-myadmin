@@ -383,6 +383,21 @@ describe.skipIf(!pmaReachable)('parity: events', () => {
     ],
     ['validation errors', { add_item: '1', editor_process_add: 'true', item_type: 'RECURRING' }],
     [
+      // 3b60372855: the original is gone, nothing is dropped or created
+      'edit of an event that no longer exists: "Event not found."',
+      {
+        edit_item: '1',
+        editor_process_edit: 'true',
+        item_original_name: 'no_such_event',
+        item_name: 'e9',
+        item_status: 'ENABLED',
+        item_type: 'RECURRING',
+        item_interval_value: '1',
+        item_interval_field: 'DAY',
+        item_definition: 'DELETE FROM log',
+      },
+    ],
+    [
       // 05917fbe4e: a non-empty interval value is accepted, 0 included (the server refuses it)
       'interval value 0 reaches the server',
       {
@@ -476,6 +491,21 @@ describe.skipIf(!pmaReachable)('parity: triggers', () => {
       't',
     ],
     ['validation errors', { add_item: '1', editor_process_add: 'true', item_table: 'nope' }, ''],
+    [
+      // 3b60372855: the original is gone, nothing is dropped or created
+      'edit of a trigger that no longer exists: "Trigger not found."',
+      {
+        edit_item: '1',
+        editor_process_edit: 'true',
+        item_original_name: 'no_such_trigger',
+        item_name: 'tg9',
+        item_table: 't',
+        item_timing: 'BEFORE',
+        item_event: 'DELETE',
+        item_definition: 'SET @x = 1',
+      },
+      '',
+    ],
   ]
   for (const [name, o, table] of CASES) {
     it(name, async () => {

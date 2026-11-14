@@ -159,7 +159,7 @@ describe('security checklist', () => {
   it('[p01-cf8d93] signed SQL in URLs; URLQueryEncryption key warnings (X47)', async () => {
     const r = await home({ URLQueryEncryption: true, URLQueryEncryptionSecretKey: 'short' })
     expect(r.warnings.map((w) => w.message)).toContain(
-      'The configuration file needs a valid key for query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc].',
+      'The configuration file needs a valid key for URL query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc].',
     )
     const unsigned = await t.req('POST', '/api/servers/1/query', { sql: 'SELECT 1', sig: 'forged' })
     expect(unsigned.status).toBe(400)

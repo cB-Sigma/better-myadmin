@@ -1,4 +1,4 @@
-# Imported from phpMyAdmin f2beb4ceee0cc5fbfee145ee4d88db8acdb01784 resources/po/ug.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/ug.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
 msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-11-03 16:06+0000\nLast-Translator: Maurício Meneghini Fauth <mauriciofauth@users.noreply.hosted.weblate.org>\nLanguage-Team: Uyghur <https://hosted.weblate.org/projects/phpmyadmin/master/ug/>\nLanguage: ug\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.11.1.dev0\n"

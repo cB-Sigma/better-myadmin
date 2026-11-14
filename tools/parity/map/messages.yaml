@@ -68,6 +68,12 @@ data:
     - paths: [setup.*.name]
       at: apps/server/src/setup/service.ts::setupPages
 msgids:
+  'The configuration file needs a valid key for query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc].':
+    n/a: 'stale catalogue entry: upstream 324551a104 says "URL query encryption" (apps/server/src/shell/home.ts); the po files keep the old wording until their next refresh'
+  'The query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc].':
+    n/a: 'stale catalogue entry: upstream 324551a104 says "URL query encryption" (apps/server/src/shell/home.ts); the po files keep the old wording until their next refresh'
+  'Error in processing request: No trigger with name %1$s found in database %2$s.':
+    n/a: 'stale catalogue entry: upstream c0b799f029 builds the trigger export error from "Error in processing request:" and "No trigger with name %1$s found in database %2$s.", as the editor does; the po files keep it until their next refresh'
   Loading:
     n/a: 'the placeholder title in modal markup (export, designer, preview SQL, index, insert, relation): phpMyAdmin JS sets the real title, or strLoading "Loading…", before showing it; BetterMyAdmin opens its dialogs with their title'
   Could not load export plugins, please check your installation!:

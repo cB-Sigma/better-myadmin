@@ -59,21 +59,23 @@ const LEVEL0: Record<string, string> = {
   swe7: NC_('Collation', 'Swedish'),
   tis620: NC_('Collation', 'Thai'),
 }
+// pma: Collation::UNICODE_CHARSETS
 const UNICODE_CHARSETS = new Set([
-  'utf8mb4',
   'ucs2',
   'utf8',
   'utf8mb3',
+  'utf8mb4',
   'utf16',
   'utf16le',
   'utf16be',
   'utf32',
-  'gb18030',
 ])
 
-/** level 1 tokens → name; `null`: the name is left as is ("general") */
-const LEVEL1: Record<string, string | null> = {
+/** getLanguageName: token → name; `null`: the name found so far is kept ("general") */
+const LANGUAGES: Record<string, string | null> = {
   general: null,
+  bosnian: NC_('Collation', 'Bosnian'), // i18n-new: phpMyAdmin 060fd18bf6, its catalogue not refreshed yet
+  bs: NC_('Collation', 'Bosnian'), // i18n-new: phpMyAdmin 060fd18bf6, its catalogue not refreshed yet
   bulgarian: NC_('Collation', 'Bulgarian'),
   bg: NC_('Collation', 'Bulgarian'),
   croatian: NC_('Collation', 'Croatian'),
@@ -88,6 +90,8 @@ const LEVEL1: Record<string, string | null> = {
   eo: NC_('Collation', 'Esperanto'),
   estonian: NC_('Collation', 'Estonian'),
   et: NC_('Collation', 'Estonian'),
+  galician: NC_('Collation', 'Galician'), // i18n-new: phpMyAdmin 060fd18bf6, its catalogue not refreshed yet
+  gl: NC_('Collation', 'Galician'), // i18n-new: phpMyAdmin 060fd18bf6, its catalogue not refreshed yet
   german1: NC_('Collation', 'German (dictionary order)'),
   german2: NC_('Collation', 'German (phone book order)'),
   hungarian: NC_('Collation', 'Hungarian'),
@@ -103,8 +107,12 @@ const LEVEL1: Record<string, string | null> = {
   lt: NC_('Collation', 'Lithuanian'),
   korean: NC_('Collation', 'Korean'),
   ko: NC_('Collation', 'Korean'),
+  mongolian: NC_('Collation', 'Mongolian'), // i18n-new: phpMyAdmin 060fd18bf6, its catalogue not refreshed yet
+  mn: NC_('Collation', 'Mongolian'), // i18n-new: phpMyAdmin 060fd18bf6, its catalogue not refreshed yet
   myanmar: NC_('Collation', 'Burmese'),
   my: NC_('Collation', 'Burmese'),
+  nb: NC_('Collation', 'Norwegian Bokmål'), // i18n-new: phpMyAdmin 060fd18bf6, its catalogue not refreshed yet
+  nn: NC_('Collation', 'Norwegian Nynorsk'), // i18n-new: phpMyAdmin 060fd18bf6, its catalogue not refreshed yet
   persian: NC_('Collation', 'Persian'),
   polish: NC_('Collation', 'Polish'),
   pl: NC_('Collation', 'Polish'),
@@ -112,6 +120,8 @@ const LEVEL1: Record<string, string | null> = {
   romanian: NC_('Collation', 'Romanian'),
   ro: NC_('Collation', 'Romanian'),
   ru: NC_('Collation', 'Russian'),
+  serbian: NC_('Collation', 'Serbian'), // i18n-new: phpMyAdmin 060fd18bf6, its catalogue not refreshed yet
+  sr: NC_('Collation', 'Serbian'), // i18n-new: phpMyAdmin 060fd18bf6, its catalogue not refreshed yet
   si: NC_('Collation', 'Sinhalese'),
   sinhala: NC_('Collation', 'Sinhalese'),
   slovak: NC_('Collation', 'Slovak'),
@@ -130,6 +140,12 @@ const LEVEL1: Record<string, string | null> = {
   uk: NC_('Collation', 'Ukrainian'),
   vietnamese: NC_('Collation', 'Vietnamese'),
   vi: NC_('Collation', 'Vietnamese'),
+}
+
+/** getScript: the script of the language, e.g. utf8mb4_sr_latn_0900_ai_ci */
+const SCRIPTS: Record<string, string> = {
+  cyrl: NC_('Collation', 'Cyrillic'),
+  latn: NC_('Collation', 'Latin'), // i18n-new: phpMyAdmin 060fd18bf6, its catalogue not refreshed yet
 }
 
 const VARIANTS: Record<string, string> = {
@@ -159,74 +175,64 @@ const SUFFIXES: Record<string, string> = {
  */
 export function collationDescription(collation: string, tr: CollationTranslator = identity): string {
   const c = (s: string) => tr.pgettext('Collation', s)
-  let name = tr.gettext('Unknown')
-  let variant: string | null = null
+  const own = <T>(map: Record<string, T>, key: string): T | undefined =>
+    Object.hasOwn(map, key) ? map[key] : undefined
+  const [charset = '', ...parts] = collation.split('_')
+  // getCharsetName
+  const charsetName = own(LEVEL0, charset)
+  const unknown = charsetName === undefined
+  const unicode = UNICODE_CHARSETS.has(charset)
+  let name = charsetName === undefined ? tr.pgettext('Collation', 'Unknown') : c(charsetName)
+  let variant: string | null = charset === 'utf8mb4' ? 'UCA 4.0.0' : null
   const suffixes: string[] = []
-  let unicode = false
-  let unknown = false
-  let level = 0
-  for (const part of collation.split('_')) {
-    if (level === 0) {
-      level = 1
-      // getNameForLevel0
-      if (part === 'utf8mb4') variant = 'UCA 4.0.0'
-      const n = Object.hasOwn(LEVEL0, part) ? LEVEL0[part] : undefined
-      if (n === undefined) {
-        name = tr.pgettext('Collation', 'Unknown')
-        unknown = true
-      } else {
-        name = c(n)
-        if (UNICODE_CHARSETS.has(part)) unicode = true
-      }
+  let languageFound = false
+  for (const [i, part] of parts.entries()) {
+    // "cs" is Czech right after the charset, e.g. utf8mb4_cs_0900_ai_ci, and case-sensitive elsewhere
+    if (i === 0 && part === 'cs') {
+      name = tr.pgettext('Collation', 'Czech')
+      languageFound = true
       continue
     }
-    if (level === 1) {
-      level = 4
-      // getNameForLevel1
-      let found = true
-      if (part === 'chinese' || part === 'cn' || part === 'zh') {
-        if (unicode) name = tr.pgettext('Collation', 'Chinese')
-      } else if (part === 'german' || part === 'de') {
-        level = 2
-      } else if (part === 'es') {
-        level = 3
-      } else if (part === 'unicode') {
-        if (unknown) name = tr.pgettext('Collation', 'Unicode')
-      } else if (Object.hasOwn(LEVEL1, part)) {
-        const n = LEVEL1[part]
-        if (n !== null && n !== undefined) name = c(n)
-      } else {
-        found = false
-      }
-      if (found) continue
+    const suffix = own(SUFFIXES, part)
+    if (suffix !== undefined) {
+      suffixes.push(tr.pgettext('Collation variant', suffix))
+      continue
     }
-    if (level === 2) {
-      level = 4
-      if (part === 'pb') {
-        name = tr.pgettext('Collation', 'German (phone book order)')
-        continue
-      }
-      name = tr.pgettext('Collation', 'German (dictionary order)')
+    const v = own(VARIANTS, part)
+    if (v !== undefined) {
+      variant = v
+      continue
     }
-    if (level === 3) {
-      level = 4
-      if (part === 'trad') {
-        name = tr.pgettext('Collation', 'Spanish (traditional)')
-        continue
-      }
-      name = tr.pgettext('Collation', 'Spanish (modern)')
+    const script = own(SCRIPTS, part)
+    if (script !== undefined) {
+      name += ` (${c(script)})`
+      continue
     }
-    if (level === 4) {
-      level = 5
-      const v = Object.hasOwn(VARIANTS, part) ? VARIANTS[part] : undefined
-      if (v !== undefined) {
-        variant = v
-        continue
-      }
+    if (languageFound) continue
+    // the token after "de" and "es" can choose the sort order, e.g. utf8mb4_de_pb_0900_ai_ci
+    const next = parts[i + 1] ?? ''
+    let language: string | null
+    if (part === 'german' || part === 'de') {
+      language =
+        next === 'pb'
+          ? tr.pgettext('Collation', 'German (phone book order)')
+          : tr.pgettext('Collation', 'German (dictionary order)')
+    } else if (part === 'es') {
+      language =
+        next === 'trad'
+          ? tr.pgettext('Collation', 'Spanish (traditional)')
+          : tr.pgettext('Collation', 'Spanish (modern)')
+    } else if (part === 'chinese' || part === 'cn' || part === 'zh') {
+      language = unicode ? tr.pgettext('Collation', 'Chinese') : name
+    } else if (part === 'unicode') {
+      language = unknown ? tr.pgettext('Collation', 'Unicode') : name
+    } else {
+      const n = own(LANGUAGES, part)
+      language = n === undefined ? null : n === null ? name : c(n)
     }
-    if (level < 5) continue
-    const s = Object.hasOwn(SUFFIXES, part) ? SUFFIXES[part] : undefined
-    if (s !== undefined) suffixes.push(tr.pgettext('Collation variant', s))
+    if (language === null) continue
+    name = language
+    languageFound = true
   }
   let result = name
   if (variant !== null) result += ` (${variant})`
