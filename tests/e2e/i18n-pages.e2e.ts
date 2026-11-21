@@ -53,7 +53,7 @@ async function openIn(browser: Browser, baseURL: string | undefined, lang: strin
 const CASES = [
   { lang: 'pl', tables: '3 tabel', docs: 'Dokumentacja BetterMyAdmina', dir: 'ltr' },
   { lang: 'ru', tables: '3 таблицы', docs: 'Документация BetterMyAdmin', dir: 'ltr' },
-  { lang: 'de', tables: '3 Tabelle', docs: 'BetterMyAdmin-Dokumentation', dir: 'ltr' },
+  { lang: 'de', tables: '3 Tabellen', docs: 'BetterMyAdmin-Dokumentation', dir: 'ltr' },
   { lang: 'ja', tables: '3 テーブル', docs: 'BetterMyAdminのドキュメント', dir: 'ltr' },
   { lang: 'ar', tables: '3 جداول', docs: 'مستندات وثائقية لـ BetterMyAdmin (بالإنجليزية)', dir: 'rtl' },
 ]
