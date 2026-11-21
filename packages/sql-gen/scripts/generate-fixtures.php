@@ -629,7 +629,7 @@ foreach ([['mariadb', 100903], ['mysql', 50500]] as $server) {
         Current::$table = 'test_table';
         $config = Config::getInstance();
         $relation = new Relation($dbi);
-        $insertEdit = new InsertEdit($dbi, $relation, new Transformations($dbi, $relation), new FileListing(), new Template($config), $config, new \PhpMyAdmin\Tests\Stubs\ResponseRenderer());
+        $insertEdit = new InsertEdit($dbi, $relation, new Transformations($dbi, $relation), new FileListing(), new Template($config), $config, new \PhpMyAdmin\Tests\Stubs\ResponseRenderer(), new \PhpMyAdmin\Utils\IniReader());
         $editField = new EditField($f['columnName'], $f['value'], $f['type'], $f['autoIncrement'], $f['isNull'], $f['wasPreviouslyNull'], $f['function'], $f['salt'], $f['previousValue'], $f['isUploaded']);
 
         $usingKey = $i % 2 === 0;

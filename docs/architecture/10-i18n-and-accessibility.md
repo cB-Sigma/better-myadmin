@@ -34,7 +34,7 @@ phpMyAdmin's `resources/po/` holds the template `phpmyadmin.pot` (3,426 msgids, 
 
 ### Pluralisation and gender
 
-Plural forms are gettext's, evaluated exactly like phpMyAdmin's motranslator does: the `Plural-Forms` expression is stripped to `[n0-9:()?=!<>/%&| ]` and evaluated with symfony/expression-language semantics, and only a *numeric* result selects a form. Expressions that yield a boolean (`plural=n != 1;`, `plural=(n > 1);` — German, French, Spanish, Italian and most other two-form catalogues) therefore always select form 0: phpMyAdmin shows "5 Datensatz betroffen." in German, and so do we (parity over correctness; fix it upstream first). Strings that phpMyAdmin leaves un-pluralised stay un-pluralised.
+Plural forms are gettext's, evaluated exactly like phpMyAdmin's motranslator does: the `Plural-Forms` expression is stripped to `[n0-9:()?=!<>/%&| ]` and evaluated with symfony/expression-language semantics, and a numeric or boolean result is cast to an int that selects the form (motranslator 6.0.2). Expressions that yield a boolean (`plural=n != 1;`, `plural=(n > 1);` — German, French, Spanish, Italian and most other two-form catalogues) therefore pick the plural form for every count but 1 (before motranslator 6.0.2 a boolean selected form 0, so phpMyAdmin and BetterMyAdmin both showed the singular). Strings that phpMyAdmin leaves un-pluralised stay un-pluralised.
 
 ## Accessibility
 

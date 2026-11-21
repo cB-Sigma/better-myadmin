@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/kk.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/kk.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2021-01-22 17:26+0000\nLast-Translator: William Desportes <williamdes@wdes.fr>\nLanguage-Team: Kazakh <https://hosted.weblate.org/projects/phpmyadmin/master/kk/>\nLanguage: kk\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.5-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2021-01-22 17:26+0000\nLast-Translator: William Desportes <williamdes@wdes.fr>\nLanguage-Team: Kazakh <https://hosted.weblate.org/projects/phpmyadmin/master/kk/>\nLanguage: kk\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.5-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Osy sátten bastap Javascript qosýly bolýy qajet!"
@@ -3912,8 +3912,13 @@ msgstr "query_cache_limit máni 1 MiB ornatylǵan"
 msgid "Search:"
 msgstr "Izdeý:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "Belgisiz"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Cheh"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -3930,6 +3935,10 @@ msgstr "Ispan (dástúr)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "Ispan (zamanaýı)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Kırıl"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -3960,12 +3969,12 @@ msgid "binary"
 msgstr "ekilik"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Ekilik"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Unicode"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Ekilik"
 
 msgctxt "Collation"
 msgid "West European"
@@ -4002,10 +4011,6 @@ msgstr "Baltyq"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "Armán"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "Kırıl"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -4048,20 +4053,12 @@ msgid "Thai"
 msgstr "Taı"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "Belgisiz"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "Bolǵar"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "Horvat"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Cheh"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4130,6 +4127,9 @@ msgstr "Sloven"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "Vetnam"
+
+msgid "Unknown"
+msgstr "Belgisiz"
 
 msgid "Icons"
 msgstr "Belgisheler"
@@ -8902,14 +8902,14 @@ msgstr "%2$s ishindegi %1$s nusqasy joıyldy."
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "%1$s nusqasy jasaldy, %2$s úshin qadaǵalaý belsendi."
 
+msgid "Trigger %1$s has been created."
+msgstr "%1$s trıgeri jasaldy."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Joıylǵan trıgerdi qalpyna keltire almadyq."
 
 msgid "Trigger %1$s has been modified."
 msgstr "%1$s trıgeri ózgertildi."
-
-msgid "Trigger %1$s has been created."
-msgstr "%1$s trıgeri jasaldy."
 
 msgid "You must provide a trigger name!"
 msgstr "Trıger ataýyn jetkizýińiz qajet!"

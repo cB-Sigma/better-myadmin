@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/pt_BR.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/pt_BR.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-11-07 17:51+0000\nLast-Translator: Maurício Meneghini Fauth <mauriciofauth@users.noreply.hosted.weblate.org>\nLanguage-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/phpmyadmin/master/pt_BR/>\nLanguage: pt_BR\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 2026.11.2.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-11-07 17:51+0000\nLast-Translator: Maurício Meneghini Fauth <mauriciofauth@users.noreply.hosted.weblate.org>\nLanguage-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/phpmyadmin/master/pt_BR/>\nLanguage: pt_BR\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 2026.11.2.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "O JavaScript deve estar ativo após este ponto!"
@@ -4499,8 +4499,13 @@ msgstr "query_cache_limit está definido como 1 MB"
 msgid "Search:"
 msgstr "Procurar:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "Desconhecido"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Tcheco"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -4517,6 +4522,10 @@ msgstr "Espanhol (tradicional)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "Espanhol (moderno)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Cirílico"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -4551,12 +4560,12 @@ msgid "no-pad"
 msgstr "Diferencia espaços"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Binário"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Unicode"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Binário"
 
 msgctxt "Collation"
 msgid "West European"
@@ -4593,10 +4602,6 @@ msgstr "Báltico"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "Armênio"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "Cirílico"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -4639,20 +4644,12 @@ msgid "Thai"
 msgstr "Tailandês"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "Desconhecido"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "Búlgaro"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "Croata"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Tcheco"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4721,6 +4718,9 @@ msgstr "Esloveno"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "Vietnamita"
+
+msgid "Unknown"
+msgstr "Desconhecido"
 
 msgid "Icons"
 msgstr "Ícones"
@@ -8434,9 +8434,6 @@ msgstr "Editar acionador"
 msgid "No trigger with name %1$s found in database %2$s."
 msgstr "Nenhum acionador com o nome %1$s foi encontrado no banco de dados %2$s."
 
-msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
-msgstr "Erro ao processar requisição: Nenhum acionador com o nome %1$s foi encontrado no banco de dados %2$s."
-
 msgid "You don't have sufficient privileges to be here right now!"
 msgstr "Você não tem direitos suficientes para estar aqui agora!"
 
@@ -10108,14 +10105,14 @@ msgstr "Versão %1$s de %2$s foi excluída."
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "Versão %1$s foi criada, rastreamento para %2$s está ativado(a)."
 
+msgid "Trigger %1$s has been created."
+msgstr "O acionador %1$s foi criado."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Desculpe, mas falhamos em restaurar o acionador removido."
 
 msgid "Trigger %1$s has been modified."
 msgstr "O acionador %1$s foi modificado."
-
-msgid "Trigger %1$s has been created."
-msgstr "O acionador %1$s foi criado."
 
 msgid "You must provide a trigger name!"
 msgstr "Você deve informar o nome do acionador!"

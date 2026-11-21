@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/vi.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/vi.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-09-01 09:51+0000\nLast-Translator: hoanghuy309 <hoanghuy309@gmail.com>\nLanguage-Team: Vietnamese <https://hosted.weblate.org/projects/phpmyadmin/master/vi/>\nLanguage: vi\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.9.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-09-01 09:51+0000\nLast-Translator: hoanghuy309 <hoanghuy309@gmail.com>\nLanguage-Team: Vietnamese <https://hosted.weblate.org/projects/phpmyadmin/master/vi/>\nLanguage: vi\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.9.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript phải được bật qua điểm này!"
@@ -4486,8 +4486,13 @@ msgstr "query_cache_limit được đặt thành 1 MiB"
 msgid "Search:"
 msgstr "Tìm kiếm:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "Không xác định"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Tiếng Séc"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -4534,12 +4539,12 @@ msgid "binary"
 msgstr "Nhị phân"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Nhị phân"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Unicode"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Nhị phân"
 
 msgctxt "Collation"
 msgid "West European"
@@ -4606,16 +4611,8 @@ msgid "Thai"
 msgstr "Tiếng Thái"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "Không xác định"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "Tiếng Bun-ga-ri"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Tiếng Séc"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4648,6 +4645,9 @@ msgstr "Tiếng Ba Lan"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "Tiếng Việt"
+
+msgid "Unknown"
+msgstr "Không xác định"
 
 msgid "Icons"
 msgstr "Biểu tượng"
@@ -7632,9 +7632,6 @@ msgstr "Sửa bẫy"
 msgid "No trigger with name %1$s found in database %2$s."
 msgstr "Không tìm thấy trình kích hoạt nào có tên %1$s trong cơ sở dữ liệu %2$s."
 
-msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
-msgstr "Lỗi khi xử lý yêu cầu: Không tìm thấy trình kích hoạt có tên %1$s trong cơ sở dữ liệu %2$s."
-
 msgid "You don't have sufficient privileges to be here right now!"
 msgstr "Bạn không có đủ đặc quyền cần thiết để có quyền xem trang này!"
 
@@ -8901,14 +8898,14 @@ msgstr "Phiên bản %1$s trên %2$s đã được tạo."
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "Phiên bản %1$s đã được tạo, việc theo dõi %2$s đang hoạt động."
 
+msgid "Trigger %1$s has been created."
+msgstr "Bẫy %1$s đã được tạo ra."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Rất tiếc, chúng tôi gặp lỗi khi phục hồi lại bẫy đã xóa."
 
 msgid "Trigger %1$s has been modified."
 msgstr "Bẫy %1$s đã bị sửa đổi."
-
-msgid "Trigger %1$s has been created."
-msgstr "Bẫy %1$s đã được tạo ra."
 
 msgid "You must provide a trigger name!"
 msgstr "Phải ghi rõ tên bẫy!"

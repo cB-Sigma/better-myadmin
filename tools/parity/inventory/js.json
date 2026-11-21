@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
-    "referenceCommit": "f4aeb7801c2d8a811d13bcffdd8871ec41247a33",
+    "referenceCommit": "291fcadb4293a09b7c3037a07afe7612b020b9e4",
     "source": "resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys",
     "count": 964
   },
@@ -2989,7 +2989,7 @@
       "kind": "event",
       "event": "ajaxError",
       "selector": "document",
-      "line": 29,
+      "line": 28,
       "file": "resources/js/main.ts"
     },
     {
@@ -2999,7 +2999,7 @@
       "kind": "event",
       "event": "change",
       "selector": "<themeColorModeToggle>",
-      "line": 67,
+      "line": 65,
       "file": "resources/js/main.ts"
     },
     {
@@ -3010,7 +3010,7 @@
       "event": "click",
       "selector": "a",
       "delegated": true,
-      "line": 26,
+      "line": 25,
       "file": "resources/js/main.ts"
     },
     {
@@ -3021,7 +3021,7 @@
       "event": "submit",
       "selector": "form",
       "delegated": true,
-      "line": 27,
+      "line": 26,
       "file": "resources/js/main.ts"
     },
     {
@@ -3705,7 +3705,7 @@
       "kind": "ajax",
       "method": "GET",
       "url": "<url>",
-      "line": 334,
+      "line": 331,
       "file": "resources/js/modules/ajax.ts"
     },
     {
@@ -3715,7 +3715,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<url>",
-      "line": 358,
+      "line": 355,
       "file": "resources/js/modules/ajax.ts"
     },
     {
@@ -3726,7 +3726,7 @@
       "event": "change",
       "selector": "<$pageContent> form.lock-page input[type=\"checkbox\"], form.lock-page input[type=\"radio\"]",
       "delegated": true,
-      "line": 868,
+      "line": 865,
       "file": "resources/js/modules/ajax.ts"
     },
     {
@@ -3737,7 +3737,7 @@
       "event": "change",
       "selector": "<$pageContent> form.lock-page textarea, form.lock-page input[type=\"text\"], form.lock-page input[type=\"number\"], form.lock-page select",
       "delegated": true,
-      "line": 858,
+      "line": 855,
       "file": "resources/js/modules/ajax.ts"
     },
     {
@@ -3747,7 +3747,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#pma_ignore_all_errors_bottom",
-      "line": 407,
+      "line": 404,
       "file": "resources/js/modules/ajax.ts"
     },
     {
@@ -3757,7 +3757,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#pma_ignore_all_errors_popup",
-      "line": 434,
+      "line": 431,
       "file": "resources/js/modules/ajax.ts"
     },
     {
@@ -3767,7 +3767,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#pma_ignore_errors_bottom",
-      "line": 402,
+      "line": 399,
       "file": "resources/js/modules/ajax.ts"
     },
     {
@@ -3777,7 +3777,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#pma_ignore_errors_popup",
-      "line": 430,
+      "line": 427,
       "file": "resources/js/modules/ajax.ts"
     },
     {
@@ -3788,7 +3788,7 @@
       "event": "click",
       "selector": "<$pageContent> form input[type=submit]",
       "delegated": true,
-      "line": 841,
+      "line": 838,
       "file": "resources/js/modules/ajax.ts"
     },
     {
@@ -3799,7 +3799,7 @@
       "event": "click",
       "selector": "a",
       "delegated": true,
-      "line": 813,
+      "line": 810,
       "file": "resources/js/modules/ajax.ts"
     },
     {
@@ -3811,7 +3811,7 @@
       "messages": [
         "strConfirmNavigation"
       ],
-      "line": 278,
+      "line": 275,
       "file": "resources/js/modules/ajax.ts"
     },
     {
@@ -3825,7 +3825,7 @@
       "keys": [
         "code 0"
       ],
-      "line": 858,
+      "line": 855,
       "file": "resources/js/modules/ajax.ts"
     },
     {
@@ -3835,7 +3835,7 @@
       "kind": "event",
       "event": "popstate",
       "selector": "window",
-      "line": 906,
+      "line": 900,
       "file": "resources/js/modules/ajax.ts"
     },
     {
@@ -3845,7 +3845,7 @@
       "kind": "event",
       "event": "reset",
       "selector": "form.lock-page",
-      "line": 881,
+      "line": 878,
       "file": "resources/js/modules/ajax.ts"
     },
     {
@@ -3856,7 +3856,7 @@
       "event": "submit",
       "selector": "form",
       "delegated": true,
-      "line": 814,
+      "line": 811,
       "file": "resources/js/modules/ajax.ts"
     },
     {
@@ -5082,7 +5082,7 @@
       "event": "click",
       "selector": "#server-breadcrumb, #goto_pagetop",
       "delegated": true,
-      "line": 3398,
+      "line": 3370,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5392,7 +5392,7 @@
       "event": "mouseout",
       "selector": ".sortlink",
       "delegated": true,
-      "line": 3678,
+      "line": 3650,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5403,7 +5403,7 @@
       "event": "mouseover",
       "selector": ".sortlink",
       "delegated": true,
-      "line": 3674,
+      "line": 3646,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5989,7 +5989,7 @@
       "event": "click",
       "selector": "#pma_navigation_collapser",
       "delegated": true,
-      "line": 1018,
+      "line": 988,
       "file": "resources/js/modules/navigation.ts"
     },
     {
@@ -6000,7 +6000,7 @@
       "event": "mousedown",
       "selector": "#pma_navigation_resizer",
       "delegated": true,
-      "line": 1017,
+      "line": 987,
       "file": "resources/js/modules/navigation.ts"
     },
     {
@@ -6010,7 +6010,7 @@
       "kind": "event",
       "event": "mouseenter",
       "selector": "#full_name_layer",
-      "line": 1371,
+      "line": 1341,
       "file": "resources/js/modules/navigation.ts"
     },
     {
@@ -6020,7 +6020,7 @@
       "kind": "event",
       "event": "mouseenter",
       "selector": "<$containerELem> .hover_show_full",
-      "line": 1357,
+      "line": 1327,
       "file": "resources/js/modules/navigation.ts"
     },
     {
@@ -6030,7 +6030,7 @@
       "kind": "event",
       "event": "mouseleave",
       "selector": "#full_name_layer",
-      "line": 1371,
+      "line": 1341,
       "file": "resources/js/modules/navigation.ts"
     },
     {
@@ -6040,7 +6040,7 @@
       "kind": "event",
       "event": "mousemove",
       "selector": "document",
-      "line": 929,
+      "line": 896,
       "file": "resources/js/modules/navigation.ts"
     },
     {
@@ -6050,17 +6050,17 @@
       "kind": "event",
       "event": "mouseup",
       "selector": "document",
-      "line": 929,
+      "line": 896,
       "file": "resources/js/modules/navigation.ts"
     },
     {
       "key": "js:modules/navigation.ts#resize:window",
       "script": "modules/navigation.ts",
-      "count": 1,
+      "count": 2,
       "kind": "event",
       "event": "resize",
       "selector": "window",
-      "line": 1024,
+      "line": 992,
       "file": "resources/js/modules/navigation.ts"
     },
     {

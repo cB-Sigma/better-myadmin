@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/bg.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/bg.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2025-12-18 18:00+0000\nLast-Translator: Кирил Стоименов <steemman123@gmail.com>\nLanguage-Team: Bulgarian <https://hosted.weblate.org/projects/phpmyadmin/master/bg/>\nLanguage: bg\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.15.1-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2025-12-18 18:00+0000\nLast-Translator: Кирил Стоименов <steemman123@gmail.com>\nLanguage-Team: Bulgarian <https://hosted.weblate.org/projects/phpmyadmin/master/bg/>\nLanguage: bg\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.15.1-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Оттук нататък е необходим javascript!"
@@ -2970,8 +2970,13 @@ msgstr "query_cache_limit е установен на 1 MiB"
 msgid "Search:"
 msgstr "Търсене:"
 
+msgctxt "Collation"
 msgid "Unknown"
-msgstr "Неизвестен"
+msgstr "непознат"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Чешки"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -2988,6 +2993,10 @@ msgstr "Испански (традиционен)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "Испански (модерен)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Кирилица"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -3022,12 +3031,12 @@ msgid "no-pad"
 msgstr "без изравняване"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Двоичен"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Unicode"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Двоичен"
 
 msgctxt "Collation"
 msgid "West European"
@@ -3064,10 +3073,6 @@ msgstr "Балтийски"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "Арменски"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "Кирилица"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -3110,20 +3115,12 @@ msgid "Thai"
 msgstr "Тайландски"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "непознат"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "Български"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "Хърватски"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Чешки"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -3192,6 +3189,9 @@ msgstr "Словенски"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "Виетнамски"
+
+msgid "Unknown"
+msgstr "Неизвестен"
 
 msgid "Icons"
 msgstr "Икони"
@@ -6379,14 +6379,14 @@ msgstr "Проследяването на %1$s беше включено във 
 msgid "Tracking for %1$s was deactivated at version %2$s."
 msgstr "Проследяването на %1$s беше изключено във версия %2$s."
 
+msgid "Trigger %1$s has been created."
+msgstr "Тригерът %1$s беше създаден."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Съжаляваме, но възстановяването на изтрития тригер е неуспешно."
 
 msgid "Trigger %1$s has been modified."
 msgstr "Тригерът %1$s беше променен."
-
-msgid "Trigger %1$s has been created."
-msgstr "Тригерът %1$s беше създаден."
 
 msgid "You must provide a trigger name!"
 msgstr "Трябва да дадете име на тригера!"

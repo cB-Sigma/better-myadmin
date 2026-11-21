@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/it.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/it.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2025-06-27 04:54+0000\nLast-Translator: Marcel <dev@tulite.it>\nLanguage-Team: Italian <https://hosted.weblate.org/projects/phpmyadmin/master/it/>\nLanguage: it\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.13-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2025-06-27 04:54+0000\nLast-Translator: Marcel <dev@tulite.it>\nLanguage-Team: Italian <https://hosted.weblate.org/projects/phpmyadmin/master/it/>\nLanguage: it\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.13-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Da qui in poi, JavaScript deve essere abilitato!"
@@ -4521,8 +4521,13 @@ msgstr "query_cache_limit impostsato a 1 MiB"
 msgid "Search:"
 msgstr "Cerca:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "Sconosciuto"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Ceco"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -4539,6 +4544,10 @@ msgstr "Spagnolo (tradizionale)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "Spagnolo (moderno)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Cirillico"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -4573,12 +4582,12 @@ msgid "no-pad"
 msgstr "no-pad"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Binario"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Unicode"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Binario"
 
 msgctxt "Collation"
 msgid "West European"
@@ -4615,10 +4624,6 @@ msgstr "Baltico"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "Armeno"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "Cirillico"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -4661,20 +4666,12 @@ msgid "Thai"
 msgstr "Thai"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "Sconosciuto"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "Bulgaro"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "Croato"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Ceco"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4743,6 +4740,9 @@ msgstr "Sloveno"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "Vietnamese"
+
+msgid "Unknown"
+msgstr "Sconosciuto"
 
 msgid "Icons"
 msgstr "Icone"
@@ -8437,9 +8437,6 @@ msgstr "Modifica trigger"
 msgid "No trigger with name %1$s found in database %2$s."
 msgstr "Non é stata trovato alcun trigger con nome %1$s nel database %2$s."
 
-msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
-msgstr "Errore nell'elaborazione della richiesta: non é stata trovato alcun trigger con nome %1$s nel database %2$s."
-
 msgid "You don't have sufficient privileges to be here right now!"
 msgstr "Non hai i permessi per effettuare questa operazione!"
 
@@ -10102,14 +10099,14 @@ msgstr "La versione %1$s di %2$s è stata cancellata."
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "Versione %1$s creata, monitoraggio attivato per %2$s."
 
+msgid "Trigger %1$s has been created."
+msgstr "Il trigger %1$s é stato creato."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Ci dispiace, non siamo riusciti a ripristinare il trigger che é stato rimosso."
 
 msgid "Trigger %1$s has been modified."
 msgstr "Il trigger %1$s é stato modificato."
-
-msgid "Trigger %1$s has been created."
-msgstr "Il trigger %1$s é stato creato."
 
 msgid "You must provide a trigger name!"
 msgstr "Devi fornire un nome di trigger!"

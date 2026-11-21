@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/uk.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/uk.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-10-25 08:31+0000\nLast-Translator: Hotripak <hotr1pak@users.noreply.hosted.weblate.org>\nLanguage-Team: Ukrainian <https://hosted.weblate.org/projects/phpmyadmin/master/uk/>\nLanguage: uk\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\nX-Generator: Weblate 2026.11.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-11-19 19:30+0000\nLast-Translator: Hotripak <hotr1pak@users.noreply.hosted.weblate.org>\nLanguage-Team: Ukrainian <https://hosted.weblate.org/projects/phpmyadmin/master/uk/>\nLanguage: uk\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\nX-Generator: Weblate 2026.12.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "З цього моменту Javascript має бути увімкнений!"
@@ -4612,8 +4612,13 @@ msgstr "Змінній query_cache_limit присвоєно значення 1 M
 msgid "Search:"
 msgstr "Пошук:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "Невідомо"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Чеська"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -4630,6 +4635,14 @@ msgstr "Іспанська (традиційна)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "Іспанська"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Кирилиця"
+
+msgctxt "Collation"
+msgid "Latin"
+msgstr "Латинська"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -4664,12 +4677,12 @@ msgid "no-pad"
 msgstr "без заповнення"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Двійковий"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Юнікод"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Двійковий"
 
 msgctxt "Collation"
 msgid "West European"
@@ -4706,10 +4719,6 @@ msgstr "Балтійська"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "Вірменська"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "Кирилиця"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -4752,8 +4761,8 @@ msgid "Thai"
 msgstr "Тайська"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "Невідомо"
+msgid "Bosnian"
+msgstr "Боснійська"
 
 msgctxt "Collation"
 msgid "Bulgarian"
@@ -4762,10 +4771,6 @@ msgstr "Болгарська"
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "Хорватська"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Чеська"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4782,6 +4787,10 @@ msgstr "Есперанто"
 msgctxt "Collation"
 msgid "Estonian"
 msgstr "Естонська"
+
+msgctxt "Collation"
+msgid "Galician"
+msgstr "Галісійська"
 
 msgctxt "Collation"
 msgid "Hungarian"
@@ -4804,8 +4813,20 @@ msgid "Lithuanian"
 msgstr "Литовська"
 
 msgctxt "Collation"
+msgid "Mongolian"
+msgstr "Монгольська"
+
+msgctxt "Collation"
 msgid "Burmese"
 msgstr "Бірманська"
+
+msgctxt "Collation"
+msgid "Norwegian Bokmål"
+msgstr "Норвезька (букмол)"
+
+msgctxt "Collation"
+msgid "Norwegian Nynorsk"
+msgstr "Норвезька (нінорск)"
 
 msgctxt "Collation"
 msgid "Persian"
@@ -4818,6 +4839,10 @@ msgstr "Польська"
 msgctxt "Collation"
 msgid "Romanian"
 msgstr "Румунська"
+
+msgctxt "Collation"
+msgid "Serbian"
+msgstr "Сербська"
 
 msgctxt "Collation"
 msgid "Sinhalese"
@@ -4834,6 +4859,9 @@ msgstr "Словенська"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "В'єтнамська"
+
+msgid "Unknown"
+msgstr "Невідомо"
 
 msgid "Icons"
 msgstr "Піктограми"
@@ -6744,11 +6772,11 @@ msgstr "Для файлу конфігурації потрібен дійсни
 msgid "The cookie encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc]."
 msgstr "Ключ шифрування cookie у файлі конфігурації довший, ніж потрібно. Він має мати лише %d байтів. Перегляньте [doc@cfg_blowfish_secret]документацію[/doc]."
 
-msgid "The configuration file needs a valid key for query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
-msgstr "Файл конфігурації потребує дійсного ключа для шифрування запитів. Для вас було автоматично згенеровано тимчасовий ключ. Дивіться [doc@cfg_URLQueryEncryptionSecretKey]документацію[/doc]."
+msgid "The configuration file needs a valid key for URL query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
+msgstr "У файлі конфігурації потрібно вказати дійсний ключ для шифрування запитів URL. Для вас було автоматично згенеровано тимчасовий ключ. Будь ласка, ознайомтеся з [doc@cfg_URLQueryEncryptionSecretKey]документацією[/doc]."
 
-msgid "The query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
-msgstr "Ключ шифрування запиту в файлі конфігурації довший, ніж необхідно. Він повинен мати довжину лише %d байт. Дивіться [doc@cfg_URLQueryEncryptionSecretKey]документацію[/doc]."
+msgid "The URL query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
+msgstr "Ключ шифрування URL-запитів у файлі конфігурації довший, ніж потрібно. Його довжина має становити лише %d байтів. Будь ласка, ознайомтеся з [doc@cfg_URLQueryEncryptionSecretKey]документацією[/doc]."
 
 msgid "Directory [code]config[/code], which is used by the setup script, still exists in your phpMyAdmin directory. It is strongly recommended to remove it once phpMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorized people downloading your configuration."
 msgstr "Каталог [code]config[/code], який використовує сценарій установки, все ще існує в каталозі phpMyAdmin. Якщо phpMyAdmin вже налаштовано, його необхідно видалити. В іншому випадку безпека вашого сервера може бути порушена через несанкціонований доступ до конфігураційного файлу завантаження."
@@ -8618,9 +8646,6 @@ msgstr "Редагувати тригер"
 msgid "No trigger with name %1$s found in database %2$s."
 msgstr "Немає тригера з ім'ям %1$s в базі даних %2$s."
 
-msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
-msgstr "Помилка в обробці запиту: Немає тригера з ім'ям %1$s в базі даних %2$s."
-
 msgid "You don't have sufficient privileges to be here right now!"
 msgstr "Ви для цього маєте недостатньо прав!"
 
@@ -8916,6 +8941,9 @@ msgstr "Звіт"
 msgid "Event %1$s has been created."
 msgstr "Подія %1$s була створена."
 
+msgid "Event not found."
+msgstr "Подію не знайдено."
+
 msgid "Sorry, we failed to restore the dropped event."
 msgstr "Неможливо відновити видалену подію."
 
@@ -9080,22 +9108,22 @@ msgid "Ignoring unsupported language code."
 msgstr "Ігнорувати непідтримуваний код мови."
 
 msgid "The database name must be a non-empty string."
-msgstr "Ім'я бази даних повинно бути не непорожнім рядком."
+msgstr "Ім'я бази даних має бути непорожнім рядком."
 
 msgid "The database name cannot be longer than %d characters."
-msgstr "Ім'я бази даних не може бути більше %d символів."
+msgstr "Назва бази даних не може перевищувати %d символів."
 
 msgid "The database name cannot end with a space character."
-msgstr "Ім'я бази даних не може закінчуватися пробілом."
+msgstr "Назва бази даних не може закінчуватися символом пробілу."
 
 msgid "The table name must be a non-empty string."
-msgstr "Ім’я таблиці має бути не порожнім рядком."
+msgstr "Ім'я таблиці має бути непорожнім рядком."
 
 msgid "The table name cannot be longer than %d characters."
-msgstr "Ім’я таблиці не може перевищувати %d символів."
+msgstr "Назва таблиці не може містити більше ніж %d символів."
 
 msgid "The table name cannot end with a space character."
-msgstr "Ім'я таблиці не може закінчуватися пробілом."
+msgstr "Назва таблиці не може закінчуватися символом пробілу."
 
 msgid "The trigger name must not be empty."
 msgstr "Ім’я тригера не має бути порожнім."
@@ -10324,14 +10352,17 @@ msgstr "Версія %1$s з %2$s була видалена."
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "Версія %1$s створена, для відстеження %2$s активована."
 
+msgid "Trigger %1$s has been created."
+msgstr "Тригер %1$s було створено."
+
+msgid "Trigger not found."
+msgstr "Тригер не знайдено."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Вибачте, нам не вдалось відновити видалений тригер."
 
 msgid "Trigger %1$s has been modified."
 msgstr "Тригер %1$s було змінено."
-
-msgid "Trigger %1$s has been created."
-msgstr "Тригер %1$s було створено."
 
 msgid "You must provide a trigger name!"
 msgstr "Слід вказати назву тригера!"

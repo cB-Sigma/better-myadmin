@@ -2,6 +2,29 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.31 (2026-11-21)
+
+### Fixes
+
+- Messages with a count now use the plural form in German, French, Spanish, Italian and the other
+  languages with two forms: "3 Datensätze betroffen." instead of "3 Datensatz betroffen."
+  (phpmyadmin/motranslator 6.0.2).
+- SQL tab: the **Delimiter** field can no longer be left empty; Go asks for a value (on a phone the
+  folded options open to show it).
+- ESRI shape file import: a damaged or truncated `.shp` file is refused with "Failed to parse
+  record." instead of importing made-up coordinates.
+- SQL parsing (phpmyadmin/sql-parser 6.0.2): MariaDB `/*M! … */` comments are recognised, `UUID`,
+  `INET4` and `INET6` are column types on MariaDB, and `EXPLAIN FOR CONNECTION` without a numeric
+  id is reported as an error.
+
+### Upstream
+
+- Synced to phpMyAdmin 291fcadb42 (24 commits): the required SQL delimiter, the navigation panel
+  laid out with CSS (BetterMyAdmin's layout already worked this way), the IniReader refactor,
+  sql-parser 6.0.2, motranslator 6.0.2 and shapefile 4.0.2, and Czech, English (UK), French,
+  Turkish, Ukrainian, Spanish and Russian translations. Details per commit in
+  `tools/upstream/ledger.json`.
+
 ## 1.0.30 (2026-11-14)
 
 ### Fixes

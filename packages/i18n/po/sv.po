@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/sv.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/sv.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-09-19 07:51+0000\nLast-Translator: Daniel Nylander <yeagersthlm@gmail.com>\nLanguage-Team: Swedish <https://hosted.weblate.org/projects/phpmyadmin/master/sv/>\nLanguage: sv\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.10.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-09-19 07:51+0000\nLast-Translator: Daniel Nylander <yeagersthlm@gmail.com>\nLanguage-Team: Swedish <https://hosted.weblate.org/projects/phpmyadmin/master/sv/>\nLanguage: sv\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.10.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript måste vara aktiverat efter detta!"
@@ -4595,8 +4595,13 @@ msgstr "query_cache_limit är satt till 1 Mb"
 msgid "Search:"
 msgstr "Sök:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "Okänd"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Tjeckisk"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -4613,6 +4618,10 @@ msgstr "Spanska (traditionell)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "Spanska (modern)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Kyrillisk"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -4647,12 +4656,12 @@ msgid "no-pad"
 msgstr "no-pad"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Binär"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Unicode"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Binär"
 
 msgctxt "Collation"
 msgid "West European"
@@ -4689,10 +4698,6 @@ msgstr "Baltisk"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "Armenisk"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "Kyrillisk"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -4735,20 +4740,12 @@ msgid "Thai"
 msgstr "Thailändsk"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "Okänd"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "Bulgarisk"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "Kroatisk"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Tjeckisk"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4817,6 +4814,9 @@ msgstr "Slovensk"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "Vietnamesisk"
+
+msgid "Unknown"
+msgstr "Okänd"
 
 msgid "Icons"
 msgstr "Ikoner"
@@ -6723,12 +6723,6 @@ msgstr "Konfigurationsfilen behöver en giltig nyckel för cookie-kryptering. En
 msgid "The cookie encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc]."
 msgstr "Cookiekrypteringsnyckeln i konfigurationsfilen är längre än nödvändigt. Den bör bara vara %d byte lång. Se [doc@cfg_blowfish_secret]dokumentationen[/doc]."
 
-msgid "The configuration file needs a valid key for query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
-msgstr "Konfigurationsfilen behöver en giltig nyckel för frågekryptering. En tillfällig nyckel skapades automatiskt åt dig. Se [doc@cfg_URLQueryEncryptionSecretKey]dokumentationen[/doc]."
-
-msgid "The query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
-msgstr "Frågekrypteringsnyckeln i konfigurationsfilen är längre än nödvändigt. Den bör bara vara %d byte lång. Se [doc@cfg_URLQueryEncryptionSecretKey]dokumentationen[/doc]."
-
 msgid "Directory [code]config[/code], which is used by the setup script, still exists in your phpMyAdmin directory. It is strongly recommended to remove it once phpMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorized people downloading your configuration."
 msgstr "Katalogen [code]config[/code], som används av installationsskriptet, finns fortfarande i din phpMyAdmin-katalog. Det rekommenderas kraftigt att ta bort den när phpMyAdmin har konfigurerats. I annat fall kan din servers säkerhet hotas av obehöriga som laddar ner din konfiguration."
 
@@ -8578,9 +8572,6 @@ msgstr "Redigera trigger"
 msgid "No trigger with name %1$s found in database %2$s."
 msgstr "Ingen trigger med namnet %1$s hittades i databasen %2$s."
 
-msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
-msgstr "Fel vid bearbetning av begäran: Ingen trigger med namnet %1$s hittades i databasen %2$s."
-
 msgid "You don't have sufficient privileges to be here right now!"
 msgstr "Du har inte tillräcklig behörighet för att vara här nu!"
 
@@ -10279,14 +10270,14 @@ msgstr "Version %1$s %2$s togs bort."
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "Version %1$s är skapad, spårning för %2$s är aktiv."
 
+msgid "Trigger %1$s has been created."
+msgstr "Triggern %1$s har skapats."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Tyvärr lyckades vi inte återställa den släppta triggern."
 
 msgid "Trigger %1$s has been modified."
 msgstr "Triggern %1$s har modifierats."
-
-msgid "Trigger %1$s has been created."
-msgstr "Triggern %1$s har skapats."
 
 msgid "You must provide a trigger name!"
 msgstr "Du måste ange ett triggernamn!"

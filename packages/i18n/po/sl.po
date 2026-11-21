@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/sl.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/sl.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2025-09-22 11:47+0000\nLast-Translator: Domen <mitenem@outlook.com>\nLanguage-Team: Slovenian <https://hosted.weblate.org/projects/phpmyadmin/master/sl/>\nLanguage: sl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\nX-Generator: Weblate 5.14-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2025-09-22 11:47+0000\nLast-Translator: Domen <mitenem@outlook.com>\nLanguage-Team: Slovenian <https://hosted.weblate.org/projects/phpmyadmin/master/sl/>\nLanguage: sl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\nX-Generator: Weblate 5.14-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Po tej točki mora biti JavaScript omogočen!"
@@ -4602,8 +4602,13 @@ msgstr "query_cache_limit je nastavljen na 1 MiB"
 msgid "Search:"
 msgstr "Iskanje:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "Neznano"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Češko"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -4620,6 +4625,10 @@ msgstr "Špansko (tradicionalno)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "Špansko (sodobno)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Cirilica"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -4654,12 +4663,12 @@ msgid "no-pad"
 msgstr "brez zapolnjevanja"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Dvojiško"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Unikod"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Dvojiško"
 
 msgctxt "Collation"
 msgid "West European"
@@ -4696,10 +4705,6 @@ msgstr "Baltsko"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "Armensko"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "Cirilica"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -4742,20 +4747,12 @@ msgid "Thai"
 msgstr "Tajsko"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "Neznano"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "Bolgarsko"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "Hrvaško"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Češko"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4824,6 +4821,9 @@ msgstr "Slovensko"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "Vietnamsko"
+
+msgid "Unknown"
+msgstr "Neznano"
 
 msgid "Icons"
 msgstr "Ikone"
@@ -8568,9 +8568,6 @@ msgstr "Uredi sprožilec"
 msgid "No trigger with name %1$s found in database %2$s."
 msgstr "Sprožilca imenovanega %1$s ni mogoče najti v zbirki podatkov %2$s."
 
-msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
-msgstr "Napaka v obdelavi zahteve: Sprožilca imenovanega %1$s ni mogoče najti v zbirki podatkov %2$s."
-
 msgid "You don't have sufficient privileges to be here right now!"
 msgstr "Nimate dovolj pravic, da bi bili sedaj tukaj!"
 
@@ -10270,14 +10267,14 @@ msgstr "Različico %1$s tabele %2$s smo izbrisali."
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "Različica %1$s je ustvarjena, sledenje %2$s je aktivirano."
 
+msgid "Trigger %1$s has been created."
+msgstr "Sprožilec %1$s je ustvarjen."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Oprostite, zavrženega sprožilca nam ni uspelo obnoviti."
 
 msgid "Trigger %1$s has been modified."
 msgstr "Sprožilec %1$s je bil spremenjen."
-
-msgid "Trigger %1$s has been created."
-msgstr "Sprožilec %1$s je ustvarjen."
 
 msgid "You must provide a trigger name!"
 msgstr "Navesti morate ime sprožilca!"

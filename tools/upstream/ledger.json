@@ -1142,6 +1142,179 @@
       "status": "not-applicable",
       "areas": ["features/04-table-level"],
       "notes": "sync f4aeb7801c: Collation buildName() inlined again: refactor."
+    },
+    {
+      "commit": "fd0e66b74c8e86012b4f68f390f765aa51b137dc",
+      "subject": "Translated using Weblate (Czech)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 291fcadb42: Czech translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "0c9539c127370774263db8ef2141d1ac152c7c82",
+      "subject": "Translated using Weblate (English (United Kingdom))",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 291fcadb42: English (United Kingdom) translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "7c5a39e558d867c79866f07abe55599c7f261437",
+      "subject": "Translated using Weblate (English (United Kingdom))",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 291fcadb42: English (United Kingdom) translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "9ddcb164c38c82b34f4ca2ce3fb12c49aa6913f7",
+      "subject": "Update po files",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 291fcadb42: po files refreshed from the pot: imported by pnpm i18n:import."
+    },
+    {
+      "commit": "d05c36dfd7ff57edc8d02ad758285638fd33e0e3",
+      "subject": "Translated using Weblate (French)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 291fcadb42: French translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "f3c7ceef44719d7be6bbfebbc7041892340afe88",
+      "subject": "Translated using Weblate (Turkish)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 291fcadb42: Turkish translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "e68adb31b040e19f7b8cd7bb853430e136940118",
+      "subject": "Translated using Weblate (Ukrainian)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 291fcadb42: Ukrainian translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "7347f94cd15d376297d8d6266ebda40dca991263",
+      "subject": "Translated using Weblate (French)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 291fcadb42: French translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "cea88b050101ad2c45520d4494a1dd59f4a66977",
+      "subject": "Translated using Weblate (Ukrainian)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 291fcadb42: Ukrainian translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "0e56aeffada03ccfe3dc1cd8dd01051feb18dd54",
+      "subject": "Update Psalm to 7.6.0",
+      "status": "not-applicable",
+      "areas": ["dependencies", "tooling"],
+      "notes": "sync 291fcadb42: Psalm 7.6.0: static analysis only."
+    },
+    {
+      "commit": "21aff9f73f94c1689da807ec0ddb8d5a510a4e71",
+      "subject": "Create IniReader",
+      "status": "not-applicable",
+      "areas": ["features/03-insert-edit-transformations", "features/07-export-import"],
+      "notes": "sync 291fcadb42: IniReader service replaces Util::getUploadSizeInBytes and the arg separator ini lookup: refactor. The upload limit now ignores a post_max_size of 0 (unlimited) instead of yielding 0; BetterMyAdmin has a single MaxUploadSize (no php.ini), so nothing to port. generate-fixtures.php (sql-gen) passes the new InsertEdit IniReader argument."
+    },
+    {
+      "commit": "3340a5ba1b527ce233713ceca9acc4a6786167dd",
+      "subject": "getMemoryLimitInBytes",
+      "status": "not-applicable",
+      "areas": ["features/07-export-import"],
+      "notes": "sync 291fcadb42: getMemoryLimitInBytes moved to IniReader: refactor; BetterMyAdmin does not read memory_limit."
+    },
+    {
+      "commit": "6265cfb892b5b1475a81e4e83746aef58cf99656",
+      "subject": "Remove unused reference",
+      "status": "not-applicable",
+      "areas": ["features/07-export-import"],
+      "notes": "sync 291fcadb42: PDF schema: an unused by-reference parameter dropped; no behaviour change."
+    },
+    {
+      "commit": "ee6603f4c12990e42440653eab84fc2c2e18c39c",
+      "subject": "Fix bug with missing delimiter",
+      "status": "ported",
+      "areas": ["features/09-sql-editor-query-pipeline"],
+      "notes": "sync 291fcadb42: The SQL box Delimiter field is required (query.twig) and ImportController asserts a non-empty sql_delimiter before handleRollbackRequest: SqlPage.tsx marks #id_sql_delimiter required (on a phone the folded options open when it is empty); the API already refused an empty delimiter (contracts/query.ts min(1)). Feature doc 09 updated."
+    },
+    {
+      "commit": "9268000ffdd36b66cdc2ca0d64b19e63886b1e26",
+      "subject": "Add support for webmozart/assert v2",
+      "status": "not-applicable",
+      "areas": ["dependencies"],
+      "notes": "sync 291fcadb42: webmozart/assert v2 accepted by composer.json: PHP dependency constraint only."
+    },
+    {
+      "commit": "29639419347934b25db39603f756ba063ebc38aa",
+      "subject": "Add change log entry for #20638",
+      "status": "not-applicable",
+      "areas": ["docs"],
+      "notes": "sync 291fcadb42: ChangeLog entry for #20638 (webmozart/assert v2)."
+    },
+    {
+      "commit": "6abf9c72e41dead231d3cc15b5b1c779548c959b",
+      "subject": "Update po files",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 291fcadb42: po files refreshed from the pot: imported by pnpm i18n:import."
+    },
+    {
+      "commit": "80756993d55692f00bf392a7d48dadb64803b669",
+      "subject": "Lay out the navigation panel with CSS",
+      "status": "not-applicable",
+      "areas": ["features/01-shell-navigation-auth"],
+      "notes": "sync 291fcadb42: Navigation panel laid out with CSS (--navigation-width on body, sticky #floating_menubar holding the breadcrumb, overlay on narrow screens closed on load, resizer observer leak fixed): BetterMyAdmin already lays the shell out with CSS in React (ShellLayout: sticky .bma-topbar with #floating_menubar and the breadcrumb, nav width from NavigationWidth, phone drawer closed on load), so the visible result is unchanged and there is no JavaScript to remove."
+    },
+    {
+      "commit": "051907960822cae536ebb52bfb80c3b215ca1553",
+      "subject": "Update Composer dependencies",
+      "status": "not-applicable",
+      "areas": ["dependencies"],
+      "notes": "sync 291fcadb42: Composer refresh (guzzlehttp/psr7, paragonie, phpstan, psalm plugins, web-auth): no runtime library BetterMyAdmin ports moved."
+    },
+    {
+      "commit": "3f05829fb92d9a7396b5f35b04fe2f889d7162a4",
+      "subject": "Update Composer dependencies",
+      "status": "ported",
+      "areas": [
+        "dependencies",
+        "features/09-sql-editor-query-pipeline",
+        "features/07-export-import",
+        "translations"
+      ],
+      "notes": "sync 291fcadb42: Composer refresh. phpmyadmin/sql-parser 6.0.1 -> 6.0.2 ported to packages/sql-lexer: MariaDB /*M! comment commands (Token FLAG_COMMENT_MARIADB_CMD, Lexer, Context::isComment), UUID/INET4/INET6 data types in the MariaDB contexts (regenerated), EXPLAIN FOR CONNECTION requires an integer id; contexts and fixtures regenerated. phpmyadmin/motranslator 6.0.2: a boolean Plural-Forms result is cast to int, so two-form catalogues (plural=n != 1) now pick the plural form (packages/i18n/src/plural.ts, docs/architecture/10). phpmyadmin/shapefile 4.0.2: unreadable points, counts or part indexes and records running past the end fail with \"Failed to parse record.\" (packages/import/src/plugins/shp.ts, golden parity case \"shp, truncated record\"). webmozart/assert, slim/psr7: not ported."
+    },
+    {
+      "commit": "00721b59993b9e0dc6b718a4bedda4ef08910f56",
+      "subject": "Translated using Weblate (Spanish)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 291fcadb42: Spanish translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "e5168efc2af9f12d64964beb948ac9f3dfa98330",
+      "subject": "Translated using Weblate (Russian)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 291fcadb42: Russian translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "771d4a7c579ddfb95391c6d54b60707a558eb850",
+      "subject": "Translated using Weblate (Turkish)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 291fcadb42: Turkish translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "291fcadb4293a09b7c3037a07afe7612b020b9e4",
+      "subject": "Translated using Weblate (Ukrainian)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 291fcadb42: Ukrainian translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
     }
   ]
 }

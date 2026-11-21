@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/hy.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/hy.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-01-03 06:36+0000\nLast-Translator: liviuconcioiu <liviu.concioiu@gmail.com>\nLanguage-Team: Armenian <https://hosted.weblate.org/projects/phpmyadmin/master/hy/>\nLanguage: hy\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\nX-Generator: Weblate 5.15.1\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-01-03 06:36+0000\nLast-Translator: liviuconcioiu <liviu.concioiu@gmail.com>\nLanguage-Team: Armenian <https://hosted.weblate.org/projects/phpmyadmin/master/hy/>\nLanguage: hy\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\nX-Generator: Weblate 5.15.1\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript-ը պետք է միացրած լինի այս պահից սկսած։"
@@ -5361,11 +5361,11 @@ msgstr "Հետագծման զեկույց `%s` աղյուսակի համար"
 msgid "Version %1$s of %2$s was deleted."
 msgstr "%1$s տարբերակը %2$s-ից ջնջվել է։"
 
-msgid "Trigger %1$s has been modified."
-msgstr "%1$s ձգանը փոփոխվեց։"
-
 msgid "Trigger %1$s has been created."
 msgstr "%1$s ձգանը ստեղծվեց։"
+
+msgid "Trigger %1$s has been modified."
+msgstr "%1$s ձգանը փոփոխվեց։"
 
 msgid "You must provide a trigger name!"
 msgstr "Դուք պետք է տրամադրեք ձգանի անունը։"

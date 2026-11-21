@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/be.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/be.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Belarusian <https://hosted.weblate.org/projects/phpmyadmin/master/be/>\nLanguage: be\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\nX-Generator: Weblate 4.11-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Belarusian <https://hosted.weblate.org/projects/phpmyadmin/master/be/>\nLanguage: be\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\nX-Generator: Weblate 4.11-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript мусіць быць уключаным!"
@@ -2774,8 +2774,13 @@ msgstr "Мінімальны памер рэзультату кэшу запыт
 msgid "Search:"
 msgstr "Пошук:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "Невядома"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Чэская"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -2792,6 +2797,10 @@ msgstr "Іспанская (традыцыйная)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "Іспанская (мадэрн)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Кірылічная"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -2818,12 +2827,12 @@ msgid "binary"
 msgstr "двайковы"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Двайковы"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Юнікод"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Двайковы"
 
 msgctxt "Collation"
 msgid "West European"
@@ -2860,10 +2869,6 @@ msgstr "Балтыйская"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "Армянская"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "Кірылічная"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -2906,20 +2911,12 @@ msgid "Thai"
 msgstr "Тайландская"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "Невядома"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "Балгарская"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "Харвацкая"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Чэская"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -2988,6 +2985,9 @@ msgstr "Славенская"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "В'етнамская"
+
+msgid "Unknown"
+msgstr "Невядома"
 
 msgid "Icons"
 msgstr "Значкі"
@@ -5614,11 +5614,11 @@ msgstr "Экспартаваць як %s"
 msgid "Version %1$s of %2$s was deleted."
 msgstr "Версія %1$s з %2$s выдаленая."
 
-msgid "Trigger %1$s has been modified."
-msgstr "Трыгер %1$s быў зменены."
-
 msgid "Trigger %1$s has been created."
 msgstr "Трыгер %1$s створаны."
+
+msgid "Trigger %1$s has been modified."
+msgstr "Трыгер %1$s быў зменены."
 
 msgid "You must provide a trigger name!"
 msgstr "Неабходна задаць назву трыгера!"

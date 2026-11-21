@@ -98,7 +98,7 @@ describe('server messages follow the request language', () => {
       'Zeige Datensätze 0 - 24 (30 insgesamt, Die Abfrage dauerte T Sekunden.)',
     ])
     expect(await q('UPDATE t SET name = name WHERE id < 0')).toEqual([
-      '0 Datensatz betroffen. (Die Abfrage dauerte T Sekunden.)',
+      '0 Datensätze betroffen. (Die Abfrage dauerte T Sekunden.)',
     ])
     expect(await q('SELECT * FROM missing')).toEqual([`#1146 - Tabelle '${DB}.missing' existiert nicht`])
     expect(
@@ -140,7 +140,7 @@ describe('server messages follow the request language', () => {
         (await run({ sql: 'UPDATE t SET name = name WHERE id < 0', rollback: true })).statements[0]!.message
           .text,
       ),
-    ).toBe('0 Datensatz betroffen. (Die Abfrage dauerte T Sekunden.) [ROLLBACK aufgetreten.]')
+    ).toBe('0 Datensätze betroffen. (Die Abfrage dauerte T Sekunden.) [ROLLBACK aufgetreten.]')
 
     // profiling: Util::formatNumber with the German separators
     const prof = (await run({ sql: 'SELECT * FROM t', profiling: true })).statements[0]?.profiling

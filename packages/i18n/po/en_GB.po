@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/en_GB.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/en_GB.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-08-22 22:52+0000\nLast-Translator: Andi Chandler <andi@gowling.com>\nLanguage-Team: English (United Kingdom) <https://hosted.weblate.org/projects/phpmyadmin/master/en_GB/>\nLanguage: en_GB\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.9.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-11-14 17:51+0000\nLast-Translator: Andi Chandler <andibing@users.noreply.hosted.weblate.org>\nLanguage-Team: English (United Kingdom) <https://hosted.weblate.org/projects/phpmyadmin/master/en_GB/>\nLanguage: en_GB\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.12.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript must be enabled past this point!"
@@ -746,6 +746,9 @@ msgstr "Descending"
 msgid "Add as"
 msgstr "Add as"
 
+msgid "Op"
+msgstr "Op"
+
 msgid "Text"
 msgstr "Text"
 
@@ -1024,6 +1027,9 @@ msgstr "Unselect all"
 
 msgid "Inside column:"
 msgstr "Inside column:"
+
+msgid "Search results for \"%s\" %s:"
+msgstr "Search results for \"%s\" %s:"
 
 msgid "%1$s match in <strong>%2$s</strong>"
 msgid_plural "%1$s matches in <strong>%2$s</strong>"
@@ -1351,6 +1357,9 @@ msgstr "Convert to Kana"
 msgid "Error"
 msgstr "Error"
 
+msgid "Backtrace"
+msgstr "Backtrace"
+
 msgid "This report automatically includes data about the error and information about relevant configuration settings. It will be sent to the phpMyAdmin team for debugging the error."
 msgstr "This report automatically includes data about the error and information about relevant configuration settings. It will be sent to the phpMyAdmin team for debugging the error."
 
@@ -1421,6 +1430,9 @@ msgstr "Event editor"
 
 msgid "Export event"
 msgstr "Export event"
+
+msgid "The event scheduler is disabled."
+msgstr "The event scheduler is disabled."
 
 msgid "Select a template"
 msgstr "Select a template"
@@ -4595,8 +4607,13 @@ msgstr "query_cache_limit is set to 1 MiB"
 msgid "Search:"
 msgstr "Search:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "Unknown"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Czech"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -4613,6 +4630,10 @@ msgstr "Spanish (traditional)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "Spanish (modern)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Cyrillic"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -4647,12 +4668,12 @@ msgid "no-pad"
 msgstr "no-pad"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Binary"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Unicode"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Binary"
 
 msgctxt "Collation"
 msgid "West European"
@@ -4689,10 +4710,6 @@ msgstr "Baltic"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "Armenian"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "Cyrillic"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -4735,20 +4752,12 @@ msgid "Thai"
 msgstr "Thai"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "Unknown"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "Bulgarian"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "Croatian"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Czech"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4817,6 +4826,9 @@ msgstr "Slovenian"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "Vietnamese"
+
+msgid "Unknown"
+msgstr "Unknown"
 
 msgid "Icons"
 msgstr "Icons"
@@ -6597,6 +6609,9 @@ msgstr "Showing rows %1$s - %2$s."
 msgid "There already exists a page named \"%s\" please rename it to something else."
 msgstr "There already exists a page named \"%s\" please rename it to something else."
 
+msgid "No database selected."
+msgstr "No database selected."
+
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Could not load export plug-ins, please check your installation!"
 
@@ -6722,12 +6737,6 @@ msgstr "The configuration file needs a valid key for cookie encryption. A tempor
 
 msgid "The cookie encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc]."
 msgstr "The cookie encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc]."
-
-msgid "The configuration file needs a valid key for query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
-msgstr "The configuration file needs a valid key for query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
-
-msgid "The query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
-msgstr "The query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
 
 msgid "Directory [code]config[/code], which is used by the setup script, still exists in your phpMyAdmin directory. It is strongly recommended to remove it once phpMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorized people downloading your configuration."
 msgstr "Directory [code]config[/code], which is used by the setup script, still exists in your phpMyAdmin directory. It is strongly recommended to remove it once phpMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorised people downloading your configuration."
@@ -6919,6 +6928,12 @@ msgstr "Y values"
 
 msgid "Please enter the SQL query first."
 msgstr "Please enter the SQL query first."
+
+msgid "Nothing selected"
+msgstr "Nothing selected"
+
+msgid "Enter an option"
+msgstr "Enter an option"
 
 msgid "The host name is empty!"
 msgstr "The host name is empty!"
@@ -7353,6 +7368,12 @@ msgstr "DROP columns %s from the table %s"
 msgid "Create the following table"
 msgstr "Create the following table"
 
+msgid "Enter new table name"
+msgstr "Enter new table name"
+
+msgid "Enter column name"
+msgstr "Enter column name"
+
 msgid "Third step of normalization (3NF)"
 msgstr "Third step of normalisation (3NF)"
 
@@ -7406,6 +7427,9 @@ msgstr "Click a data point to view and possibly edit the data row."
 
 msgid "The plot can be resized by dragging it along the bottom right corner."
 msgstr "The plot can be resized by dragging it along the bottom right corner."
+
+msgid "Zoom search instructions"
+msgstr "Zoom search instructions"
 
 msgid "Select two columns"
 msgstr "Select two columns"
@@ -8577,9 +8601,6 @@ msgstr "Edit trigger"
 
 msgid "No trigger with name %1$s found in database %2$s."
 msgstr "No trigger with name %1$s found in database %2$s."
-
-msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
-msgstr "Error in processing request: No trigger with name %1$s found in database %2$s."
 
 msgid "You don't have sufficient privileges to be here right now!"
 msgstr "You don't have sufficient privileges to be here right now!"
@@ -10279,14 +10300,14 @@ msgstr "Version %1$s of %2$s was deleted."
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "Version %1$s was created, tracking for %2$s is active."
 
+msgid "Trigger %1$s has been created."
+msgstr "Trigger %1$s has been created."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Sorry, we failed to restore the dropped trigger."
 
 msgid "Trigger %1$s has been modified."
 msgstr "Trigger %1$s has been modified."
-
-msgid "Trigger %1$s has been created."
-msgstr "Trigger %1$s has been created."
 
 msgid "You must provide a trigger name!"
 msgstr "You must provide a trigger name!"

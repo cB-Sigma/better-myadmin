@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/lo.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/lo.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-08-01 23:19+0000\nLast-Translator: BoneNI <bounkirdni@gmail.com>\nLanguage-Team: Lao <https://hosted.weblate.org/projects/phpmyadmin/master/lo/>\nLanguage: lo\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.8.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-08-01 23:19+0000\nLast-Translator: BoneNI <bounkirdni@gmail.com>\nLanguage-Team: Lao <https://hosted.weblate.org/projects/phpmyadmin/master/lo/>\nLanguage: lo\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.8.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "ຕ້ອງເປີດໃຊ້ງານ Javascript ເພື່ອໄປຕໍ່!"
@@ -4590,8 +4590,13 @@ msgstr "query_cache_limit ຖືກຕັ້ງເປັນ 1 MiB"
 msgid "Search:"
 msgstr "ຄົ້ນຫາ:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "ບໍ່ຮູ້ຈັກ"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "ເຊັກ"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -4608,6 +4613,10 @@ msgstr "ສະເປນ (ດັ້ງເດີມ)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "ສະເປນ (ສະໄໝໃໝ່)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "ຊີຣິນລິກ"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -4642,12 +4651,12 @@ msgid "no-pad"
 msgstr "ບໍ່ມີການເຕີມຊ່ອງວ່າງ (no-pad)"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "ຖານສອງ (Binary)"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "ຢູນິໂຄດ (Unicode)"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "ຖານສອງ (Binary)"
 
 msgctxt "Collation"
 msgid "West European"
@@ -4684,10 +4693,6 @@ msgstr "ບານຕິກ"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "ອາເມເນຍ"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "ຊີຣິນລິກ"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -4730,20 +4735,12 @@ msgid "Thai"
 msgstr "ໄທ"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "ບໍ່ຮູ້ຈັກ"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "ບູນກາຣີ"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "ໂຄຣເອເຊຍ"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "ເຊັກ"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4812,6 +4809,9 @@ msgstr "ສະໂລວີເນຍ"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "ຫວຽດນາມ"
+
+msgid "Unknown"
+msgstr "ບໍ່ຮູ້ຈັກ"
 
 msgid "Icons"
 msgstr "ໄອຄອນ"
@@ -6717,12 +6717,6 @@ msgstr "ໄຟລ໌ຕັ້ງຄ່າຕ້ອງການຄີ (key) ທ�
 msgid "The cookie encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc]."
 msgstr "ຄີເຂົ້າລະຫັດຄຸກກີ້ໃນໄຟລ໌ຕັ້ງຄ່າມີຄວາມຍາວເກີນຄວາມຈຳເປັນ. ມັນຄວນຈະມີຄວາມຍາວພຽງ %d ໄບຕ໌. ກະລຸນາເບິ່ງລາຍລະອຽດທີ່ [doc@cfg_blowfish_secret]ເອກະສານແນະນຳ[/doc]."
 
-msgid "The configuration file needs a valid key for query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
-msgstr "ໄຟລ໌ຕັ້ງຄ່າຕ້ອງການຄີ (key) ທີ່ຖືກຕ້ອງສຳລັບການເຂົ້າລະຫັດຄຳສັ່ງສອບຖາມ (query). ຄີຊົ່ວຄາວໄດ້ຖືກສ້າງຂຶ້ນໃຫ້ທ່ານໂດຍອັດຕະໂນມັດແລ້ວ. ກະລຸນາເບິ່ງລາຍລະອຽດທີ່ [doc@cfg_URLQueryEncryptionSecretKey]ເອກະສານແນະນຳ[/doc]."
-
-msgid "The query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
-msgstr "ຄີເຂົ້າລະຫັດຄຳສັ່ງສອບຖາມໃນໄຟລ໌ຕັ້ງຄ່າມີຄວາມຍາວເກີນຄວາມຈຳເປັນ. ມັນຄວນຈະມີຄວາມຍາວພຽງ %d ໄບຕ໌. ກະລຸນາເບິ່ງລາຍລະອຽດທີ່ [doc@cfg_URLQueryEncryptionSecretKey]ເອກະສານແນະນຳ[/doc]."
-
 msgid "Directory [code]config[/code], which is used by the setup script, still exists in your phpMyAdmin directory. It is strongly recommended to remove it once phpMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorized people downloading your configuration."
 msgstr "ໂຟນເດີ [code]config[/code] ທີ່ໃຊ້ສຳລັບການຕິດຕັ້ງຍັງຄົງມີຢູ່ໃນໄດເຣັກທໍຣີ phpMyAdmin ຂອງທ່ານ. ແນະນຳໃຫ້ລຶບມັນອອກທັນທີຫຼັງຈາກຕັ້ງຄ່າສຳເລັດ ເພື່ອຄວາມປອດໄພຂອງເຊີບເວີ."
 
@@ -8565,9 +8559,6 @@ msgstr "ແກ້ໄຂ Trigger"
 msgid "No trigger with name %1$s found in database %2$s."
 msgstr "ບໍ່ພົບ Trigger ທີ່ມີຊື່ %1$s ໃນຖານຂໍ້ມູນ %2$s."
 
-msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
-msgstr "ຂໍ້ຜິດພາດ: ບໍ່ພົບ trigger ຊື່ %1$s ໃນຖານຂໍ້ມູນ %2$s."
-
 msgid "You don't have sufficient privileges to be here right now!"
 msgstr "ທ່ານບໍ່ມີສິດພຽງພໍທີ່ຈະເຂົ້າເຖິງບ່ອນນີ້ໃນເວລານີ້!"
 
@@ -10261,14 +10252,14 @@ msgstr "ເວີຊັນ %1$s ຂອງ %2$s ຖືກລຶບແລ້ວ."
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "ເວີຊັນ %1$s ຖືກສ້າງແລ້ວ, ການຕິດຕາມສຳລັບ %2$s ກຳລັງເຮັດວຽກ."
 
+msgid "Trigger %1$s has been created."
+msgstr "Trigger %1$s ຖືກສ້າງແລ້ວ."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "ຂໍໂທດ, ບໍ່ສາມາດກູ້ຄືນ Trigger ທີ່ຖືກລຶບໄປໄດ້."
 
 msgid "Trigger %1$s has been modified."
 msgstr "Trigger %1$s ຖືກແກ້ໄຂແລ້ວ."
-
-msgid "Trigger %1$s has been created."
-msgstr "Trigger %1$s ຖືກສ້າງແລ້ວ."
 
 msgid "You must provide a trigger name!"
 msgstr "ທ່ານຕ້ອງລະບຸຊື່ Trigger!"

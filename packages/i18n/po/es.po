@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/es.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/es.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-11-10 14:51+0000\nLast-Translator: Salvador Peña <sal@users.noreply.hosted.weblate.org>\nLanguage-Team: Spanish <https://hosted.weblate.org/projects/phpmyadmin/master/es/>\nLanguage: es\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.11.2.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-11-19 19:30+0000\nLast-Translator: Salvador Peña <sal@users.noreply.hosted.weblate.org>\nLanguage-Team: Spanish <https://hosted.weblate.org/projects/phpmyadmin/master/es/>\nLanguage: es\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.12.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "¡Pasado este punto, debe tener Javascript activado!"
@@ -4607,8 +4607,13 @@ msgstr "«query_cache_limit» está definido a 1 MiB"
 msgid "Search:"
 msgstr "Buscar:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "Desconocido"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Checo"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -4625,6 +4630,14 @@ msgstr "Español (tradicional)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "Español (moderno)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Cirílico"
+
+msgctxt "Collation"
+msgid "Latin"
+msgstr "Latina"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -4659,12 +4672,12 @@ msgid "no-pad"
 msgstr "sin espacios"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Binario"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Unicode"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Binario"
 
 msgctxt "Collation"
 msgid "West European"
@@ -4701,10 +4714,6 @@ msgstr "Báltico"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "Armenio"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "Cirílico"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -4747,8 +4756,8 @@ msgid "Thai"
 msgstr "Tailandés"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "Desconocido"
+msgid "Bosnian"
+msgstr "Bosnio"
 
 msgctxt "Collation"
 msgid "Bulgarian"
@@ -4757,10 +4766,6 @@ msgstr "Búlgaro"
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "Croata"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Checo"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4777,6 +4782,10 @@ msgstr "Esperanto"
 msgctxt "Collation"
 msgid "Estonian"
 msgstr "Estonio"
+
+msgctxt "Collation"
+msgid "Galician"
+msgstr "Gálico"
 
 msgctxt "Collation"
 msgid "Hungarian"
@@ -4799,8 +4808,20 @@ msgid "Lithuanian"
 msgstr "Lituano"
 
 msgctxt "Collation"
+msgid "Mongolian"
+msgstr "Mongol"
+
+msgctxt "Collation"
 msgid "Burmese"
 msgstr "Birmano"
+
+msgctxt "Collation"
+msgid "Norwegian Bokmål"
+msgstr "Bokmål noruego"
+
+msgctxt "Collation"
+msgid "Norwegian Nynorsk"
+msgstr "Nynorsk noruego"
 
 msgctxt "Collation"
 msgid "Persian"
@@ -4813,6 +4834,10 @@ msgstr "Polaco"
 msgctxt "Collation"
 msgid "Romanian"
 msgstr "Rumano"
+
+msgctxt "Collation"
+msgid "Serbian"
+msgstr "Serbio"
 
 msgctxt "Collation"
 msgid "Sinhalese"
@@ -4829,6 +4854,9 @@ msgstr "Esloveno"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "Vietnamita"
+
+msgid "Unknown"
+msgstr "Desconocido"
 
 msgid "Icons"
 msgstr "Íconos"
@@ -4934,7 +4962,7 @@ msgid "complete inserts"
 msgstr "INSERTs completos"
 
 msgid "extended inserts"
-msgstr "INSERTs extensos"
+msgstr "INSERTs extendidos"
 
 msgid "both of the above"
 msgstr "todo lo anterior"
@@ -6738,11 +6766,11 @@ msgstr "El archivo de configuración necesita una clave válida para el cifrado 
 msgid "The cookie encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc]."
 msgstr "La clave de cifrado de la cookie en el archivo de configuración es más larga de lo necesario. Sólo debería tener %d bytes de longitud. Consulta la [doc@cfg_blowfish_secret]documentación[/doc]."
 
-msgid "The configuration file needs a valid key for query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
-msgstr "El archivo de configuración necesita una clave válida para el cifrado de consulta. Se ha generado automáticamente una clave temporal para ti. Consulta la [doc@cfg_URLQueryEncryptionSecretKey]documentación[/doc]."
+msgid "The configuration file needs a valid key for URL query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
+msgstr "El archivo de configuración necesita una clave válida para el cifrado de consulta de URL. Se ha generado automáticamente una clave temporal para ti. Consulta la [doc@cfg_URLQueryEncryptionSecretKey]documentación[/doc]."
 
-msgid "The query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
-msgstr "La clave de cifrado de consulta en el archivo de configuración es más larga de lo necesario. Sólo debería tener %d bytes de longitud. Consulta la [doc@cfg_URLQueryEncryptionSecretKey]documentación[/doc]."
+msgid "The URL query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
+msgstr "La clave de cifrado de consulta de URL en el archivo de configuración es más larga de lo necesario. Sólo debería tener %d bytes de longitud. Consulta la [doc@cfg_URLQueryEncryptionSecretKey]documentación[/doc]."
 
 msgid "Directory [code]config[/code], which is used by the setup script, still exists in your phpMyAdmin directory. It is strongly recommended to remove it once phpMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorized people downloading your configuration."
 msgstr "El directorio [code]config[/code], utilizado por el script de configuración, aún existe en el directorio phpMyAdmin. Es muy recomendable eliminarlo una vez que configuró phpMyAdmin. De lo contrario, podría comprometer la seguridad de su servidor cuando personas no autorizadas descarguen su configuración."
@@ -8608,9 +8636,6 @@ msgstr "Editar disparador"
 msgid "No trigger with name %1$s found in database %2$s."
 msgstr "No se encontró disparador con nombre %1$s en la base de datos %2$s."
 
-msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
-msgstr "Error al procesar la solicitud: no se encontró ningún activador con el nombre %1$s en la base de datos %2$s."
-
 msgid "You don't have sufficient privileges to be here right now!"
 msgstr "¡Usted no tiene suficientes privilegios para estar aquí ahora!"
 
@@ -8905,6 +8930,9 @@ msgstr "Reportar"
 msgid "Event %1$s has been created."
 msgstr "Se creó el evento %1$s."
 
+msgid "Event not found."
+msgstr "Evento no encontrado."
+
 msgid "Sorry, we failed to restore the dropped event."
 msgstr "Pedimos disculpas por no haber podido recuperar el evento eliminado."
 
@@ -9069,22 +9097,22 @@ msgid "Ignoring unsupported language code."
 msgstr "Ignorando código de idioma no compatible."
 
 msgid "The database name must be a non-empty string."
-msgstr "El nombre de la base de datos debe ser una cadena no vacía."
+msgstr "El nombre de la base de datos no debe ser una cadena vacía."
 
 msgid "The database name cannot be longer than %d characters."
 msgstr "El nombre de la base de datos no puede tener más de %d caracteres."
 
 msgid "The database name cannot end with a space character."
-msgstr "El nombre de la base de datos no puede terminar con un carácter de espacio."
+msgstr "El nombre de la base de datos no puede terminar con un caracter espacio."
 
 msgid "The table name must be a non-empty string."
-msgstr "El nombre de la tabla debe ser una cadena no vacía."
+msgstr "El nombre de la tabla no debe ser una cadena vacía."
 
 msgid "The table name cannot be longer than %d characters."
 msgstr "El nombre de la tabla no puede tener más de %d caracteres."
 
 msgid "The table name cannot end with a space character."
-msgstr "El nombre de la tabla no puede terminar con un carácter de espacio."
+msgstr "El nombre de la tabla no puede terminar con un caracter espacio."
 
 msgid "The trigger name must not be empty."
 msgstr "El nombre del disparador no debe estar vacío."
@@ -10309,14 +10337,17 @@ msgstr "Se borró la versión %1$s de %2$s."
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "Se ha creado la versión %1$s, se ha activado el seguimiento para %2$s."
 
+msgid "Trigger %1$s has been created."
+msgstr "Disparador %1$s creado."
+
+msgid "Trigger not found."
+msgstr "Disparador no encontrado."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Pedimos disculpas por no haber podido recuperar el disparador eliminado."
 
 msgid "Trigger %1$s has been modified."
 msgstr "Se modificó el disparador %1$s."
-
-msgid "Trigger %1$s has been created."
-msgstr "Disparador %1$s creado."
 
 msgid "You must provide a trigger name!"
 msgstr "¡Debe proveer un nombre de disparador!"

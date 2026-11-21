@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/ko.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/ko.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-10-26 07:34+0000\nLast-Translator: kim8ccf3a4116ec4691 <kim8ccf3a4116ec4691@users.noreply.hosted.weblate.org>\nLanguage-Team: Korean <https://hosted.weblate.org/projects/phpmyadmin/master/ko/>\nLanguage: ko\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.11.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-10-26 07:34+0000\nLast-Translator: kim8ccf3a4116ec4691 <kim8ccf3a4116ec4691@users.noreply.hosted.weblate.org>\nLanguage-Team: Korean <https://hosted.weblate.org/projects/phpmyadmin/master/ko/>\nLanguage: ko\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.11.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "이 페이지를 넘기려면 Javascript 사용을 허용해야 합니다!"
@@ -4602,8 +4602,13 @@ msgstr "query_cache_limit가 1Mib로 설정되었습니다"
 msgid "Search:"
 msgstr "검색:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "알수없음"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "체코어"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -4620,6 +4625,10 @@ msgstr "스페인어(고전)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "스페인어(현대)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "키릴어"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -4654,12 +4663,12 @@ msgid "no-pad"
 msgstr "패드-없음"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "바이너리"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "유니코드"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "바이너리"
 
 msgctxt "Collation"
 msgid "West European"
@@ -4696,10 +4705,6 @@ msgstr "발트어"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "아르메니아어"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "키릴어"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -4742,20 +4747,12 @@ msgid "Thai"
 msgstr "태국어"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "알수없음"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "불가리아어"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "크로아티아어"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "체코어"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4824,6 +4821,9 @@ msgstr "슬로베니아어"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "베트남어"
+
+msgid "Unknown"
+msgstr "알수없음"
 
 msgid "Icons"
 msgstr "아이콘"
@@ -6729,12 +6729,6 @@ msgstr "설정 파일에는 쿠키 암호화를 위한 유효한 키가 필요�
 msgid "The cookie encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc]."
 msgstr "구성 파일의 쿠키 암호화 키가 필요 이상으로 깁니다. 이 키는 %d 바이트 길이 여야합니다. 이 [doc@cfg_blowfish_secret]문서[/doc]를 참조하세요."
 
-msgid "The configuration file needs a valid key for query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
-msgstr "설정 파일에는 쿼리 암호화를 위한 유효한 키가 필요합니다. 임시 키가 자동으로 생성됩니다. 이 [doc@cfg_URLQueryEncryptionSecretKey]문서[/doc]를 참조하세요."
-
-msgid "The query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
-msgstr "설정 파일의 쿼리 암호화 키가 필요 이상으로 깁니다. 이 키는 %d 바이트 길이 여야합니다. 이 [doc@cfg_URLQueryEncryptionSecretKey]문서[/doc]를 참조하세요."
-
 msgid "Directory [code]config[/code], which is used by the setup script, still exists in your phpMyAdmin directory. It is strongly recommended to remove it once phpMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorized people downloading your configuration."
 msgstr "설정 스크립트가 [code]config[/code] 디렉토리를 사용하고 phpMyAdmin디렉토리에도 존재합니다. phpMyAdmin 설정 완료후 꼭 삭제하세요. 그렇지 않으며 보안에 취약해 집니다."
 
@@ -8595,9 +8589,6 @@ msgstr "트리거 수정"
 msgid "No trigger with name %1$s found in database %2$s."
 msgstr "%2$s 데이터베이스에 %1$s라는 트리거가 없습니다."
 
-msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
-msgstr "처리 요청 중 오류: %2$s 데이터베이스에 %1$s라는 트리거가 없습니다."
-
 msgid "You don't have sufficient privileges to be here right now!"
 msgstr "어떻게 들어오셨어요? 지금 여기 있을 권한이 없습니다!"
 
@@ -10291,14 +10282,14 @@ msgstr "%2$s의 %1$s 버전이 삭제되었습니다."
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "%1$s 버전이 만들어졌으며 %2$s에 대한 추적이 활성화되어 있습니다."
 
+msgid "Trigger %1$s has been created."
+msgstr "트리거 %1$s를 생성했습니다."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "죄송합니다만, 삭제한 트리거를 복구하지 못했습니다."
 
 msgid "Trigger %1$s has been modified."
 msgstr "트리거 %1$s가 수정되었습니다."
-
-msgid "Trigger %1$s has been created."
-msgstr "트리거 %1$s를 생성했습니다."
 
 msgid "You must provide a trigger name!"
 msgstr "트리거 이름을 입력하세요!"

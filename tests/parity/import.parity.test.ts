@@ -305,6 +305,13 @@ const cases: Array<{
     file: f('bad.xml', '<pma_xml_export><database'),
   },
   { name: 'shp, points', form: () => dbForm, changes: { format: 'shp' }, file: f('pts.shp', shp()) },
+  // shapefile 4.0.2: the second point has no y, "Failed to parse record."
+  {
+    name: 'shp, truncated record',
+    form: () => dbForm,
+    changes: { format: 'shp' },
+    file: f('cut.shp', shp().subarray(0, -8)),
+  },
   { name: 'no file [p07-797ff9]', form: () => dbForm, file: null },
   {
     name: 'incorrect format',

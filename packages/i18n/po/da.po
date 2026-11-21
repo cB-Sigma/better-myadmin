@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/da.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/da.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2021-01-22 17:26+0000\nLast-Translator: William Desportes <williamdes@wdes.fr>\nLanguage-Team: Danish <https://hosted.weblate.org/projects/phpmyadmin/master/da/>\nLanguage: da\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.5-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2021-01-22 17:26+0000\nLast-Translator: William Desportes <williamdes@wdes.fr>\nLanguage-Team: Danish <https://hosted.weblate.org/projects/phpmyadmin/master/da/>\nLanguage: da\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.5-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Herefter skal JavaScript være slået til!"
@@ -3763,8 +3763,13 @@ msgstr "query_cache_limit er sat til 1 MiB"
 msgid "Search:"
 msgstr "Søg:"
 
+msgctxt "Collation"
 msgid "Unknown"
-msgstr "Ukendt"
+msgstr "ukendt"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Tjekkisk"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -3781,6 +3786,10 @@ msgstr "Spansk (traditionel)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "Spansk (moderne)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Kyrillisk"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -3807,12 +3816,12 @@ msgid "binary"
 msgstr "Binært"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Binært"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Unicode"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Binært"
 
 msgctxt "Collation"
 msgid "West European"
@@ -3849,10 +3858,6 @@ msgstr "Baltisk"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "Armensk"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "Kyrillisk"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -3895,20 +3900,12 @@ msgid "Thai"
 msgstr "Thai"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "ukendt"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "Bulgarsk"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "Kroatisk"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Tjekkisk"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -3977,6 +3974,9 @@ msgstr "Slovensk"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "Vietnamesisk"
+
+msgid "Unknown"
+msgstr "Ukendt"
 
 msgid "Icons"
 msgstr "Ikoner"
@@ -8656,14 +8656,14 @@ msgstr "Version %1$s af %2$s blev slettet."
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "Version %1$s blev oprettet, sporing af %2$s er aktiv."
 
+msgid "Trigger %1$s has been created."
+msgstr "Trigger %1$s er oprettet."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Beklager, det lykkedes ikke at genetablere den slettede trigger."
 
 msgid "Trigger %1$s has been modified."
 msgstr "Trigger \"%1$s\" er blevet ændret."
-
-msgid "Trigger %1$s has been created."
-msgstr "Trigger %1$s er oprettet."
 
 msgid "You must provide a trigger name!"
 msgstr "Du skal angive et triggernavn!"

@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/ta.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/ta.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-07-28 04:01+0000\nLast-Translator: Rajkumar Ramadoss <lionrajkumar@gmail.com>\nLanguage-Team: Tamil <https://hosted.weblate.org/projects/phpmyadmin/master/ta/>\nLanguage: ta\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.8.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-07-28 04:01+0000\nLast-Translator: Rajkumar Ramadoss <lionrajkumar@gmail.com>\nLanguage-Team: Tamil <https://hosted.weblate.org/projects/phpmyadmin/master/ta/>\nLanguage: ta\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.8.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "சாவாச்கிரிப்ட் இந்த புள்ளியைத் தாண்டி இயக்கப்பட வேண்டும்!"
@@ -4595,8 +4595,13 @@ msgstr "query_cache_limit 1 mib ஆக அமைக்கப்பட்டு�
 msgid "Search:"
 msgstr "தேடுக:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "தெரியவில்லை"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "செக்"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -4613,6 +4618,10 @@ msgstr "ச்பானிச் (பாரம்பரிய)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "ச்பானிச் (நவீன)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "சிரிலிக்"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -4647,12 +4656,12 @@ msgid "no-pad"
 msgstr "இல்லை"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "இருமம்"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "ஒருங்குறி"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "இருமம்"
 
 msgctxt "Collation"
 msgid "West European"
@@ -4689,10 +4698,6 @@ msgstr "பால்டிக்"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "ஆர்மீனியன்"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "சிரிலிக்"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -4735,20 +4740,12 @@ msgid "Thai"
 msgstr "தாய்"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "தெரியவில்லை"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "பல்கேரியன்"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "குரோசியன்"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "செக்"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4817,6 +4814,9 @@ msgstr "ச்லோவேனியன்"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "வியட்நாமிய"
+
+msgid "Unknown"
+msgstr "தெரியவில்லை"
 
 msgid "Icons"
 msgstr "முகவுருக்கள்"
@@ -6723,12 +6723,6 @@ msgstr "குக்கீ குறியாக்கத்திற்கு �
 msgid "The cookie encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc]."
 msgstr "உள்ளமைவு கோப்பில் உள்ள குக்கீ குறியாக்க விசை தேவையானதை விட நீளமானது. இது %d பைட்டுகள் மட்டுமே நீளமாக இருக்க வேண்டும். தயவுசெய்து [doc@cfg_blowfish_secret] ஆவணங்களைப் பார்க்கவும் [/doc]."
 
-msgid "The configuration file needs a valid key for query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
-msgstr "வினவல் குறியாக்கத்திற்கு உள்ளமைவு கோப்பிற்கு சரியான விசை தேவை. உங்களுக்காக ஒரு தற்காலிக விசை தானாகவே உருவாக்கப்பட்டது. தயவுசெய்து [doc@cfg_URLQueryEncryptionSecretKey]ஆவணத்தைப்[/doc] பார்."
-
-msgid "The query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
-msgstr "உள்ளமைவு கோப்பில் உள்ள வினவல் குறியாக்க விசை தேவையானதை விட நீளமாக உள்ளது. இது %d பைட்டுகள் மட்டுமே நீளமாக இருக்க வேண்டும். தயவுசெய்து [doc@cfg_URLQueryEncryptionSecretKey]ஆவணத்தைப்[/doc] பார்."
-
 msgid "Directory [code]config[/code], which is used by the setup script, still exists in your phpMyAdmin directory. It is strongly recommended to remove it once phpMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorized people downloading your configuration."
 msgstr "நிறுவல்கோவையால் பயன்படுத்தப்படும் [code]config[/code]அடைவு இன்னும் உங்கள் phpMyAdmin அடைவில் உள்ளது. phpMyAdmin ஐ கட்டமைத்தவுடன் அவ்வடைவை நீக்க phpMyAdmin மிகவும் பரிந்துரைக்கிறது. இல்லையெனில் உங்கள் சர்வர் பாதுகாப்பு கட்டமைப்பு கோவையை அங்கீகரிக்கப்படாத பயனர் பதிவிறக்குவதால் பாதிப்பு ஏற்படும்."
 
@@ -8575,9 +8569,6 @@ msgstr "புதிய பயனாளரை சேர்க்க->செய�
 msgid "No trigger with name %1$s found in database %2$s."
 msgstr "தரவுத்தள %2$s இல் %1$s என்ற பெயருடன் தூண்டுதல் இல்லை."
 
-msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
-msgstr "செயலாக்க கோரிக்கையில் பிழை: தரவுத்தள %2$s இல் %1$s என்ற பெயருடன் தூண்டுதல் இல்லை."
-
 msgid "You don't have sufficient privileges to be here right now!"
 msgstr "இப்போது இங்கே இருக்க உங்களுக்கு போதுமான சலுகைகள் இல்லை!"
 
@@ -10276,14 +10267,14 @@ msgstr "பதிப்பு %1$s %2$s நீக்கப்பட்டது.
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "பதிப்பு %1$s உருவாக்கப்பட்டது, %2$s க்கான கண்காணிப்பு செயலில் உள்ளது."
 
+msgid "Trigger %1$s has been created."
+msgstr "தூண்டுதல் %1$s உருவாக்கப்பட்டுள்ளது."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "மன்னிக்கவும், கைவிடப்பட்ட தூண்டுதலை மீட்டெடுக்க நாங்கள் தவறிவிட்டோம்."
 
 msgid "Trigger %1$s has been modified."
 msgstr "தூண்டுதல் %1$s மாற்றியமைக்கப்பட்டுள்ளது."
-
-msgid "Trigger %1$s has been created."
-msgstr "தூண்டுதல் %1$s உருவாக்கப்பட்டுள்ளது."
 
 msgid "You must provide a trigger name!"
 msgstr "நீங்கள் ஒரு தூண்டுதல் பெயரை வழங்க வேண்டும்!"
