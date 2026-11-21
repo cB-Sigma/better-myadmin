@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/ru.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/ru.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-10-19 01:51+0000\nLast-Translator: Andrei Stepanov <adem@users.noreply.hosted.weblate.org>\nLanguage-Team: Russian <https://hosted.weblate.org/projects/phpmyadmin/master/ru/>\nLanguage: ru\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\nX-Generator: Weblate 2026.11.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-11-19 19:30+0000\nLast-Translator: Roman Serov <cgtalium@yandex.com>\nLanguage-Team: Russian <https://hosted.weblate.org/projects/phpmyadmin/master/ru/>\nLanguage: ru\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\nX-Generator: Weblate 2026.12.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Для полноценной работы необходимо включить JavaScript!"
@@ -746,6 +746,9 @@ msgstr "По убыванию"
 msgid "Add as"
 msgstr "Добавить как"
 
+msgid "Op"
+msgstr "Оп."
+
 msgid "Text"
 msgstr "Текст"
 
@@ -1025,6 +1028,9 @@ msgstr "Снять выделение"
 msgid "Inside column:"
 msgstr "В поле:"
 
+msgid "Search results for \"%s\" %s:"
+msgstr "Результаты поиска по \"%s\" %s:"
+
 msgid "%1$s match in <strong>%2$s</strong>"
 msgid_plural "%1$s matches in <strong>%2$s</strong>"
 msgstr[0] "%1$s соответствие в таблице <strong>%2$s</strong>"
@@ -1297,7 +1303,7 @@ msgid "Sort by key:"
 msgstr "Сортировка по ключу:"
 
 msgid "Extra options"
-msgstr "Расширенные параметры"
+msgstr "Дополнительные опции"
 
 msgid "Partial texts"
 msgstr "Сокращённые тексты"
@@ -1353,6 +1359,9 @@ msgstr "Конвертировать в Кану"
 
 msgid "Error"
 msgstr "Ошибка"
+
+msgid "Backtrace"
+msgstr "Обратная трассировка"
 
 msgid "This report automatically includes data about the error and information about relevant configuration settings. It will be sent to the phpMyAdmin team for debugging the error."
 msgstr "Отчет содержит сообщение об ошибке и информацию о соответствующих настройках. Они будут отправлены команде разработчиков phpMyAdmin для исправления ошибки."
@@ -4603,8 +4612,13 @@ msgstr "query_cache_limit установлен на 1 MiB"
 msgid "Search:"
 msgstr "Поиск:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "неизвестно"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Чешский"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -4621,6 +4635,14 @@ msgstr "Испанский (традиционный)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "Испанский"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Кириллический"
+
+msgctxt "Collation"
+msgid "Latin"
+msgstr "Латинский"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -4655,12 +4677,12 @@ msgid "no-pad"
 msgstr "без выравнивания"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Двоичный"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Юникод"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Двоичный"
 
 msgctxt "Collation"
 msgid "West European"
@@ -4697,10 +4719,6 @@ msgstr "Балтийский"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "Армянский"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "Кириллический"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -4743,8 +4761,8 @@ msgid "Thai"
 msgstr "Таи"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "неизвестно"
+msgid "Bosnian"
+msgstr "Боснийский"
 
 msgctxt "Collation"
 msgid "Bulgarian"
@@ -4753,10 +4771,6 @@ msgstr "Болгарский"
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "Хорватский"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Чешский"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4773,6 +4787,10 @@ msgstr "Эсперанто"
 msgctxt "Collation"
 msgid "Estonian"
 msgstr "Эстонский"
+
+msgctxt "Collation"
+msgid "Galician"
+msgstr "Галисийский"
 
 msgctxt "Collation"
 msgid "Hungarian"
@@ -4795,8 +4813,20 @@ msgid "Lithuanian"
 msgstr "Литовский"
 
 msgctxt "Collation"
+msgid "Mongolian"
+msgstr "Монгольский"
+
+msgctxt "Collation"
 msgid "Burmese"
 msgstr "Бирманский"
+
+msgctxt "Collation"
+msgid "Norwegian Bokmål"
+msgstr "Норвежский (Букмол)"
+
+msgctxt "Collation"
+msgid "Norwegian Nynorsk"
+msgstr "Норвежский (Нюнорск)"
 
 msgctxt "Collation"
 msgid "Persian"
@@ -4809,6 +4839,10 @@ msgstr "Польский"
 msgctxt "Collation"
 msgid "Romanian"
 msgstr "Румынский"
+
+msgctxt "Collation"
+msgid "Serbian"
+msgstr "Сербский"
 
 msgctxt "Collation"
 msgid "Sinhalese"
@@ -4825,6 +4859,9 @@ msgstr "Словенский"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "Вьетнамский"
+
+msgid "Unknown"
+msgstr "неизвестно"
 
 msgid "Icons"
 msgstr "Значки"
@@ -6735,12 +6772,6 @@ msgstr "Для шифрования куки в конфигурационном
 msgid "The cookie encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc]."
 msgstr "Ключ шифрования куки в конфигурационном файле длиннее необходимого. Его длина должна быть всего %d байт. Пожалуйста, обратитесь к [doc@cfg_blowfish_secret]документации[/doc] ."
 
-msgid "The configuration file needs a valid key for query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
-msgstr "В файле конфигурации необходим действительный ключ для шифрования запросов. Для вас был автоматически сгенерирован временный ключ. Пожалуйста, обратитесь к [doc@cfg_URLQueryEncryptionSecretKey]документации[/doc]."
-
-msgid "The query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
-msgstr "Ключ шифрования запроса в файле конфигурации длиннее, чем необходимо. Его длина должна составлять только %d байт. См. [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
-
 msgid "Directory [code]config[/code], which is used by the setup script, still exists in your phpMyAdmin directory. It is strongly recommended to remove it once phpMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorized people downloading your configuration."
 msgstr "Используемый скриптом настройки каталог [code]config[/code] все ещё находится в установочной директории phpMyAdmin. Обязательно удалите его сразу после настройки phpMyAdmin. В ином случае безопасность вашего сервера может быть скомпрометирована через свободный доступ к загрузке конфигурационного файла."
 
@@ -6932,6 +6963,12 @@ msgstr "Значения Y"
 
 msgid "Please enter the SQL query first."
 msgstr "Введите сначала SQL-запрос."
+
+msgid "Nothing selected"
+msgstr "Ничего не выделено"
+
+msgid "Enter an option"
+msgstr "Введите параметр"
 
 msgid "The host name is empty!"
 msgstr "Пустое имя хоста!"
@@ -7365,6 +7402,12 @@ msgstr "DROP столбцов %s в таблице %s"
 
 msgid "Create the following table"
 msgstr "Создать следующую таблицу"
+
+msgid "Enter new table name"
+msgstr "Введите имя новой таблицы"
+
+msgid "Enter column name"
+msgstr "Ведите имя столбца"
 
 msgid "Third step of normalization (3NF)"
 msgstr "Третий этап нормализации (3NF)"
@@ -8594,9 +8637,6 @@ msgstr "Редактировать триггер"
 msgid "No trigger with name %1$s found in database %2$s."
 msgstr "В базе данных %2$s триггер с именем %1$s не найден."
 
-msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
-msgstr "Ошибка обработки запроса: Триггер с именем %1$s не найден в базе данных %2$s."
-
 msgid "You don't have sufficient privileges to be here right now!"
 msgstr "Для доступа к данной странице у вас недостаточно прав!"
 
@@ -8892,6 +8932,9 @@ msgstr "Отчёт"
 msgid "Event %1$s has been created."
 msgstr "Было создано событие %1$s."
 
+msgid "Event not found."
+msgstr "Событие не найдено."
+
 msgid "Sorry, we failed to restore the dropped event."
 msgstr "Невозможно восстановить удаленное событие."
 
@@ -9056,7 +9099,7 @@ msgid "Ignoring unsupported language code."
 msgstr "Игнорировать неподдерживаемые коды языков."
 
 msgid "The database name must be a non-empty string."
-msgstr "Не указано имя базы данных."
+msgstr "Имя базы данных не должно быть пустой строкой."
 
 msgid "The database name cannot be longer than %d characters."
 msgstr "Имя базы данных не может быть длиннее %d символов."
@@ -9065,7 +9108,7 @@ msgid "The database name cannot end with a space character."
 msgstr "Имя базы данных не может заканчиваться символом пробела."
 
 msgid "The table name must be a non-empty string."
-msgstr "Имя таблицы должно быть непустой строкой."
+msgstr "Имя таблицы не должно быть пустой строкой."
 
 msgid "The table name cannot be longer than %d characters."
 msgstr "Имя таблицы не может быть длиннее %d символов."
@@ -10300,14 +10343,17 @@ msgstr "Версия %1$s из %2$s удалена."
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "Версия %1$s создана, отслеживание %2$s включено."
 
+msgid "Trigger %1$s has been created."
+msgstr "Триггер %1$s был создан."
+
+msgid "Trigger not found."
+msgstr "Триггер не найден."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Невозможно восстановить удаленный триггер."
 
 msgid "Trigger %1$s has been modified."
 msgstr "Триггер %1$s был изменен."
-
-msgid "Trigger %1$s has been created."
-msgstr "Триггер %1$s был создан."
 
 msgid "You must provide a trigger name!"
 msgstr "Необходимо задать имя триггера!"

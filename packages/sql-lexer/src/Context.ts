@@ -273,6 +273,7 @@ export class Context {
   static isComment(str: string, end = false): number | null {
     if (str.startsWith('#')) return TokenFlag.COMMENT_BASH
     if (str.startsWith('/*!')) return TokenFlag.COMMENT_MYSQL_CMD
+    if (str.startsWith('/*M!')) return TokenFlag.COMMENT_MARIADB_CMD
     if (str.startsWith('/*') || str.startsWith('*/')) return TokenFlag.COMMENT_C
     if (
       str.startsWith('-- ') ||

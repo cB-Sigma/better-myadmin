@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/zh_CN.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/zh_CN.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-10-15 09:51+0000\nLast-Translator: Lesterbor <qianfan@users.noreply.hosted.weblate.org>\nLanguage-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/projects/phpmyadmin/master/zh_Hans/>\nLanguage: zh_CN\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.11.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-10-15 09:51+0000\nLast-Translator: Lesterbor <qianfan@users.noreply.hosted.weblate.org>\nLanguage-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/projects/phpmyadmin/master/zh_Hans/>\nLanguage: zh_CN\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.11.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "该处必须启用 Javascript！"
@@ -4506,8 +4506,13 @@ msgstr "query_cache_limit 已被设为 1 MB"
 msgid "Search:"
 msgstr "搜索："
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "未知"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "捷克语"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -4524,6 +4529,10 @@ msgstr "西班牙语（传统）"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "西班牙语（现代）"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "西里尔语"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -4558,12 +4567,12 @@ msgid "no-pad"
 msgstr "无填充"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "二进制"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Unicode"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "二进制"
 
 msgctxt "Collation"
 msgid "West European"
@@ -4600,10 +4609,6 @@ msgstr "巴拉克语"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "亚美尼亚语"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "西里尔语"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -4646,20 +4651,12 @@ msgid "Thai"
 msgstr "泰语"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "未知"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "保加利亚语"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "克罗地亚语"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "捷克语"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4728,6 +4725,9 @@ msgstr "斯洛文尼亚语"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "越南语"
+
+msgid "Unknown"
+msgstr "未知"
 
 msgid "Icons"
 msgstr "图标"
@@ -8436,9 +8436,6 @@ msgstr "编辑触发器"
 msgid "No trigger with name %1$s found in database %2$s."
 msgstr "在数据库 %2$s 中找不到名为 %1$s 的触发器。"
 
-msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
-msgstr "处理请求时出错：在数据库 %2$s 中找不到名为 %1$s 的触发器。"
-
 msgid "You don't have sufficient privileges to be here right now!"
 msgstr "权限不足！"
 
@@ -10114,14 +10111,14 @@ msgstr "%2$s的版本%1$s被删除了。"
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "已创建版本 %1$s，%2$s 的追踪已启用。"
 
+msgid "Trigger %1$s has been created."
+msgstr "已创建触发器 %1$s 。"
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "抱歉，恢复已删除的触发器失败。"
 
 msgid "Trigger %1$s has been modified."
 msgstr "已修改触发器 %1$s 。"
-
-msgid "Trigger %1$s has been created."
-msgstr "已创建触发器 %1$s 。"
 
 msgid "You must provide a trigger name!"
 msgstr "需要触发器名称!"

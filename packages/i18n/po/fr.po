@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/fr.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/fr.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin-docs 4.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-11-10 14:51+0000\nLast-Translator: Marc Delisle <lem9@users.noreply.hosted.weblate.org>\nLanguage-Team: French <https://hosted.weblate.org/projects/phpmyadmin/master/fr/>\nLanguage: fr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 2026.11.2.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin-docs 4.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-11-16 11:23+0000\nLast-Translator: kjo-sdds <kjo-sdds@users.noreply.hosted.weblate.org>\nLanguage-Team: French <https://hosted.weblate.org/projects/phpmyadmin/master/fr/>\nLanguage: fr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 2026.12.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "JavaScript doit être activé au-delà de ce point !"
@@ -4607,8 +4607,13 @@ msgstr "query_cache_limit a une valeur de 1 Mio"
 msgid "Search:"
 msgstr "Rechercher :"
 
+msgctxt "Collation"
 msgid "Unknown"
-msgstr "Inconnu"
+msgstr "inconnu"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Tchèque"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -4625,6 +4630,14 @@ msgstr "Espagnol (traditionnel)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "Espagnol"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Cyrillique"
+
+msgctxt "Collation"
+msgid "Latin"
+msgstr "Latin"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -4659,12 +4672,12 @@ msgid "no-pad"
 msgstr "no-pad"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Binaire"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Unicode"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Binaire"
 
 msgctxt "Collation"
 msgid "West European"
@@ -4701,10 +4714,6 @@ msgstr "Baltique"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "Arménien"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "Cyrillique"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -4747,8 +4756,8 @@ msgid "Thai"
 msgstr "Thaï"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "inconnu"
+msgid "Bosnian"
+msgstr "Bosnien"
 
 msgctxt "Collation"
 msgid "Bulgarian"
@@ -4757,10 +4766,6 @@ msgstr "Bulgare"
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "Croate"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Tchèque"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4777,6 +4782,10 @@ msgstr "Espéranto"
 msgctxt "Collation"
 msgid "Estonian"
 msgstr "Estonien"
+
+msgctxt "Collation"
+msgid "Galician"
+msgstr "Galicien"
 
 msgctxt "Collation"
 msgid "Hungarian"
@@ -4799,8 +4808,20 @@ msgid "Lithuanian"
 msgstr "Lituanien"
 
 msgctxt "Collation"
+msgid "Mongolian"
+msgstr "Mongol"
+
+msgctxt "Collation"
 msgid "Burmese"
 msgstr "Birman"
+
+msgctxt "Collation"
+msgid "Norwegian Bokmål"
+msgstr "Norvégien Bokmål"
+
+msgctxt "Collation"
+msgid "Norwegian Nynorsk"
+msgstr "Norvégien Nynorsk"
 
 msgctxt "Collation"
 msgid "Persian"
@@ -4813,6 +4834,10 @@ msgstr "Polonais"
 msgctxt "Collation"
 msgid "Romanian"
 msgstr "Roumain"
+
+msgctxt "Collation"
+msgid "Serbian"
+msgstr "Serbe"
 
 msgctxt "Collation"
 msgid "Sinhalese"
@@ -4829,6 +4854,9 @@ msgstr "Slovène"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "Vietnamien"
+
+msgid "Unknown"
+msgstr "Inconnu"
 
 msgid "Icons"
 msgstr "Icônes"
@@ -6738,10 +6766,10 @@ msgstr "Le fichier de configuration a besoin d'une clé valide pour le chiffreme
 msgid "The cookie encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc]."
 msgstr "La clé de chiffrement des cookies dans le fichier de configuration est plus longue que nécessaire. Elle ne devrait avoir qu'une longueur de %d octets. Veuillez consulter la [doc@cfg_blowfish_secret]documentation[/doc]."
 
-msgid "The configuration file needs a valid key for query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
+msgid "The configuration file needs a valid key for URL query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
 msgstr "Le fichier de configuration a besoin d'une clé valide pour le chiffrement de requêtes. Une clé temporaire a été générée automatiquement pour vous. Veuillez vous référer à la [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
 
-msgid "The query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
+msgid "The URL query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
 msgstr "La clé de chiffrement de requêtes dans le fichier de configuration est plus longue que nécessaire. Elle ne devrait avoir qu'une longueur de %d octets. Veuillez consulter la [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
 
 msgid "Directory [code]config[/code], which is used by the setup script, still exists in your phpMyAdmin directory. It is strongly recommended to remove it once phpMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorized people downloading your configuration."
@@ -8608,9 +8636,6 @@ msgstr "Éditer le déclencheur"
 msgid "No trigger with name %1$s found in database %2$s."
 msgstr "Aucun déclencheur nommé %1$s n'a été trouvé dans la base de données %2$s."
 
-msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
-msgstr "Erreur dans le traitement de la demande : aucun déclencheur nommé %1$s n'a été trouvé dans la base de données %2$s."
-
 msgid "You don't have sufficient privileges to be here right now!"
 msgstr "L'utilisateur n'est pas autorisé à accéder à cette page !"
 
@@ -8904,6 +8929,9 @@ msgstr "Rapporter"
 
 msgid "Event %1$s has been created."
 msgstr "L'évènement %1$s a été créé."
+
+msgid "Event not found."
+msgstr "Événement introuvable."
 
 msgid "Sorry, we failed to restore the dropped event."
 msgstr "Il a été impossible de restaurer l'évènement."
@@ -10309,14 +10337,17 @@ msgstr "La version %1$s de %2$s a été supprimée."
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "Version %1$s créée, le suivi pour %2$s est activé."
 
+msgid "Trigger %1$s has been created."
+msgstr "Le déclencheur %1$s a été créé."
+
+msgid "Trigger not found."
+msgstr "Déclencheur introuvable."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Il a été impossible de restaurer le déclencheur."
 
 msgid "Trigger %1$s has been modified."
 msgstr "Le déclencheur %1$s a été modifié."
-
-msgid "Trigger %1$s has been created."
-msgstr "Le déclencheur %1$s a été créé."
 
 msgid "You must provide a trigger name!"
 msgstr "Il faut fournir un nom valide pour le déclencheur !"

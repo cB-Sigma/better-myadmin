@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/si.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/si.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Sinhala <https://hosted.weblate.org/projects/phpmyadmin/master/si/>\nLanguage: si\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.11-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Sinhala <https://hosted.weblate.org/projects/phpmyadmin/master/si/>\nLanguage: si\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.11-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "මෙම ස්ථානයයෙන් පසු JavaScript සක්‍රිය කර තිබීම අවශ්‍යය!"
@@ -4830,14 +4830,14 @@ msgstr "%2$s වන අනුවාදයේදී %1$s සඳහා අවධ�
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "%1$s වන අනුවාදය සාදන ලදි. %2$s සඳහා අවධානය සක්‍රීයයි."
 
+msgid "Trigger %1$s has been created."
+msgstr "%1$s ප්‍රේරකය සාදන ලදි."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "හලන ලද ප්‍රේරකය ප්‍රතිස්ථාපනය කිරීම අසමත් විය."
 
 msgid "Trigger %1$s has been modified."
 msgstr "%1$s ප්‍රේරකය වෙනස් කරන ලදි."
-
-msgid "Trigger %1$s has been created."
-msgstr "%1$s ප්‍රේරකය සාදන ලදි."
 
 msgid "You must provide a trigger name!"
 msgstr "ඔබ ප්‍රේරකය සඳහා නමක් ලබාදිය යුතුයි!"

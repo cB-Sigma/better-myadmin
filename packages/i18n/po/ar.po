@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/ar.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/ar.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2025-07-14 12:01+0000\nLast-Translator: \"Ali H.Abdulhadi\" <a.h.alsaady1998@gmail.com>\nLanguage-Team: Arabic <https://hosted.weblate.org/projects/phpmyadmin/master/ar/>\nLanguage: ar\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\nX-Generator: Weblate 5.13-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2025-07-14 12:01+0000\nLast-Translator: \"Ali H.Abdulhadi\" <a.h.alsaady1998@gmail.com>\nLanguage-Team: Arabic <https://hosted.weblate.org/projects/phpmyadmin/master/ar/>\nLanguage: ar\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\nX-Generator: Weblate 5.13-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "يجب تفعيل Javascript بعد هذه النقطة!"
@@ -2361,8 +2361,13 @@ msgstr "حجم ذاكرة التخزين المؤقت للاستعلام الح�
 msgid "Search:"
 msgstr "إبحث:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "غير معروف"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "التشيكية"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -2409,12 +2414,12 @@ msgid "binary"
 msgstr "ثنائي"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "ثنائي"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "يونيكود"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "ثنائي"
 
 msgctxt "Collation"
 msgid "West European"
@@ -2493,20 +2498,12 @@ msgid "Thai"
 msgstr "التايلندية"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "غير معروف"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "البلغارية"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "الكرواتية"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "التشيكية"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -2575,6 +2572,9 @@ msgstr "السلوفينية"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "الفيتنامية"
+
+msgid "Unknown"
+msgstr "غير معروف"
 
 msgid "Both"
 msgstr "كلا"
@@ -4843,9 +4843,6 @@ msgstr "إضافة زناد"
 
 msgid "No trigger with name %1$s found in database %2$s."
 msgstr "لم يتم العثور على مشغل بالاسم %1$s في قاعدة البيانات %2$s."
-
-msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
-msgstr "خطأ في طلب المعالجة: لم يتم العثور على مشغل بالاسم %1$s في قاعدة البيانات %2$s."
 
 msgid "You don't have sufficient privileges to be here right now!"
 msgstr "ليس لديك الحقوق الكافية بأن تكون هنا الآن!"

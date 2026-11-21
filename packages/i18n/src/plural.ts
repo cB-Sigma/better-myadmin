@@ -2,9 +2,9 @@
  * Plural-form selection exactly as phpMyAdmin's gettext implementation (phpmyadmin/motranslator) does it.
  *
  * motranslator does NOT evaluate the Plural-Forms expression as C: it strips every character outside
- * `[n0-9:()?=!<>/%&| ]` and evaluates the rest with symfony/expression-language, then keeps the
- * result only when it is numeric. A boolean result (`plural=n != 1;`, `plural=(n > 1);` …) is not
- * numeric, so those locales always pick form 0. We reproduce that, because it is what phpMyAdmin shows.
+ * `[n0-9:()?=!<>/%&| ]` and evaluates the rest with symfony/expression-language, then casts a numeric
+ * or (since motranslator 6.0.2) boolean result to an int; anything else is form 0. A boolean expression
+ * (`plural=n != 1;`, `plural=(n > 1);` …) therefore picks form 1 when it is true.
  *
  * pma: vendor/phpmyadmin/motranslator/src/Translator.php::sanitizePluralExpression, ::extractPluralCount,
  *      ::selectString; vendor/symfony/expression-language/Parser.php (operator table)
@@ -226,8 +226,9 @@ export function pluralRule(pluralForms: string): PluralRule {
       if (node !== null) {
         try {
           const v = node(Math.trunc(n))
-          // is_numeric(bool) and is_numeric(null) are false → 0
-          plural = typeof v === 'number' ? Math.trunc(v) : 0
+          // motranslator 6.0.2: a number or a bool is cast to int (`plural=n != 1` evaluates to a bool);
+          // anything else (null) → 0
+          plural = typeof v === 'number' ? Math.trunc(v) : typeof v === 'boolean' ? Number(v) : 0
         } catch {
           plural = 0
         }

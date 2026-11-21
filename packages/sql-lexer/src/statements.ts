@@ -1,6 +1,6 @@
 import { Context } from './Context.ts'
 import { Parser } from './Parser.ts'
-import { type Token, TokenType, type TokenValue } from './Token.ts'
+import { type Token, TokenFlag, TokenType, type TokenValue } from './Token.ts'
 import { TokensList } from './TokensList.ts'
 /**
  * Port of vendor/phpmyadmin/sql-parser/src/Statement.php and src/Statements/*.php.
@@ -1468,7 +1468,18 @@ export class ExplainStatement extends Statement {
           list.idx++ // Ignore the current token
           list.getNext() // CONNECTION
           nextToken = list.getNext() // Identifier
-          this.connectionId = nextToken?.value ?? null
+          // is_int(): PHP ints are numbers without the float flags (a hex literal is hexdec(), an int)
+          if (
+            nextToken === null ||
+            nextToken.type !== TokenType.Number ||
+            typeof nextToken.value !== 'number' ||
+            (nextToken.flags & (TokenFlag.NUMBER_APPROXIMATE | TokenFlag.NUMBER_FLOAT)) !== 0
+          ) {
+            parser.error('Unexpected token.', nextToken)
+            break
+          }
+
+          this.connectionId = nextToken.value
           break
         }
 

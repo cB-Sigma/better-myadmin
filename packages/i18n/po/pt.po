@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/pt.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/pt.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-03-24 13:09+0000\nLast-Translator: Horus68 <horus68@users.noreply.hosted.weblate.org>\nLanguage-Team: Portuguese <https://hosted.weblate.org/projects/phpmyadmin/master/pt/>\nLanguage: pt\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 5.17-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-03-24 13:09+0000\nLast-Translator: Horus68 <horus68@users.noreply.hosted.weblate.org>\nLanguage-Team: Portuguese <https://hosted.weblate.org/projects/phpmyadmin/master/pt/>\nLanguage: pt\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 5.17-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "O Javascript tem de estar activo a partir deste ponto!"
@@ -4266,8 +4266,13 @@ msgstr "query_cache_limit está definido como 1 MB"
 msgid "Search:"
 msgstr "Pesquisar:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "Desconhecido"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Checo"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -4284,6 +4289,10 @@ msgstr "Espanhol (tradicional)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "Espanhol (moderno)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Cirílico"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -4318,12 +4327,12 @@ msgid "no-pad"
 msgstr "no-pad"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Binário"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Unicode"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Binário"
 
 msgctxt "Collation"
 msgid "West European"
@@ -4360,10 +4369,6 @@ msgstr "Báltico"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "Arménio"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "Cirílico"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -4406,20 +4411,12 @@ msgid "Thai"
 msgstr "Tailandês"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "Desconhecido"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "Búlgaro"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "Croata"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Checo"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4488,6 +4485,9 @@ msgstr "Esloveno"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "Vietnamita"
+
+msgid "Unknown"
+msgstr "Desconhecido"
 
 msgid "Icons"
 msgstr "Ícones"
@@ -7939,9 +7939,6 @@ msgstr "Editar trigger"
 msgid "No trigger with name %1$s found in database %2$s."
 msgstr "Não foi encontrado nenhum trigger com o nome %1$s na base de dados %2$s."
 
-msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
-msgstr "Erro no processamento do pedido: Não foi encontrado nenhum trigger com o nome %1$s na base de dados %2$s."
-
 msgid "You don't have sufficient privileges to be here right now!"
 msgstr "Não tem permissões suficientes para aceder aqui, neste momento!"
 
@@ -9583,14 +9580,14 @@ msgstr "Versão %1$s de %2$s foi apagada."
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "Versão %1$s foi criada, rastreamento para %2$s está ativado(a)."
 
+msgid "Trigger %1$s has been created."
+msgstr "O trigger %1$s foi criado."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Lamentamos, mas não foi possível repor o trigger perdido."
 
 msgid "Trigger %1$s has been modified."
 msgstr "O trigger %1$s foi modificado."
-
-msgid "Trigger %1$s has been created."
-msgstr "O trigger %1$s foi criado."
 
 msgid "You must provide a trigger name!"
 msgstr "Deve fornecer um nome ao trigger!"

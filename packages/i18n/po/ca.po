@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/ca.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/ca.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-04-25 14:09+0000\nLast-Translator: blacx0 <josepd.capdevila@gmail.com>\nLanguage-Team: Catalan <https://hosted.weblate.org/projects/phpmyadmin/master/ca/>\nLanguage: ca\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.17.1-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-04-25 14:09+0000\nLast-Translator: blacx0 <josepd.capdevila@gmail.com>\nLanguage-Team: Catalan <https://hosted.weblate.org/projects/phpmyadmin/master/ca/>\nLanguage: ca\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.17.1-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "A partir d'aquest punt és necessari tenir el javascript activat!"
@@ -3867,8 +3867,13 @@ msgstr "«query_cache_limit» està establert a 1 MiB"
 msgid "Search:"
 msgstr "Cerca:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "Desconegut"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Txec"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -3885,6 +3890,10 @@ msgstr "Espanyol (tradicional)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "Espanyol (modern)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Ciríl·lic"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -3911,12 +3920,12 @@ msgid "binary"
 msgstr "binari"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Binari"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Unicode"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Binari"
 
 msgctxt "Collation"
 msgid "West European"
@@ -3953,10 +3962,6 @@ msgstr "Bàltic"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "Armeni"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "Ciríl·lic"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -3999,20 +4004,12 @@ msgid "Thai"
 msgstr "Tailandès"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "Desconegut"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "Búlgar"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "Croata"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Txec"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4081,6 +4078,9 @@ msgstr "Eslovè"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "Vietnamita"
+
+msgid "Unknown"
+msgstr "Desconegut"
 
 msgid "Icons"
 msgstr "Icones"
@@ -8860,14 +8860,14 @@ msgstr "Versió %1$s de %2$s esborrada."
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "S'ha creat la versió %1$s, activat el seguiment per %2$s."
 
+msgid "Trigger %1$s has been created."
+msgstr "Disparador %1$s creat."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Malauradament, no s'ha pogut restaurar el disparador eliminat."
 
 msgid "Trigger %1$s has been modified."
 msgstr "S'ha modificat el disparador %1$s."
-
-msgid "Trigger %1$s has been created."
-msgstr "Disparador %1$s creat."
 
 msgid "You must provide a trigger name!"
 msgstr "Heu de proporcionar un nom de disparador!"

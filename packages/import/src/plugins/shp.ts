@@ -88,15 +88,19 @@ class ShapeReader {
 
   #record(): { shapeType: number; shpData: ShpData } | null {
     let read = 0
+    // ShapeRecord::loadData: '' and short reads (unpack fails) are false
     const data = (count: number): Buffer | null => {
       const b = this.read(count)
       read += b.length
       return b.length === 0 ? null : b
     }
-    const V = () => data(4)?.readUInt32LE(0) ?? null
+    const V = () => {
+      const b = data(4)
+      return b !== null && b.length === 4 ? b.readUInt32LE(0) : null
+    }
     const d = () => {
       const b = data(8)
-      return b !== null && b.length === 8 ? b.readDoubleLE(0) : 0
+      return b !== null && b.length === 8 ? b.readDoubleLE(0) : null
     }
     const rec = { shapeType: -1, shpData: {} as ShpData }
     const num = data(4)
@@ -107,7 +111,16 @@ class ShapeReader {
     const st = V()
     if (st === null) return rec
     rec.shapeType = NAMES[st] !== undefined ? st : -1
-    const point = (): XY => ({ x: d(), y: d() })
+    // shapefile 4.0.2: a point, count or part index that cannot be read fails the record
+    const failed = () => {
+      this.lastError = 'Failed to parse record.'
+      return null
+    }
+    const point = (): XY | null => {
+      const x = d()
+      const y = d()
+      return x === null || y === null ? null : { x, y }
+    }
     const bbox = () => {
       d()
       d()
@@ -117,29 +130,44 @@ class ShapeReader {
     switch (rec.shapeType) {
       case 0:
         break
-      case 1:
-        rec.shpData = point()
+      case 1: {
+        const p = point()
+        if (p === null) return failed()
+        rec.shpData = p
         break
+      }
       case 8: {
         bbox()
-        const np = V() ?? 0
+        const np = V()
+        if (np === null) return failed()
         rec.shpData = { numpoints: np, points: [] }
-        for (let i = 0; i < np; ++i) rec.shpData.points?.push(point())
+        for (let i = 0; i < np; ++i) {
+          const p = point()
+          if (p === null) return failed()
+          rec.shpData.points?.push(p)
+        }
         break
       }
       case 3:
       case 5: {
         bbox()
-        const numparts = V() ?? 0
-        const numpoints = V() ?? 0
+        const numparts = V()
+        const numpoints = V()
+        if (numparts === null || numpoints === null) return failed()
         const starts: number[] = []
-        for (let i = 0; i < numparts; ++i) starts.push(V() ?? 0)
+        for (let i = 0; i < numparts; ++i) {
+          const s0 = V()
+          if (s0 === null) return failed()
+          starts.push(s0)
+        }
         const parts: Array<{ points: XY[] }> = []
         let part = 0
         for (let i = 0; i < numpoints; ++i) {
           if (part + 1 < numparts && i === starts[part + 1]) ++part
           parts[part] ??= { points: [] }
-          parts[part]?.points.push(point())
+          const p = point()
+          if (p === null) return failed()
+          parts[part]?.points.push(p)
         }
         rec.shpData = { numparts, numpoints, parts }
         break
@@ -154,7 +182,9 @@ class ShapeReader {
     }
     /* We need to skip rest of the record */
     while (read < size) {
-      if (data(4) === null) break
+      const before = read
+      data(4)
+      if (read === before || this.eof) return failed()
     }
     if (read !== size) {
       this.lastError = 'Invalid Shape type.'

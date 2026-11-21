@@ -120,7 +120,7 @@ Card footer:
 
 | Control | Name | Behaviour |
 |---|---|---|
-| Delimiter | `sql_delimiter` (`#id_sql_delimiter`, size 3, default `;`) | fed to `BufferedQuery::setDelimiter` on import and to simulate-dml |
+| Delimiter | `sql_delimiter` (`#id_sql_delimiter`, size 3, default `;`, `required`: Go refuses an empty one; ImportController asserts it non-empty and passes it to `handleRollbackRequest`) | fed to `BufferedQuery::setDelimiter` on import and to simulate-dml |
 | Show this query here again | `show_query=1` (`#checkbox_show_query`) | On Go click, JS stores `localStorage.showThisQuery='1'` and `showThisQueryObject={db,table,query}`; `setShowThisQuery()` on load re-checks the box and restores the query for the same db/table. Server side `show_query` makes `SqlQueryForm` display `sql_query` param |
 | Retain query box | `retain_query_box=1`, `checked` iff `RetainQueryBox` | if unchecked, after a successful AJAX run the form is collapsed via `#togglequerybox` ("Hide query box"/"Show query box" button appended by JS) |
 | Rollback when finished | `rollback_query=1` | `Import::handleRollbackRequest` — see pipeline; message gets `[ROLLBACK occurred.]` |

@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/he.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/he.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-10-19 01:50+0000\nLast-Translator: Yaron Shahrabani <yaron@users.noreply.hosted.weblate.org>\nLanguage-Team: Hebrew <https://hosted.weblate.org/projects/phpmyadmin/master/he/>\nLanguage: he\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\nX-Generator: Weblate 2026.11.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-10-19 01:50+0000\nLast-Translator: Yaron Shahrabani <yaron@users.noreply.hosted.weblate.org>\nLanguage-Team: Hebrew <https://hosted.weblate.org/projects/phpmyadmin/master/he/>\nLanguage: he\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\nX-Generator: Weblate 2026.11.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "יש להפעיל Javascript מעבר לנקודה זו!"
@@ -2084,8 +2084,13 @@ msgstr "זיכרון מטמון השאילתות מושבת"
 msgid "Search:"
 msgstr "חיפוש:"
 
+msgctxt "Collation"
 msgid "Unknown"
-msgstr "לא ידועה"
+msgstr "לא ידוע"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "צ׳כי"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -2102,6 +2107,10 @@ msgstr "ספרדי (מסורתי)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "ספרדי (מודרני)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "קירילי"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -2128,12 +2137,12 @@ msgid "binary"
 msgstr "בינרי"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "בינרי"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "יוניקוד"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "בינרי"
 
 msgctxt "Collation"
 msgid "West European"
@@ -2170,10 +2179,6 @@ msgstr "בלטי"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "ארמני"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "קירילי"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -2216,20 +2221,12 @@ msgid "Thai"
 msgstr "תאי"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "לא ידוע"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "בולגרי"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "קרואטי"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "צ׳כי"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -2298,6 +2295,9 @@ msgstr "סלובני"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "וייטנאמי"
+
+msgid "Unknown"
+msgstr "לא ידועה"
 
 msgid "Icons"
 msgstr "סמלים"

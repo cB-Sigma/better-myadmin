@@ -430,6 +430,10 @@ function SqlForm({
           size={3}
           value={delimiter}
           onChange={(e) => setDelimiter(e.target.value)}
+          // query.twig: required, so Go does not post an empty delimiter; on a phone the folded
+          // options open to show the field
+          required
+          onInvalid={() => setOptionsOpen(true)}
         />
       </label>
       <label className="flex items-center gap-1">

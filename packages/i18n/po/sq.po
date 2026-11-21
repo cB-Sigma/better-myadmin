@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/sq.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/sq.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2022-02-15 16:20+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Albanian <https://hosted.weblate.org/projects/phpmyadmin/master/sq/>\nLanguage: sq\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.11-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2022-02-15 16:20+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Albanian <https://hosted.weblate.org/projects/phpmyadmin/master/sq/>\nLanguage: sq\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.11-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript duhet të aftësohet për të kaluar këtë pikë!"
@@ -3730,8 +3730,13 @@ msgstr "query_cache_limit është vendosur në 1 MiB"
 msgid "Search:"
 msgstr "Kërko:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "I panjohur"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Çekisht"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -3748,6 +3753,10 @@ msgstr "Spanjisht (tradicionale)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "Spanisht (modern)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Cirilike"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -3774,12 +3783,12 @@ msgid "binary"
 msgstr "Binar"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Binar"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Unikod"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Binar"
 
 msgctxt "Collation"
 msgid "West European"
@@ -3816,10 +3825,6 @@ msgstr "Balltike"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "Armenisht"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "Cirilike"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -3862,20 +3867,12 @@ msgid "Thai"
 msgstr "Tailandisht"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "I panjohur"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "Bulgarisht"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "Kroatisht"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Çekisht"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -3944,6 +3941,9 @@ msgstr "Sllovenisht"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "Vietnamisht"
+
+msgid "Unknown"
+msgstr "I panjohur"
 
 msgid "Icons"
 msgstr "Ikona"
@@ -8589,14 +8589,14 @@ msgstr "Versioni %1$s nga %2$s u fshi."
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "Versioni %1$s u krijua, gjurmimi për %2$s është aktiv."
 
+msgid "Trigger %1$s has been created."
+msgstr "Shkrehësi %1$s është krijuar."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Na vjen keq, dështuam në rikthimin e shkrehësit të fshirë."
 
 msgid "Trigger %1$s has been modified."
 msgstr "Shkrehësi %1$s është modifikuar."
-
-msgid "Trigger %1$s has been created."
-msgstr "Shkrehësi %1$s është krijuar."
 
 msgid "You must provide a trigger name!"
 msgstr "Duhet të siguroni një emër shkrehësi!"

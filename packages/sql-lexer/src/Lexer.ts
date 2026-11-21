@@ -353,10 +353,19 @@ export class Lexer {
           return new Token(token, TokenType.Comment, flags)
         }
 
-        // Checking if this is a MySQL-specific command.
-        if (this.last + 1 < this.len && this.c(this.last + 1) === '!') {
-          flags |= TokenFlag.COMMENT_MYSQL_CMD
+        // Checking if this is a MySQL (/*!) or MariaDB (/*M!) specific command.
+        if (
+          this.last + 1 < this.len &&
+          (this.c(this.last + 1) === '!' ||
+            (this.c(this.last + 1) === 'M' && this.last + 2 < this.len && this.c(this.last + 2) === '!'))
+        ) {
           token += this.c(++this.last)
+          if (this.c(this.last) === '!') {
+            flags |= TokenFlag.COMMENT_MYSQL_CMD
+          } else {
+            flags |= TokenFlag.COMMENT_MARIADB_CMD
+            token += this.c(++this.last)
+          }
 
           while (++this.last < this.len && this.c(this.last) >= '0' && this.c(this.last) <= '9') {
             token += this.c(this.last)

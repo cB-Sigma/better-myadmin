@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/ro.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/ro.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2025-12-29 11:00+0000\nLast-Translator: liviuconcioiu <liviu.concioiu@gmail.com>\nLanguage-Team: Romanian <https://hosted.weblate.org/projects/phpmyadmin/master/ro/>\nLanguage: ro\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\nX-Generator: Weblate 5.15.1\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2025-12-29 11:00+0000\nLast-Translator: liviuconcioiu <liviu.concioiu@gmail.com>\nLanguage-Team: Romanian <https://hosted.weblate.org/projects/phpmyadmin/master/ro/>\nLanguage: ro\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\nX-Generator: Weblate 5.15.1\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript trebuie să fie activat peste acest punct!"
@@ -4063,8 +4063,13 @@ msgstr "query_cache_limit este setat la 1 MiO"
 msgid "Search:"
 msgstr "Caută:"
 
+msgctxt "Collation"
 msgid "Unknown"
-msgstr "Necunoscut"
+msgstr "Necunoscută"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Cehă"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -4081,6 +4086,10 @@ msgstr "Spaniolă (tradițională)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "Spaniolă (modernă)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Chirilică"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -4107,12 +4116,12 @@ msgid "binary"
 msgstr "binar"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Binar"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Unicod"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Binar"
 
 msgctxt "Collation"
 msgid "West European"
@@ -4149,10 +4158,6 @@ msgstr "Baltică"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "Armeană"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "Chirilică"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -4195,20 +4200,12 @@ msgid "Thai"
 msgstr "Thailandeză"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "Necunoscută"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "Bulgară"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "Croată"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Cehă"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4277,6 +4274,9 @@ msgstr "Slovenă"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "Vietnameză"
+
+msgid "Unknown"
+msgstr "Necunoscut"
 
 msgid "Icons"
 msgstr "Iconuri"
@@ -9202,14 +9202,14 @@ msgstr "Versiunea %1$s a %2$s a fost ștearsă."
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "Versiunea %1$s a fost creată, urmărirea %2$s este activă."
 
+msgid "Trigger %1$s has been created."
+msgstr "Declanșatorul %1$s a fost creat."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Regret, restaurarea declanșatorului eliminat a eșuat."
 
 msgid "Trigger %1$s has been modified."
 msgstr "Declanșatorul %1$s a fost modificat."
-
-msgid "Trigger %1$s has been created."
-msgstr "Declanșatorul %1$s a fost creat."
 
 msgid "You must provide a trigger name!"
 msgstr "Trebuie să furnizezi un nume de declanșator!"

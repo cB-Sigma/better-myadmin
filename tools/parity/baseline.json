@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:baseline`; the ratchet `pnpm parity:check` compares against",
-    "referenceCommit": "f4aeb7801c2d8a811d13bcffdd8871ec41247a33"
+    "referenceCommit": "291fcadb4293a09b7c3037a07afe7612b020b9e4"
   },
   "kinds": {
     "routes": {
@@ -1786,9 +1786,9 @@
       ]
     },
     "messages": {
-      "total": 3447,
+      "total": 3444,
       "implemented": 3296,
-      "covered": 3446,
+      "covered": 3443,
       "coverage": 0.9997,
       "implementedKeys": [
         "- none -",
@@ -5126,7 +5126,6 @@
         "Enter the response parameter used by your reCAPTCHA v2 compatible API.",
         "Enter the URL for your reCAPTCHA v2 compatible API.",
         "Error 405! Request method not allowed.",
-        "Error in processing request: No trigger with name %1$s found in database %2$s.",
         "Error moving the uploaded file, see [doc@faq1-11]FAQ 1.11[/doc].",
         "Error while moving uploaded file.",
         "Event editor",
@@ -5198,14 +5197,12 @@
         "Taking you to the target site.",
         "The %s extension is missing. Please check your PHP configuration.",
         "The $cfg['TempDir'] (%s) is not accessible. phpMyAdmin is not able to cache templates and will be slow because of this.",
-        "The configuration file needs a valid key for query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc].",
         "The cookie encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc].",
         "The curl extension was not found and allow_url_fopen is disabled. Due to this some features such as error reporting or version check are disabled.",
         "The FIDO U2F API has been deprecated in favor of the Web Authentication API (WebAuthn).",
         "The file being uploaded is probably larger than the maximum allowed size.",
         "The ini_get and/or ini_set functions are disabled in php.ini. phpMyAdmin requires these functions!",
         "The mbstring PHP extension was not found and you seem to be using a multibyte charset. Without the mbstring extension phpMyAdmin is unable to split strings correctly and it may result in unexpected results.",
-        "The query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc].",
         "The routing cache could not be written, you need to adjust permissions on the folder/file \"%s\"",
         "The trigger name cannot be longer than %d characters.",
         "The trigger name cannot end with a space character.",

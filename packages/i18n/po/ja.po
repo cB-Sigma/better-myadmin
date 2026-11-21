@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/ja.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/ja.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-04-27 16:31+0000\nLast-Translator: Sandra Swift <nolamiller1203+weblate@gmail.com>\nLanguage-Team: Japanese <https://hosted.weblate.org/projects/phpmyadmin/master/ja/>\nLanguage: ja\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 5.17.1-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-04-27 16:31+0000\nLast-Translator: Sandra Swift <nolamiller1203+weblate@gmail.com>\nLanguage-Team: Japanese <https://hosted.weblate.org/projects/phpmyadmin/master/ja/>\nLanguage: ja\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 5.17.1-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript を有効にしてください！"
@@ -4578,8 +4578,13 @@ msgstr "query_cache_limit は 1 MiB に設定されています"
 msgid "Search:"
 msgstr "検索："
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "不明"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "チェコ語"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -4596,6 +4601,10 @@ msgstr "スペイン語（古典）"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "スペイン語（現代）"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "キリル諸語"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -4630,12 +4639,12 @@ msgid "no-pad"
 msgstr "パッドなし"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "バイナリ"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Unicode"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "バイナリ"
 
 msgctxt "Collation"
 msgid "West European"
@@ -4672,10 +4681,6 @@ msgstr "バルト諸語"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "アルメニア語"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "キリル諸語"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -4718,20 +4723,12 @@ msgid "Thai"
 msgstr "タイ語"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "不明"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "ブルガリア語"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "クロアチア語"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "チェコ語"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -4800,6 +4797,9 @@ msgstr "スロベニア語"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "ベトナム語"
+
+msgid "Unknown"
+msgstr "不明"
 
 msgid "Icons"
 msgstr "アイコン"
@@ -8538,9 +8538,6 @@ msgstr "トリガを編集する"
 msgid "No trigger with name %1$s found in database %2$s."
 msgstr "データベース %2$s に %1$s という名前のトリガはありません。"
 
-msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
-msgstr "リクエストの処理中にエラーが発生しました：データベース %2$s に %1$s という名前のトリガはありません。"
-
 msgid "You don't have sufficient privileges to be here right now!"
 msgstr "権限不足でアクセスできません!"
 
@@ -10228,14 +10225,14 @@ msgstr "%2$s に世代 %1$s が削除されました。"
 msgid "Version %1$s was created, tracking for %2$s is active."
 msgstr "世代 %1$s を作成しました。%2$s の SQL コマンド追跡機能はアクティブです。"
 
+msgid "Trigger %1$s has been created."
+msgstr "トリガ %1$s を作成しました。"
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "申し訳ありませんが、削除されたトリガの復元に失敗しました。"
 
 msgid "Trigger %1$s has been modified."
 msgstr "トリガ %1$s を変更しました。"
-
-msgid "Trigger %1$s has been created."
-msgstr "トリガ %1$s を作成しました。"
 
 msgid "You must provide a trigger name!"
 msgstr "トリガ名は必須です!"

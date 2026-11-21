@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin f4aeb7801c2d8a811d13bcffdd8871ec41247a33 resources/po/lv.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/lv.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-08 00:26+0000\nPO-Revision-Date: 2026-10-15 09:51+0000\nLast-Translator: \"ℂ𝕠𝕠𝕠𝕝 (𝕘𝕚𝕥𝕙𝕦𝕓.𝕔𝕠𝕞/ℂ𝕠𝕠𝕠𝕝)\" <coool@mail.lv>\nLanguage-Team: Latvian <https://hosted.weblate.org/projects/phpmyadmin/master/lv/>\nLanguage: lv\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\nX-Generator: Weblate 2026.11.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-10-15 09:51+0000\nLast-Translator: \"ℂ𝕠𝕠𝕠𝕝 (𝕘𝕚𝕥𝕙𝕦𝕓.𝕔𝕠𝕞/ℂ𝕠𝕠𝕠𝕝)\" <coool@mail.lv>\nLanguage-Team: Latvian <https://hosted.weblate.org/projects/phpmyadmin/master/lv/>\nLanguage: lv\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\nX-Generator: Weblate 2026.11.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Lai nodrošinātu pilnu funkcionalitāti, jums ir jāiespējo JavaScript!"
@@ -2506,8 +2506,13 @@ msgstr "Minimālais vaicājuma kešatmiņas rezultāta lielums"
 msgid "Search:"
 msgstr "Meklēt:"
 
+msgctxt "Collation"
 msgid "Unknown"
 msgstr "Nezināms"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Čehu"
 
 msgctxt "Collation"
 msgid "German (phone book order)"
@@ -2524,6 +2529,10 @@ msgstr "Spāņu (tradicionālais)"
 msgctxt "Collation"
 msgid "Spanish (modern)"
 msgstr "Spāņu (mūsdienas)"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Kirilicas"
 
 msgctxt "Collation variant"
 msgid "case-insensitive"
@@ -2554,12 +2563,12 @@ msgid "binary"
 msgstr "binārais"
 
 msgctxt "Collation"
-msgid "Binary"
-msgstr "Binārais"
-
-msgctxt "Collation"
 msgid "Unicode"
 msgstr "Unikoda"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Binārais"
 
 msgctxt "Collation"
 msgid "West European"
@@ -2596,10 +2605,6 @@ msgstr "Baltu"
 msgctxt "Collation"
 msgid "Armenian"
 msgstr "Armēņu"
-
-msgctxt "Collation"
-msgid "Cyrillic"
-msgstr "Kirilicas"
 
 msgctxt "Collation"
 msgid "Arabic"
@@ -2642,20 +2647,12 @@ msgid "Thai"
 msgstr "Taju"
 
 msgctxt "Collation"
-msgid "Unknown"
-msgstr "Nezināms"
-
-msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "Bulgāru"
 
 msgctxt "Collation"
 msgid "Croatian"
 msgstr "Horvātu"
-
-msgctxt "Collation"
-msgid "Czech"
-msgstr "Čehu"
 
 msgctxt "Collation"
 msgid "Danish"
@@ -2724,6 +2721,9 @@ msgstr "Slovēņu"
 msgctxt "Collation"
 msgid "Vietnamese"
 msgstr "Vjetnamiešu"
+
+msgid "Unknown"
+msgstr "Nezināms"
 
 msgid "Both"
 msgstr "Abās pusēs"
@@ -4222,9 +4222,6 @@ msgstr "Rediģēt palaidēju"
 msgid "No trigger with name %1$s found in database %2$s."
 msgstr "%2$s datubāzē nav atrasts neviens palaidējs ar %1$s nosaukumu."
 
-msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
-msgstr "Kļūda, apstrādājot pieprasījumu: Palaidējs ar %1$s nosaukumu nav atrasts %2$s datubāzē."
-
 msgid "You don't have sufficient privileges to be here right now!"
 msgstr "Jums nav pietiekoši tiesību, lai atrastos šeit tagad!"
 
@@ -4896,14 +4893,14 @@ msgstr "Izgūt kā %s"
 msgid "Version %1$s of %2$s was deleted."
 msgstr "%2$s %1$s versija tika dzēsta."
 
+msgid "Trigger %1$s has been created."
+msgstr "%1$s palaidējs izveidots."
+
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Atvainojiet, mums neizdevās atjaunot izdzēsto palaidēju."
 
 msgid "Trigger %1$s has been modified."
 msgstr "%1$s palaidējs mainīts."
-
-msgid "Trigger %1$s has been created."
-msgstr "%1$s palaidējs izveidots."
 
 msgid "You must provide a trigger name!"
 msgstr "Jāievada palaidēja nosaukums!"

@@ -124,7 +124,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `ActionLinksMode` | packages/ui/src/components/icon.tsx:43<br>packages/ui/src/components/icon.tsx:55<br>apps/server/src/routes/sql.ts:196<br>apps/server/src/table/structure-page.ts:377<br>apps/web/src/features/sql/SqlPage.tsx:658 |  |
+| ✅ | `ActionLinksMode` | packages/ui/src/components/icon.tsx:43<br>packages/ui/src/components/icon.tsx:55<br>apps/server/src/routes/sql.ts:196<br>apps/server/src/table/structure-page.ts:377<br>apps/web/src/features/sql/SqlPage.tsx:662 |  |
 | ✅ | `AllowSharedBookmarks` | apps/server/src/browse/grid.ts:871<br>apps/server/src/metadata/service.ts:297<br>apps/server/src/routes/metadata.ts:216<br>apps/server/src/routes/sql.ts:197<br>apps/web/src/features/browse/ResultsView.tsx:372 |  |
 | ✅ | `BrowseMarkerEnable` | apps/server/src/browse/grid.ts:865<br>apps/web/src/features/browse/GridTable.tsx:865<br>apps/web/src/features/browse/GridTable.tsx:885<br>apps/web/src/features/browse/GridTable.tsx:917<br>apps/web/src/features/browse/GridTable.tsx:1020 |  |
 | ✅ | `BrowsePointerEnable` | apps/server/src/browse/grid.ts:864<br>apps/web/src/features/browse/GridTable.tsx:866<br>apps/web/src/features/browse/GridTable.tsx:933<br>apps/web/src/features/browse/GridTable.tsx:1020 |  |
@@ -155,7 +155,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ShowSQL` | apps/server/src/browse/actions.ts:102<br>apps/server/src/query/message.ts:94<br>apps/web/src/features/sql/message-card.ts:27 |  |
 | ✅ | `TableNavigationLinksMode` | apps/web/src/features/navigation/NavTree.tsx:393<br>apps/web/src/features/navigation/NavigationPanel.tsx:679<br>packages/ui/src/components/icon.tsx:43<br>apps/server/src/browse/grid.ts:866<br>apps/server/src/navigation/service.ts:76 |  |
 | ✅ | `TablePrimaryKeyOrder` | apps/server/src/browse/service.ts:94<br>apps/server/src/browse/service.ts:99 |  |
-| ✅ | `TextareaAutoSelect` | apps/server/src/routes/sql.ts:194<br>apps/web/src/features/sql/SqlPage.tsx:512 |  |
+| ✅ | `TextareaAutoSelect` | apps/server/src/routes/sql.ts:194<br>apps/web/src/features/sql/SqlPage.tsx:516 |  |
 
 ## 03 insert edit transformations — 16/16 (100.0%) covered, 14/16 implemented
 
@@ -449,8 +449,8 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ShowDbStructureCreation` | apps/server/src/database/structure.ts:203<br>apps/server/src/database/structure.ts:361 |  |
 | ✅ | `ShowDbStructureLastCheck` | apps/server/src/database/structure.ts:205<br>apps/server/src/database/structure.ts:367 |  |
 | ✅ | `ShowDbStructureLastUpdate` | apps/server/src/database/structure.ts:204<br>apps/server/src/database/structure.ts:364 |  |
-| ✅ | `TextareaCols` | apps/server/src/insert-edit/form.ts:586<br>apps/server/src/insert-edit/form.ts:587<br>apps/server/src/routes/sql.ts:192<br>apps/web/src/features/sql/SqlPage.tsx:508 |  |
-| ✅ | `TextareaRows` | apps/server/src/insert-edit/form.ts:581<br>apps/server/src/insert-edit/form.ts:582<br>apps/server/src/routes/sql.ts:193<br>apps/web/src/features/sql/SqlPage.tsx:507<br>apps/web/src/features/sql/SqlPage.tsx:637 |  |
+| ✅ | `TextareaCols` | apps/server/src/insert-edit/form.ts:586<br>apps/server/src/insert-edit/form.ts:587<br>apps/server/src/routes/sql.ts:192<br>apps/web/src/features/sql/SqlPage.tsx:512 |  |
+| ✅ | `TextareaRows` | apps/server/src/insert-edit/form.ts:581<br>apps/server/src/insert-edit/form.ts:582<br>apps/server/src/routes/sql.ts:193<br>apps/web/src/features/sql/SqlPage.tsx:511<br>apps/web/src/features/sql/SqlPage.tsx:641 |  |
 | ✅ | `ThemeDefault` | apps/server/src/routes/metadata.ts:608<br>apps/server/src/routes/shell.ts:150<br>packages/metadata/src/userprefs.ts:154<br>apps/server/src/main.ts:104<br>apps/server/src/preferences/service.ts:326 | X16 |
 | ✅ | `TrustedProxies` | apps/server/src/preferences/form-display.ts:297<br>apps/web/src/features/setup/SetupForms.tsx:180<br>apps/server/src/agent/auth.ts:93<br>apps/server/src/agent/auth.ts:106<br>apps/server/src/app.ts:223 |  |
 | ✅ | `UserprefsDisallow` | apps/server/src/preferences/form-display.ts:222<br>apps/server/src/preferences/form-display.ts:309<br>apps/server/src/preferences/form-display.ts:459<br>apps/server/src/metadata/service.ts:359<br>apps/server/src/preferences/service.ts:99 |  |

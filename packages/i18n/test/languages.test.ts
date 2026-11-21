@@ -55,9 +55,9 @@ describe('LanguageManager', () => {
 })
 
 describe('Plural-Forms evaluation (motranslator + symfony/expression-language)', () => {
-  it('boolean results select form 0, numeric results are used and clamped', () => {
+  it('boolean results are cast to int (motranslator 6.0.2), numeric results are used and clamped', () => {
     const de = pluralRule(' nplurals=2; plural=n != 1;')
-    expect([0, 1, 2, 5].map((n) => de.select(n))).toEqual([0, 0, 0, 0])
+    expect([0, 1, 2, 5].map((n) => de.select(n))).toEqual([1, 0, 1, 1])
     const ru = pluralRule(
       ' nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);',
     )
