@@ -2,6 +2,15 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.32 (2026-11-21)
+
+### Fixes
+
+- SQL tab: with the Delimiter box empty, Ctrl+Enter now stops at the same "Please fill out this
+  field" check as Go, instead of posting the query and getting "Invalid request." back. On a phone,
+  where the box is folded under Options, a tap on Go opens the options and puts the cursor in the
+  box at once, rather than needing a second tap to show why nothing ran.
+
 ## 1.0.31 (2026-11-21)
 
 ### Fixes

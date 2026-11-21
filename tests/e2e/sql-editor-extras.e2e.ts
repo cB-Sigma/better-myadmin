@@ -183,6 +183,27 @@ test.describe('SQL tab extras', () => {
     await expect(editor(page)).toHaveText('SELECT id FROM t ORDER BY id DESC')
   })
 
+  test('an empty Delimiter stops Go and Ctrl+Enter alike; a custom one runs', async ({ page }) => {
+    await page.goto(`/s/1/db/${DB}/sql`)
+    const delimiter = page.locator('#id_sql_delimiter')
+    await expect(delimiter).toHaveValue(';')
+    await setQuery(page, 'SELECT name AS delim_probe FROM t WHERE id = 1')
+    await delimiter.fill('')
+    await page.locator('#button_submit_query').click()
+    await expect(delimiter).toBeFocused()
+    expect(await delimiter.evaluate((e: HTMLInputElement) => e.validity.valueMissing)).toBe(true)
+    // Ctrl+Enter submits through the form (getKeyboardFormSubmitEventHandler clicks Go), so it
+    // stops at the same check instead of posting an empty delimiter
+    await editor(page).click()
+    await page.keyboard.press('Control+Enter')
+    await expect(delimiter).toBeFocused()
+    await expect(page.locator('table.table_results')).toHaveCount(0)
+    await delimiter.fill('$$')
+    await editor(page).click()
+    await page.keyboard.press('Control+Enter')
+    await expect(page.locator('table.table_results')).toContainText('delim_probe')
+  })
+
   test('a changed editor asks before leaving the page [p09-67640f]', async ({ page }) => {
     await page.goto(`/s/1/db/${DB}/sql`)
     await setQuery(page, 'SELECT 1 -- not run')

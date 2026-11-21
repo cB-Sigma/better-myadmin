@@ -279,6 +279,23 @@ test('SQL page: the column list sits below the editor and a query runs', async (
   await expect(page.locator('table.table_results tbody tr').first()).toBeVisible()
 })
 
+test('SQL page: an empty Delimiter folded under Options opens them and points at the field', async ({
+  page,
+}) => {
+  await page.goto(`/s/1/db/${DB}/sql?sql=${encodeURIComponent('SELECT 1')}`)
+  const options = page.getByRole('button', { name: 'Options' })
+  const delimiter = page.locator('#id_sql_delimiter')
+  await options.tap()
+  await delimiter.fill('')
+  await options.tap()
+  await expect(delimiter).toBeHidden()
+  // one tap: the options open and the field has the focus (the browser cannot point at a hidden one)
+  await page.locator('#button_submit_query').tap()
+  await expect(delimiter).toBeVisible()
+  await expect(delimiter).toBeFocused()
+  await expect(page.locator('table.table_results')).toHaveCount(0)
+})
+
 /** A stand-in visualViewport (Playwright opens no on-screen keyboard): kb(px) covers the bottom. */
 async function fakeKeyboard(page: Page) {
   await page.addInitScript(() => {
