@@ -190,6 +190,14 @@ function SqlForm({
   // form.lock-page + the CodeMirror lock (AJAX.lockPageHandler): a changed editor or field shows
   // the lock icon and asks before leaving the page (re-read on each keyup through `text`)
   const lockRef = useFormLock(editor.current?.isDirty() === true)
+  const formEl = useRef<HTMLFormElement | null>(null)
+  const formRef = useCallback(
+    (el: HTMLFormElement | null) => {
+      formEl.current = el
+      lockRef(el)
+    },
+    [lockRef],
+  )
 
   const updateParameters = useCallback((enabled: boolean) => {
     // updateQueryParameters runs on the checkbox change and on editor blur
@@ -430,10 +438,18 @@ function SqlForm({
           size={3}
           value={delimiter}
           onChange={(e) => setDelimiter(e.target.value)}
-          // query.twig: required, so Go does not post an empty delimiter; on a phone the folded
-          // options open to show the field
+          // query.twig: required, so Go does not post an empty delimiter. On a phone the field may
+          // be folded away, where the browser cannot point at it: open the options, then ask again
           required
-          onInvalid={() => setOptionsOpen(true)}
+          onInvalid={(e) => {
+            const field = e.currentTarget
+            if (field.offsetParent !== null) return
+            setOptionsOpen(true)
+            setTimeout(() => {
+              field.focus()
+              field.reportValidity()
+            })
+          }}
         />
       </label>
       <label className="flex items-center gap-1">
@@ -482,7 +498,7 @@ function SqlForm({
   return (
     <InlineEditContext.Provider value={{ open: inlineOpen, setOpen: setInlineOpen }}>
       <form
-        ref={lockRef}
+        ref={formRef}
         id="sqlqueryform"
         name="sqlform"
         onSubmit={submit}
@@ -514,7 +530,8 @@ function SqlForm({
                     lint={lint}
                     autocomplete={autocomplete}
                     autoSelect={s.TextareaAutoSelect}
-                    onSubmit={() => submit()}
+                    // Ctrl+Enter goes through the form, so its checks (an empty delimiter) apply too
+                    onSubmit={() => (formEl.current ? formEl.current.requestSubmit() : submit())}
                     onChange={(v) => {
                       setText(v)
                       tab?.onText(v)
