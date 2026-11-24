@@ -592,7 +592,7 @@
   "p02-57815e": {
     "file": "docs/features/02-browse-results-grid.md",
     "section": "Micro-behaviours checklist › Cell rendering",
-    "text": "Date/time cells `text-nowrap`; other text `pre_wrap` (whitespace preserved, newlines → `<br>`, double space → `&nbsp;`)."
+    "text": "Date/time cells `text-nowrap`; other text `pre_wrap` (whitespace and newlines preserved as typed, no `&nbsp;` or `<br>`)."
   },
   "p02-5aad8b": {
     "file": "docs/features/02-browse-results-grid.md",

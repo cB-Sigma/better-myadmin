@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
-    "referenceCommit": "291fcadb4293a09b7c3037a07afe7612b020b9e4",
+    "referenceCommit": "5add5a93adb56f421fe611eb09620773649bc7d1",
     "source": "resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys",
     "count": 964
   },
@@ -3032,7 +3032,7 @@
       "method": "POST",
       "url": "index.php?route=/sql",
       "route": "/sql",
-      "line": 1117,
+      "line": 1115,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3043,7 +3043,7 @@
       "method": "POST",
       "url": "index.php?route=/sql/get-enum-values",
       "route": "/sql/get-enum-values",
-      "line": 1030,
+      "line": 1028,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3054,7 +3054,7 @@
       "method": "POST",
       "url": "index.php?route=/sql/get-relational-values",
       "route": "/sql/get-relational-values",
-      "line": 986,
+      "line": 984,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3065,7 +3065,7 @@
       "method": "POST",
       "url": "index.php?route=/sql/get-set-values",
       "route": "/sql/get-set-values",
-      "line": 1072,
+      "line": 1070,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3087,7 +3087,7 @@
       "method": "POST",
       "url": "index.php?route=/table/replace",
       "route": "/table/replace",
-      "line": 1441,
+      "line": 1439,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3096,7 +3096,7 @@
       "count": 1,
       "kind": "dialog",
       "event": "alert",
-      "line": 1288,
+      "line": 1286,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3106,7 +3106,7 @@
       "kind": "event",
       "event": "beforeunload",
       "selector": "window",
-      "line": 2280,
+      "line": 2278,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3117,7 +3117,7 @@
       "event": "change",
       "selector": "<$editArea> select",
       "delegated": true,
-      "line": 900,
+      "line": 898,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3127,7 +3127,7 @@
       "kind": "event",
       "event": "change",
       "selector": "<$editArea> span.curr_value",
-      "line": 1004,
+      "line": 1002,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3138,7 +3138,7 @@
       "event": "change",
       "selector": "<g.cEdit> .edit_box",
       "delegated": true,
-      "line": 912,
+      "line": 910,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3148,7 +3148,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$checkbox>",
-      "line": 940,
+      "line": 938,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3159,7 +3159,7 @@
       "event": "click",
       "selector": "<$editArea> .browse_foreign",
       "delegated": true,
-      "line": 908,
+      "line": 906,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3169,7 +3169,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$editArea> > *",
-      "line": 1211,
+      "line": 1209,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3179,7 +3179,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<cd>",
-      "line": 1854,
+      "line": 1852,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3189,7 +3189,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<clone>",
-      "line": 1902,
+      "line": 1900,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3199,7 +3199,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<g.o> div.restore_column",
-      "line": 1789,
+      "line": 1787,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3209,7 +3209,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<g.o> div.save_edited",
-      "line": 2275,
+      "line": 2273,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3219,7 +3219,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<g.t> td.data.click1",
-      "line": 2165,
+      "line": 2163,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3230,7 +3230,7 @@
       "event": "click",
       "selector": "<g.t> td.data.click2",
       "delegated": true,
-      "line": 2174,
+      "line": 2172,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3240,7 +3240,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<listElmt>",
-      "line": 1884,
+      "line": 1882,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3250,7 +3250,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<showAll>",
-      "line": 1893,
+      "line": 1891,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3260,7 +3260,7 @@
       "kind": "event",
       "event": "click",
       "selector": "html",
-      "line": 2259,
+      "line": 2257,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3270,7 +3270,7 @@
       "kind": "event",
       "event": "click",
       "selector": "this",
-      "line": 1475,
+      "line": 1473,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3280,7 +3280,7 @@
       "kind": "event",
       "event": "copy",
       "selector": "document",
-      "line": 2660,
+      "line": 2658,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3291,7 +3291,7 @@
       "event": "dblclick",
       "selector": "<g.t> td.data.click2",
       "delegated": true,
-      "line": 2174,
+      "line": 2172,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3301,7 +3301,7 @@
       "kind": "event",
       "event": "dblclick",
       "selector": "<g.t> th.draggable",
-      "line": 1753,
+      "line": 1751,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3311,7 +3311,7 @@
       "kind": "event",
       "event": "dblclick",
       "selector": "<g.t> th.draggable a",
-      "line": 1783,
+      "line": 1781,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3321,7 +3321,7 @@
       "kind": "event",
       "event": "dragstart",
       "selector": "<g.t> th a",
-      "line": 1798,
+      "line": 1796,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3331,7 +3331,7 @@
       "kind": "event",
       "event": "focus",
       "selector": "<g.cEditStd> .edit_box",
-      "line": 2219,
+      "line": 2217,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3341,7 +3341,7 @@
       "kind": "event",
       "event": "focus",
       "selector": "<g.cEditTextarea> .edit_box",
-      "line": 2240,
+      "line": 2238,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3351,7 +3351,7 @@
       "kind": "event",
       "event": "input",
       "selector": "<g.cEdit> .edit_box",
-      "line": 931,
+      "line": 929,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3362,7 +3362,7 @@
       "event": "keydown",
       "selector": "<$editArea> textarea",
       "delegated": true,
-      "line": 925,
+      "line": 923,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3377,7 +3377,7 @@
         "V",
         "ctrl"
       ],
-      "line": 919,
+      "line": 917,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3387,7 +3387,7 @@
       "kind": "event",
       "event": "keydown",
       "selector": "<g.cEditStd>",
-      "line": 2231,
+      "line": 2229,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3401,7 +3401,7 @@
       "keys": [
         "Enter"
       ],
-      "line": 2223,
+      "line": 2221,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3420,7 +3420,7 @@
         "alt",
         "ctrl"
       ],
-      "line": 2217,
+      "line": 2215,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3430,7 +3430,7 @@
       "kind": "event",
       "event": "keydown",
       "selector": "<g.cEditTextarea>",
-      "line": 2252,
+      "line": 2250,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3445,7 +3445,7 @@
         "Enter",
         "shift"
       ],
-      "line": 2244,
+      "line": 2242,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3464,7 +3464,7 @@
         "alt",
         "ctrl"
       ],
-      "line": 2238,
+      "line": 2236,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3481,7 +3481,7 @@
         "meta",
         "shift"
       ],
-      "line": 2458,
+      "line": 2456,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3494,7 +3494,7 @@
       "keys": [
         "Escape"
       ],
-      "line": 2259,
+      "line": 2257,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3505,7 +3505,7 @@
       "event": "keypress",
       "selector": "<g.cEdit> .edit_box",
       "delegated": true,
-      "line": 912,
+      "line": 910,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3516,7 +3516,7 @@
       "event": "keyup",
       "selector": "<$editArea> textarea",
       "delegated": true,
-      "line": 1096,
+      "line": 1094,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3530,7 +3530,7 @@
         "Enter",
         "Escape"
       ],
-      "line": 1185,
+      "line": 1183,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3541,7 +3541,7 @@
       "event": "keyup",
       "selector": "<g.cEdit> .edit_box",
       "delegated": true,
-      "line": 1101,
+      "line": 1099,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3551,7 +3551,7 @@
       "kind": "event",
       "event": "mousedown",
       "selector": "<cb>",
-      "line": 1702,
+      "line": 1700,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3562,7 +3562,7 @@
       "event": "mousedown",
       "selector": "<g.t> td.data",
       "delegated": true,
-      "line": 2589,
+      "line": 2587,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3572,7 +3572,7 @@
       "kind": "event",
       "event": "mousedown",
       "selector": "<g.t> th.draggable",
-      "line": 1753,
+      "line": 1751,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3582,7 +3582,7 @@
       "kind": "event",
       "event": "mousedown",
       "selector": "document",
-      "line": 825,
+      "line": 823,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3592,7 +3592,7 @@
       "kind": "event",
       "event": "mouseenter",
       "selector": "<g.t> td, th.draggable",
-      "line": 1909,
+      "line": 1907,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3602,7 +3602,7 @@
       "kind": "event",
       "event": "mouseenter",
       "selector": "<g.t> th.draggable",
-      "line": 1753,
+      "line": 1751,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3612,7 +3612,7 @@
       "kind": "event",
       "event": "mouseenter",
       "selector": "<t> th.draggable a",
-      "line": 2799,
+      "line": 2797,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3623,7 +3623,7 @@
       "event": "mouseleave",
       "selector": "<g.t> td.data",
       "delegated": true,
-      "line": 2609,
+      "line": 2607,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3633,7 +3633,7 @@
       "kind": "event",
       "event": "mouseleave",
       "selector": "<g.t> th.draggable",
-      "line": 1753,
+      "line": 1751,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3643,7 +3643,7 @@
       "kind": "event",
       "event": "mouseleave",
       "selector": "<t> th.draggable a",
-      "line": 2799,
+      "line": 2797,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3653,7 +3653,7 @@
       "kind": "event",
       "event": "mousemove",
       "selector": "document",
-      "line": 2821,
+      "line": 2819,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3664,7 +3664,7 @@
       "event": "mouseover",
       "selector": "<g.t> td.data, thead th:not(.column_action)",
       "delegated": true,
-      "line": 2614,
+      "line": 2612,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3674,7 +3674,7 @@
       "kind": "event",
       "event": "mouseup",
       "selector": "document",
-      "line": 2651,
+      "line": 2649,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3685,7 +3685,7 @@
       "event": "paste",
       "selector": "<g.cEdit> .edit_box",
       "delegated": true,
-      "line": 912,
+      "line": 910,
       "file": "resources/js/makegrid.ts"
     },
     {

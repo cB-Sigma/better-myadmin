@@ -66,6 +66,9 @@ const CASES: Array<{ name: string; sql: string; delimiter?: string }> = [
   },
   { name: 'empty result with columns [p09-4d18f5]', sql: 'SELECT * FROM t WHERE id = -1' },
   { name: 'table without unique key', sql: 'SELECT * FROM nokey' },
+  // 2c144b711e: only a rollback needs a delimiter; an empty one never splits, the text is one query
+  { name: 'empty delimiter: one statement runs', sql: 'SELECT name FROM t WHERE id = 2', delimiter: '' },
+  { name: 'empty delimiter: the whole text is one query', sql: 'SELECT 1; SELECT 2', delimiter: '' },
 ]
 
 /** The message part of phpMyAdmin's response for the statements, with timings masked. */

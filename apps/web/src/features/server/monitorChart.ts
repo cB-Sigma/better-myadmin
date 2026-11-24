@@ -91,7 +91,8 @@ export function createMonitorChart(
       onClick: (_event, _elements, chart) => {
         const ticks = chart.scales.x?.ticks ?? []
         const first = ticks[0]?.value
-        const last = ticks[4]?.value ?? ticks.at(-1)?.value
+        // d83e729796: the last tick, whatever the count (we always build five)
+        const last = ticks.at(-1)?.value
         if (first !== undefined && last !== undefined) o.onClick(first, last)
       },
     },

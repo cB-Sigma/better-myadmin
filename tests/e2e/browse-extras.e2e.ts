@@ -20,7 +20,7 @@ test.beforeAll(async () => {
   const c = await mysql.createConnection(ROOT)
   await c.query(`DROP DATABASE IF EXISTS ${DB}; CREATE DATABASE ${DB}; USE ${DB};
     CREATE TABLE c (id INT PRIMARY KEY, n INT NULL, b BIT(3), s VARCHAR(20), d DATETIME) ENGINE=InnoDB;
-    INSERT INTO c VALUES (1, NULL, b'101', 'a  b', '2024-01-02 03:04:05'), (2, 42, b'011', '', NULL), (3, 7, b'0', 'z', NULL);
+    INSERT INTO c VALUES (1, NULL, b'101', 'a  b', '2024-01-02 03:04:05'), (2, 42, b'011', '', NULL), (3, 7, b'0', 'y\\nz <b>', NULL);
     CREATE TABLE big (id INT PRIMARY KEY, v VARCHAR(10)) ENGINE=InnoDB;
     INSERT INTO big VALUES ${Array.from({ length: 120 }, (_, i) => `(${i + 1}, 'v${i + 1}')`).join(',')};
     DROP USER IF EXISTS '${USER}'@'%'; CREATE USER '${USER}'@'%' IDENTIFIED BY '${USER}';
@@ -65,6 +65,12 @@ test('cells: italic NULL, right-aligned numbers, date/time no-wrap, BIT as binar
   await expect(await cell(page, 1, 'n')).toHaveClass(/text-end/)
   await expect(await cell(page, 0, 'd')).toHaveClass(/text-nowrap/)
   await expect(await cell(page, 0, 's')).toHaveClass(/pre_wrap/)
+  // the text as stored (70049f9bab): pre_wrap shows the spaces and the newline, no &nbsp; or <br>
+  // in it, so copying a cell (or editing it) does not turn spaces into no-break spaces
+  expect(await (await cell(page, 0, 's')).evaluate((e) => e.textContent)).toBe('a  b')
+  const multi = await cell(page, 2, 's')
+  expect(await multi.evaluate((e) => e.textContent)).toBe('y\nz <b>')
+  await expect(multi.locator('br')).toHaveCount(0)
   await expect(await cell(page, 0, 'b')).toHaveText('101')
   await expect(await cell(page, 1, 'b')).toHaveText('011')
   await expect(await cell(page, 2, 'b')).toHaveText('000')

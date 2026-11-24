@@ -124,10 +124,10 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `ActionLinksMode` | packages/ui/src/components/icon.tsx:43<br>packages/ui/src/components/icon.tsx:55<br>apps/server/src/routes/sql.ts:196<br>apps/server/src/table/structure-page.ts:377<br>apps/web/src/features/sql/SqlPage.tsx:662 |  |
+| ✅ | `ActionLinksMode` | packages/ui/src/components/icon.tsx:43<br>packages/ui/src/components/icon.tsx:55<br>apps/server/src/routes/sql.ts:196<br>apps/server/src/table/structure-page.ts:377<br>apps/web/src/features/sql/SqlPage.tsx:679 |  |
 | ✅ | `AllowSharedBookmarks` | apps/server/src/browse/grid.ts:871<br>apps/server/src/metadata/service.ts:297<br>apps/server/src/routes/metadata.ts:216<br>apps/server/src/routes/sql.ts:197<br>apps/web/src/features/browse/ResultsView.tsx:372 |  |
-| ✅ | `BrowseMarkerEnable` | apps/server/src/browse/grid.ts:865<br>apps/web/src/features/browse/GridTable.tsx:865<br>apps/web/src/features/browse/GridTable.tsx:885<br>apps/web/src/features/browse/GridTable.tsx:917<br>apps/web/src/features/browse/GridTable.tsx:1020 |  |
-| ✅ | `BrowsePointerEnable` | apps/server/src/browse/grid.ts:864<br>apps/web/src/features/browse/GridTable.tsx:866<br>apps/web/src/features/browse/GridTable.tsx:933<br>apps/web/src/features/browse/GridTable.tsx:1020 |  |
+| ✅ | `BrowseMarkerEnable` | apps/server/src/browse/grid.ts:865<br>apps/web/src/features/browse/GridTable.tsx:858<br>apps/web/src/features/browse/GridTable.tsx:878<br>apps/web/src/features/browse/GridTable.tsx:910<br>apps/web/src/features/browse/GridTable.tsx:1013 |  |
+| ✅ | `BrowsePointerEnable` | apps/server/src/browse/grid.ts:864<br>apps/web/src/features/browse/GridTable.tsx:859<br>apps/web/src/features/browse/GridTable.tsx:926<br>apps/web/src/features/browse/GridTable.tsx:1013 |  |
 | ✅ | `DefaultForeignKeyChecks` | apps/server/src/database/context.ts:176<br>apps/server/src/database/context.ts:177<br>apps/server/src/import/page.ts:144<br>apps/server/src/routes/sql.ts:106<br>apps/server/src/routes/sql.ts:107 |  |
 | ✅ | `DefaultQueryDatabase` | apps/server/src/routes/sql.ts:146 |  |
 | ✅ | `DefaultQueryTable` | apps/server/src/routes/sql.ts:162 |  |
@@ -144,10 +144,10 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `RelationalDisplay` | apps/server/src/browse/view-state.ts:70 |  |
 | ✅ | `RememberSorting` | apps/server/src/browse/service.ts:67 |  |
 | ✅ | `RepeatCells` | apps/server/src/browse/view-state.ts:54<br>apps/server/src/browse/view-state.ts:105<br>apps/server/src/insert-edit/foreign.ts:44 |  |
-| ✅ | `RowActionLinks` | apps/server/src/browse/grid.ts:860<br>apps/web/src/features/browse/GridTable.tsx:175<br>apps/web/src/features/browse/GridTable.tsx:844 |  |
+| ✅ | `RowActionLinks` | apps/server/src/browse/grid.ts:860<br>apps/web/src/features/browse/GridTable.tsx:168<br>apps/web/src/features/browse/GridTable.tsx:837 |  |
 | ✅ | `RowActionLinksWithoutUnique` | apps/server/src/browse/grid.ts:313 |  |
-| ✅ | `RowActionType` | packages/ui/src/components/icon.tsx:43<br>apps/server/src/browse/grid.ts:861<br>apps/web/src/features/browse/GridTable.tsx:689<br>apps/web/src/features/browse/GridTable.tsx:700<br>apps/web/src/features/browse/GridTable.tsx:778 |  |
-| ✅ | `SaveCellsAtOnce` | apps/server/src/browse/grid.ts:863<br>apps/web/src/features/browse/GridTable.tsx:320<br>apps/web/src/features/browse/GridTable.tsx:389 |  |
+| ✅ | `RowActionType` | packages/ui/src/components/icon.tsx:43<br>apps/server/src/browse/grid.ts:861<br>apps/web/src/features/browse/GridTable.tsx:682<br>apps/web/src/features/browse/GridTable.tsx:693<br>apps/web/src/features/browse/GridTable.tsx:771 |  |
+| ✅ | `SaveCellsAtOnce` | apps/server/src/browse/grid.ts:863<br>apps/web/src/features/browse/GridTable.tsx:313<br>apps/web/src/features/browse/GridTable.tsx:382 |  |
 | ✅ | `Servers/*/MaxTableUiprefs` | apps/server/src/metadata/service.ts:303 |  |
 | ✅ | `Servers/*/table_uiprefs` | packages/metadata/src/storage.ts:35<br>packages/metadata/src/storage.ts:57<br>packages/metadata/src/storage.ts:80<br>packages/metadata/src/storage.ts:102 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `ShowAll` | apps/server/src/browse/grid.ts:602<br>apps/server/src/browse/grid.ts:870<br>apps/server/src/insert-edit/foreign.ts:22 |  |
@@ -155,7 +155,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ShowSQL` | apps/server/src/browse/actions.ts:102<br>apps/server/src/query/message.ts:94<br>apps/web/src/features/sql/message-card.ts:27 |  |
 | ✅ | `TableNavigationLinksMode` | apps/web/src/features/navigation/NavTree.tsx:393<br>apps/web/src/features/navigation/NavigationPanel.tsx:679<br>packages/ui/src/components/icon.tsx:43<br>apps/server/src/browse/grid.ts:866<br>apps/server/src/navigation/service.ts:76 |  |
 | ✅ | `TablePrimaryKeyOrder` | apps/server/src/browse/service.ts:94<br>apps/server/src/browse/service.ts:99 |  |
-| ✅ | `TextareaAutoSelect` | apps/server/src/routes/sql.ts:194<br>apps/web/src/features/sql/SqlPage.tsx:516 |  |
+| ✅ | `TextareaAutoSelect` | apps/server/src/routes/sql.ts:194<br>apps/web/src/features/sql/SqlPage.tsx:532 |  |
 
 ## 03 insert edit transformations — 16/16 (100.0%) covered, 14/16 implemented
 
@@ -409,7 +409,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `Export/file_template_table` | apps/server/src/export/page.ts:185 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `Export/sql_include_comments` | packages/export/src/plugins/sql.ts:169<br>packages/export/src/plugins/sql.ts:175<br>packages/export/src/plugins/sql.ts:1562 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `Export/sql_max_query_size` | packages/export/src/plugins/sql.ts:331<br>packages/export/src/plugins/sql.ts:1590 | read under a computed name — option or page-setting name (Plugins::getDefault) |
-| ✅ | `FirstDayOfCalendar` | apps/server/src/insert-edit/form.ts:458<br>apps/web/src/features/browse/GridTable.tsx:1320<br>apps/web/src/features/insert-edit/ValueWidget.tsx:447<br>apps/web/src/features/server/MonitorLogs.tsx:88<br>apps/web/src/lib/config.ts:92 |  |
+| ✅ | `FirstDayOfCalendar` | apps/server/src/insert-edit/form.ts:458<br>apps/web/src/features/browse/GridTable.tsx:1313<br>apps/web/src/features/insert-edit/ValueWidget.tsx:447<br>apps/web/src/features/server/MonitorLogs.tsx:88<br>apps/web/src/lib/config.ts:92 |  |
 | ✅ | `ForeignKeyMaxLimit` | apps/server/src/browse/actions.ts:195<br>apps/server/src/browse/actions.ts:199<br>apps/server/src/browse/actions.ts:235<br>apps/server/src/insert-edit/context.ts:143<br>apps/server/src/insert-edit/form.ts:186 |  |
 | ✅ | `Import/csv_enclosed` | packages/import/src/plugins/csv.ts:44<br>packages/import/src/plugins/csv.ts:102 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `Import/csv_escaped` | packages/import/src/plugins/csv.ts:45<br>packages/import/src/plugins/csv.ts:103 | read under a computed name — option or page-setting name (Plugins::getDefault) |
@@ -449,8 +449,8 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ShowDbStructureCreation` | apps/server/src/database/structure.ts:203<br>apps/server/src/database/structure.ts:361 |  |
 | ✅ | `ShowDbStructureLastCheck` | apps/server/src/database/structure.ts:205<br>apps/server/src/database/structure.ts:367 |  |
 | ✅ | `ShowDbStructureLastUpdate` | apps/server/src/database/structure.ts:204<br>apps/server/src/database/structure.ts:364 |  |
-| ✅ | `TextareaCols` | apps/server/src/insert-edit/form.ts:586<br>apps/server/src/insert-edit/form.ts:587<br>apps/server/src/routes/sql.ts:192<br>apps/web/src/features/sql/SqlPage.tsx:512 |  |
-| ✅ | `TextareaRows` | apps/server/src/insert-edit/form.ts:581<br>apps/server/src/insert-edit/form.ts:582<br>apps/server/src/routes/sql.ts:193<br>apps/web/src/features/sql/SqlPage.tsx:511<br>apps/web/src/features/sql/SqlPage.tsx:641 |  |
+| ✅ | `TextareaCols` | apps/server/src/insert-edit/form.ts:586<br>apps/server/src/insert-edit/form.ts:587<br>apps/server/src/routes/sql.ts:192<br>apps/web/src/features/sql/SqlPage.tsx:528 |  |
+| ✅ | `TextareaRows` | apps/server/src/insert-edit/form.ts:581<br>apps/server/src/insert-edit/form.ts:582<br>apps/server/src/routes/sql.ts:193<br>apps/web/src/features/sql/SqlPage.tsx:527<br>apps/web/src/features/sql/SqlPage.tsx:658 |  |
 | ✅ | `ThemeDefault` | apps/server/src/routes/metadata.ts:608<br>apps/server/src/routes/shell.ts:150<br>packages/metadata/src/userprefs.ts:154<br>apps/server/src/main.ts:104<br>apps/server/src/preferences/service.ts:326 | X16 |
 | ✅ | `TrustedProxies` | apps/server/src/preferences/form-display.ts:297<br>apps/web/src/features/setup/SetupForms.tsx:180<br>apps/server/src/agent/auth.ts:93<br>apps/server/src/agent/auth.ts:106<br>apps/server/src/app.ts:223 |  |
 | ✅ | `UserprefsDisallow` | apps/server/src/preferences/form-display.ts:222<br>apps/server/src/preferences/form-display.ts:309<br>apps/server/src/preferences/form-display.ts:459<br>apps/server/src/metadata/service.ts:359<br>apps/server/src/preferences/service.ts:99 |  |

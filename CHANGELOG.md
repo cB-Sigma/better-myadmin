@@ -2,6 +2,23 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.33 (2026-11-24)
+
+### Fixes
+
+- Browse: text with two or more spaces in a row, or with line breaks, is shown exactly as stored.
+  The cells used to hold no-break spaces and line-break tags, so copying a value out of the grid
+  gave different text from what is in the database. (Editing a cell always used the stored value.)
+- SQL API: an empty delimiter is now accepted for an ordinary query (the whole text then runs as
+  one query); only "Rollback when finished" needs one. The SQL tab still asks for a delimiter.
+
+### Upstream
+
+- Synced to phpMyAdmin 5add5a93ad (22 commits): the two fixes above, the monitor chart's log
+  analysis range taken from its last time tick, Spanish, Russian, Turkish and Ukrainian
+  translations and a po refresh. The rest are refactors, Psalm and test changes that need nothing
+  here (see `tools/upstream/ledger.json`).
+
 ## 1.0.32 (2026-11-21)
 
 ### Fixes

@@ -2,7 +2,7 @@
 
 # Parity coverage
 
-Mechanical inventories of phpMyAdmin `291fcadb` ([reference-commit.txt](../reference-commit.txt)) and how much of each BetterMyAdmin covers. Covered = implemented + exception + n/a. See [Testing and parity](../../architecture/11-testing-and-parity-strategy.md#mechanical-inventories-and-the-parity-gate) for how the numbers are computed and gated.
+Mechanical inventories of phpMyAdmin `5add5a93` ([reference-commit.txt](../reference-commit.txt)) and how much of each BetterMyAdmin covers. Covered = implemented + exception + n/a. See [Testing and parity](../../architecture/11-testing-and-parity-strategy.md#mechanical-inventories-and-the-parity-gate) for how the numbers are computed and gated.
 
 | Inventory | Total | implemented | exception | n/a | planned | untested | failing | missing | broken | Covered | % |
 |---|---|---|---|---|---|---|---|---|---|---|---|
@@ -246,4 +246,4 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 | [messages.json](../../../tools/parity/inventory/messages.json) | 3444 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 964 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 297 API endpoints, 89 SPA routes (3 placeholders/catch-alls), 2045 control claims, 2188 tests.
+Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 297 API endpoints, 89 SPA routes (3 placeholders/catch-alls), 2045 control claims, 2193 tests.

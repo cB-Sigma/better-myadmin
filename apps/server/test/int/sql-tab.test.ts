@@ -97,6 +97,18 @@ describe('SQL tab options', () => {
     expect(body.ajaxReload).toEqual({ reload: true })
   })
 
+  it('an empty delimiter runs the text as one query; a rollback still needs one (2c144b711e)', async () => {
+    const a = await app()
+    const one = await run(a, 'SELECT name FROM t WHERE id = 1', { delimiter: '' })
+    expect(one.status).toBe(200)
+    expect(one.body.statements).toHaveLength(1)
+    const refused = await run(a, "UPDATE t SET name = 'x' WHERE id = 1", { delimiter: '', rollback: true })
+    expect(refused.status).toBe(400)
+    expect(refused.body.error?.message).toBe('Invalid request.')
+    const [rows] = await root.query(`SELECT name FROM ${DB}.t WHERE id = 1`)
+    expect((rows as Array<{ name: string }>)[0]!.name).toBe('a')
+  })
+
   it('rollback when finished leaves the data unchanged and the pooled connection clean [p09-aa1339]', async () => {
     const a = await app()
     const { body } = await run(a, "UPDATE t SET name = 'changed' WHERE id = 1", { rollback: true })

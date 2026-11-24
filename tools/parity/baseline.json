@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:baseline`; the ratchet `pnpm parity:check` compares against",
-    "referenceCommit": "291fcadb4293a09b7c3037a07afe7612b020b9e4"
+    "referenceCommit": "5add5a93adb56f421fe611eb09620773649bc7d1"
   },
   "kinds": {
     "routes": {

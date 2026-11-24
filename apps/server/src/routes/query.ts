@@ -32,6 +32,12 @@ queryRoutes.post('/', async (c) => {
   const { cfg, pools } = c.get('deps')
   const req = await parseJson(c, QueryRequest)
   if (req.sql.trim() === '') throw new ValidationError(c.get('tr').gettext('Missing value in the form!'))
+  // ImportController: Assert::stringNotEmpty($delimiter) only when rollback_query is posted; the same
+  // envelope as a request the contract refuses
+  if (req.rollback === true && req.delimiter === '') {
+    // i18n-new: API error (phpMyAdmin has no JSON API)
+    throw new ValidationError(c.get('tr').gettext('Invalid request.'))
+  }
   const session = c.get('session')
   // A query that came from a URL runs only with a valid signature (Core::checkSqlQuerySignature);
   // phpMyAdmin then ignores the unsigned sql_query and reports the missing parameter.

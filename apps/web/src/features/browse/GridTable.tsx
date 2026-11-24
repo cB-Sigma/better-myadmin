@@ -110,20 +110,13 @@ type MoveDir = 'up' | 'down' | 'left' | 'right'
 
 const hasClass = (cls: string, c: string) => cls.split(/\s+/).includes(c)
 
-/** Core::mimeDefaultFunction as React: newlines → <br>, double spaces → space + nbsp. */
+/**
+ * A cell's text as is: Results::getRowData escapes it (htmlspecialchars) and the `pre_wrap` class
+ * shows its spaces and newlines. (Core::mimeDefaultFunction's `&nbsp;` and `<br>` went upstream
+ * in 70049f9bab: copied text came out with no-break spaces.)
+ */
 function MimeText({ text }: { text: string }) {
-  const lines = text.split('\n')
-  return (
-    <>
-      {lines.map((l, i) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: positional lines
-        <Fragment key={i}>
-          {i > 0 && <br />}
-          {l.replaceAll('  ', '  ')}
-        </Fragment>
-      ))}
-    </>
-  )
+  return <>{text}</>
 }
 
 /** The raw text of a cell for the editor (getCellValue). */
