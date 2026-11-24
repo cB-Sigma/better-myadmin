@@ -75,7 +75,7 @@ export const GridCell = z.object({
   k: z.enum(['null', 'empty', 'v']),
   /** the td classes except `hide` (data, grid_edit click1|click2, not_null, relation, …) */
   cls: z.string(),
-  /** displayed text (plain; newlines and double spaces are rendered like mimeDefaultFunction) */
+  /** displayed text (plain; the `pre_wrap` class shows its spaces and newlines) */
   t: z.string().optional(),
   /** data-originallength of a truncated cell */
   ol: z.number().int().optional(),

@@ -1315,6 +1315,160 @@
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 291fcadb42: Ukrainian translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "478f7f318e1d67deb9a27593abb8c04be8866709",
+      "subject": "Translated using Weblate (Spanish)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 5add5a93ad: Spanish translations from Weblate on QA_5_2 (po/es.po), merged into master; master's resources/po brought in by pnpm i18n:import."
+    },
+    {
+      "commit": "8922b3a280ba4013cc815e088e9d1f1f2408623c",
+      "subject": "Translated using Weblate (Russian)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 5add5a93ad: Russian translations from Weblate on QA_5_2, merged into master; imported by pnpm i18n:import."
+    },
+    {
+      "commit": "0b92a2ae6c825ed697ef3620106692ee72c0f231",
+      "subject": "Translated using Weblate (Turkish)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 5add5a93ad: Turkish translations from Weblate on QA_5_2, merged into master; imported by pnpm i18n:import."
+    },
+    {
+      "commit": "f3f112049abde01f724204c7ec8c35bca8fabb34",
+      "subject": "Translated using Weblate (Ukrainian)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 5add5a93ad: Ukrainian translations from Weblate on QA_5_2, merged into master; imported by pnpm i18n:import."
+    },
+    {
+      "commit": "da6e317253a75077a212582a178ed4b8ca38312d",
+      "subject": "Update po files",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 5add5a93ad: po refresh (source references); imported by pnpm i18n:import, the parity messages inventory regenerated (only source line references moved)."
+    },
+    {
+      "commit": "2c144b711e30f0dbc7456a1493cf213ef57bfe69",
+      "subject": "Only require the SQL delimiter for rollback queries",
+      "status": "ported",
+      "areas": ["features/09-sql-editor-query-pipeline"],
+      "notes": "sync 5add5a93ad: ImportController asserts a non-empty sql_delimiter only when rollback_query is posted. query.twig keeps the field required, so the form (Go, Ctrl+Enter, the phone layout) is unchanged. API: contracts/query.ts no longer refuses an empty delimiter (was min(1)); routes/query.ts answers \"Invalid request.\" only for an empty delimiter with rollback. An empty delimiter makes the whole text one query (BufferedQuery never splits; splitSql matches). Golden parity cases \"empty delimiter: ...\" in tests/parity/sql-box.parity.test.ts, int test in apps/server/test/int/sql-tab.test.ts, feature doc 09 row updated."
+    },
+    {
+      "commit": "02117087fb378906d36d51f85f28842b563e9b19",
+      "subject": "Add missing param types in ServerRequest",
+      "status": "not-applicable",
+      "areas": ["tooling"],
+      "notes": "sync 5add5a93ad: Native parameter types in ServerRequest; no behaviour change."
+    },
+    {
+      "commit": "a23b5cbab789d0c0631d8fe01144ba24209476c7",
+      "subject": "Update Psalm to 7.13.1",
+      "status": "not-applicable",
+      "areas": ["dependencies", "tooling"],
+      "notes": "sync 5add5a93ad: Psalm 7.13.1 (dev dependency)."
+    },
+    {
+      "commit": "9eefe160f36a970e252a8b10373c0178ba0a0428",
+      "subject": "Refactor arrayRemove",
+      "status": "not-applicable",
+      "areas": ["features/08-settings-preferences-pmadb"],
+      "notes": "sync 5add5a93ad: Core::arrayRemove rewritten recursively; same result for every path the config code removes."
+    },
+    {
+      "commit": "3186b67c8f02be235eb0da987019d5fb96aa69be",
+      "subject": "Refactor arrayWrite",
+      "status": "not-applicable",
+      "areas": ["features/08-settings-preferences-pmadb"],
+      "notes": "sync 5add5a93ad: Core::arrayWrite rewritten recursively (a scalar on the path is now replaced by an array instead of erroring); no reachable behaviour change for our config writer."
+    },
+    {
+      "commit": "7c565c7569ec6e2015e7b3000567b86ececf54c9",
+      "subject": "Make functions pure",
+      "status": "not-applicable",
+      "areas": ["features/08-settings-preferences-pmadb"],
+      "notes": "sync 5add5a93ad: arrayWrite/arrayRemove return the array instead of writing through a reference; callers updated; no behaviour change."
+    },
+    {
+      "commit": "6d4ceb5c3a566310b102f960deb32d77d2064661",
+      "subject": "Split off into a new class",
+      "status": "not-applicable",
+      "areas": ["features/08-settings-preferences-pmadb"],
+      "notes": "sync 5add5a93ad: The nested-array helpers move from Core to Utils\\NestedArray; no behaviour change. config fixtures regenerated, unchanged apart from the pin."
+    },
+    {
+      "commit": "a0d57f567b464dd05e6367d725ca215a6de2df50",
+      "subject": "Fix double escaping view name",
+      "status": "not-applicable",
+      "areas": ["features/05-database-level"],
+      "notes": "sync 5add5a93ad: Show create: a view's name was escaped twice and SHOW CREATE went through mimeDefaultFunction (&nbsp;, <br>); now plain text. DbStructurePage.tsx already rendered both as plain React text (no double escaping), which is what phpMyAdmin now does."
+    },
+    {
+      "commit": "70049f9bab255cd4ca45c61b753ae560cb66b506",
+      "subject": "Fix data corruption with consecutive spaces",
+      "status": "ported",
+      "areas": ["features/02-browse-results-grid"],
+      "notes": "sync 5add5a93ad: Core::mimeDefaultFunction removed: grid cells are plain htmlspecialchars (pre_wrap shows spaces and newlines), and makegrid no longer adds <br> after an inline edit. GridTable.tsx MimeText now renders the text as is (it put no-break spaces for double spaces and <br> for newlines, so a copied cell had U+00A0). Our editor already read the raw value, so saving never corrupted data. e2e: browse-extras.e2e.ts checks a cell with two spaces and a newline keeps them, with no <br>. Feature doc 02 updated."
+    },
+    {
+      "commit": "bd0be2b34cfd1c40a0a8299828ccffa1f987c63e",
+      "subject": "Remove unused clear method",
+      "status": "not-applicable",
+      "areas": ["tests"],
+      "notes": "sync 5add5a93ad: Removes an unused test helper method; no runtime code."
+    },
+    {
+      "commit": "5f87df115220b2962d0ac7f342771561ee358681",
+      "subject": "Remove unused valuesForOBGzipProvider method",
+      "status": "not-applicable",
+      "areas": ["tests"],
+      "notes": "sync 5add5a93ad: Removes an unused PHPUnit data provider; no runtime code."
+    },
+    {
+      "commit": "89bc5f3d160f8f3d9bdd44cef1bf936657542628",
+      "subject": "Adjust type hint in PDF",
+      "status": "not-applicable",
+      "areas": ["features/04-table-level"],
+      "notes": "sync 5add5a93ad: PDF type hint only."
+    },
+    {
+      "commit": "1fd7b517076e044caf00edc19b2f0a406f9f484c",
+      "subject": "Fix normalization test",
+      "status": "not-applicable",
+      "areas": ["features/04-table-level"],
+      "notes": "sync 5add5a93ad: Normalization return-type annotations and test fixes; no behaviour change."
+    },
+    {
+      "commit": "aa3016a6fe76e390285b14970aeeb10e82410522",
+      "subject": "Move htmlspecialchars to Twig",
+      "status": "not-applicable",
+      "areas": ["features/04-table-level"],
+      "notes": "sync 5add5a93ad: Index::isPacked returns raw and the templates escape it instead: same output. Our index tables render it as React text."
+    },
+    {
+      "commit": "16be61da51d76315340c7ea464a2a54da05223c3",
+      "subject": "Fix warning when an image transformation gets invalid image data",
+      "status": "not-applicable",
+      "areas": ["features/03-insert-edit-transformations"],
+      "notes": "sync 5add5a93ad: QA_5_2 ImageWrapper::fromString suppresses imagecreatefromstring's warning on invalid image data; master already had the @ and returns null. Our apps/server/src/insert-edit/image.ts already returns null for data that is not an image, without a warning."
+    },
+    {
+      "commit": "0ea1ab3b631b00ae8cd482186752ca1530fc5220",
+      "subject": "Add change log entry for #20596",
+      "status": "not-applicable",
+      "areas": ["docs"],
+      "notes": "sync 5add5a93ad: ChangeLog entry for #20596 (the QA_5_2 image warning fix)."
+    },
+    {
+      "commit": "d83e729796ac8799f54cb3967323d81f06d10d7f",
+      "subject": "Fix monitor chart click error when the chart has fewer than 5 ticks",
+      "status": "ported",
+      "areas": ["features/06-server-level"],
+      "notes": "sync 5add5a93ad: Monitor chart click: the analysis range ends at the last x tick instead of ticks[4]. monitorChart.ts now takes ticks.at(-1) (we always build five, so the range is unchanged)."
     }
   ]
 }

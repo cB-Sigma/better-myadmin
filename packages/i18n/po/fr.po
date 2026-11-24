@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 291fcadb4293a09b7c3037a07afe7612b020b9e4 resources/po/fr.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 5add5a93adb56f421fe611eb09620773649bc7d1 resources/po/fr.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin-docs 4.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-15 00:26+0000\nPO-Revision-Date: 2026-11-16 11:23+0000\nLast-Translator: kjo-sdds <kjo-sdds@users.noreply.hosted.weblate.org>\nLanguage-Team: French <https://hosted.weblate.org/projects/phpmyadmin/master/fr/>\nLanguage: fr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 2026.12.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin-docs 4.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-22 00:26+0000\nPO-Revision-Date: 2026-11-16 11:23+0000\nLast-Translator: kjo-sdds <kjo-sdds@users.noreply.hosted.weblate.org>\nLanguage-Team: French <https://hosted.weblate.org/projects/phpmyadmin/master/fr/>\nLanguage: fr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 2026.12.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "JavaScript doit être activé au-delà de ce point !"

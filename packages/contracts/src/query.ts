@@ -10,7 +10,11 @@ export const QueryRequest = z.object({
   pos: z.number().int().min(0).default(0),
   /** session_max_rows: a positive number or 'all'. Omitted → MaxRows. */
   maxRows: z.union([z.number().int().positive(), z.literal('all')]).optional(),
-  delimiter: z.string().min(1).default(';'),
+  /**
+   * sql_delimiter. May be empty (the whole text is then one statement, as BufferedQuery with an empty
+   * delimiter never splits); only a rollback needs one (ImportController, 2c144b711e).
+   */
+  delimiter: z.string().default(';'),
   /** true when the query was typed in the SQL box ($_SESSION['sql_from_query_box']). */
   fromQueryBox: z.boolean().default(false),
   /**
