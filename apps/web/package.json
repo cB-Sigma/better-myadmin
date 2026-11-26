@@ -1,6 +1,6 @@
 {
   "name": "@bettermyadmin/web",
-  "version": "1.0.33",
+  "version": "1.0.34",
   "private": true,
   "license": "GPL-2.0-or-later",
   "type": "module",
@@ -40,7 +40,7 @@
     "ol": "10.10.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "zod": "4.6.6"
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.1.7",
@@ -50,6 +50,6 @@
     "@types/react-dom": "19.1.5",
     "@vitejs/plugin-react": "4.4.1",
     "tailwindcss": "4.1.7",
-    "vite": "6.3.5"
+    "vite": "6.4.6"
   }
 }

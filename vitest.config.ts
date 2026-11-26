@@ -1,0 +1,64 @@
+import { defineConfig } from 'vitest/config'
+
+// The three tiers, run one at a time with --project (package.json: test, test:int, test:parity)
+export default defineConfig({
+  test: {
+    projects: [
+      {
+        test: {
+          name: 'unit',
+          include: [
+            'packages/*/test/**/*.test.{ts,tsx}',
+            'apps/*/test/unit/**/*.test.ts',
+            'apps/web/src/**/*.test.{ts,tsx}',
+            'tools/*/test/**/*.test.ts',
+            'tests/ui-parity/**/*.test.ts',
+          ],
+        },
+      },
+      {
+        test: {
+          name: 'int',
+          include: ['apps/*/test/int/**/*.test.ts', 'packages/*/test/int/**/*.test.ts'],
+          // socket-guard first: a lost DB socket must not crash the worker (it precedes retry, which
+          // cannot recover a dead worker). Then the per-file MySQL lock.
+          setupFiles: [
+            'apps/server/test/support/socket-guard.ts',
+            'apps/server/test/support/int-suite-lock.ts',
+          ],
+          // transient connection/load flakes on 2-core shared runners (a dropped DB socket, a contended
+          // read) self-heal on a re-run; each test is isolated, so a retry is safe
+          retry: 2,
+          testTimeout: 30000,
+          // setup/teardown (fixture DDL, replica thread control) is slow on a 2-core CI runner
+          hookTimeout: 30000,
+          // one file at a time (they share fixed accounts and databases on one MySQL); each file still
+          // runs isolated in its own fork
+          pool: 'forks',
+          fileParallelism: false,
+        },
+      },
+      {
+        test: {
+          name: 'parity',
+          include: ['tests/parity/**/*.parity.test.ts'],
+          // socket-guard first (a lost DB socket must not crash the worker), then target + the lock
+          setupFiles: [
+            'apps/server/test/support/socket-guard.ts',
+            'tests/parity/lib/target.ts',
+            'tests/parity/lib/suite-lock.ts',
+          ],
+          // a dropped DB socket / connection error under 2-core load flips this tier red for no product
+          // reason; retry (each test is isolated) so transient connection flakes self-heal
+          retry: 2,
+          testTimeout: 60000,
+          // replica setup and other hooks are slow on a 2-core CI runner (was hitting the 10s default)
+          hookTimeout: 30000,
+          // one file at a time, as the int project (see there)
+          pool: 'forks',
+          fileParallelism: false,
+        },
+      },
+    ],
+  },
+})

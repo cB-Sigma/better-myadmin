@@ -1,6 +1,6 @@
 {
   "name": "@bettermyadmin/contracts",
-  "version": "1.0.33",
+  "version": "1.0.34",
   "private": true,
   "license": "GPL-2.0-or-later",
   "type": "module",
@@ -12,6 +12,6 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "zod": "4.6.6"
+    "zod": "4.6.7"
   }
 }

@@ -10,7 +10,7 @@ jobs:
   # Here rather than in per-push ci.yml: it starts a live reference and compares live output, which is
   # inherently flaky on shared 2-core runners (transient Docker Hub pulls, dropped HTTP/DB sockets).
   # The deterministic per-push parity guard is `parity-gate` in ci.yml (tools/parity vs the baseline).
-  # retry: 2 (vitest.workspace.ts) and the socket guard (apps/server/test/support/socket-guard.ts)
+  # retry: 2 (vitest.config.ts) and the socket guard (apps/server/test/support/socket-guard.ts)
   # still apply; a nightly re-run (workflow_dispatch) absorbs any residual transient flake.
   parity:
     runs-on: ubuntu-24.04

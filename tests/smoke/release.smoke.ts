@@ -41,6 +41,10 @@ test('serves the built app, setup closed', async ({ request }) => {
   const js = await request.get(asset as string)
   expect(js.status()).toBe(200)
   expect(js.headers()['cache-control']).toBe('public, max-age=31536000, immutable')
+  // the files whose names do not change between releases are always revalidated: a browser must
+  // not reuse an older index.html, whose asset names a newer release no longer serves
+  expect(index.headers()['cache-control']).toBe('no-cache')
+  expect((await request.get('/theme-init.js')).headers()['cache-control']).toBe('no-cache')
   // a client route falls back to the SPA
   expect((await request.get('/s/1/db/x/t/y/browse')).status()).toBe(200)
   const setup = await request.get('/api/setup')
