@@ -2,6 +2,31 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.34 (2026-11-26)
+
+### Security
+
+- Web server: request paths with a backslash or an encoded path separator can no longer reach files
+  or routes they should not (the static file server decoded some paths twice, and treated a
+  backslash as a folder separator); route middleware can no longer be skipped through mounted or
+  wildcard routes; the CSRF check now also covers hyperlink-auditing requests; form validation
+  is no longer skipped for multipart requests; a closing tag split across a CSS template is
+  escaped (hono 4.13.18, @hono/node-server 2.1.7).
+- MySQL connection: a server can no longer downgrade the login to the clear-text password plugin
+  and so see the password, and a compressed reply can no longer be inflated without limit to
+  exhaust memory (mysql2 3.24.6).
+- Request validation: an oversized list in a request can no longer exhaust memory while it is
+  checked (zod 4.6.7).
+- Pages whose names stay the same between releases (index.html, theme-init.js) are always
+  revalidated, so a browser never keeps an older page after an upgrade.
+- Build and test tooling updated: vite 6.4.6, vitest 4.1.12, rollup 4.68.2, Playwright 1.65.0,
+  turbo 2.11.11 (dev and build only; nothing of them ships in the image).
+
+### Fixes
+
+- A notice shown right after the previous one went away (for example "Dropping Primary Key/Index"
+  just after "Dropping column") could vanish at once instead of staying until its request ended.
+
 ## 1.0.33 (2026-11-24)
 
 ### Fixes

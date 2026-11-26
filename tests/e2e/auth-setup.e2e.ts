@@ -90,6 +90,10 @@ test('http auth: Basic credentials log in, logout asks again [p01-03cad3]', asyn
   const page = await ctx.newPage()
   await page.goto(`${i.url}/`)
   await expect(page.locator('#pma_navigation')).toBeVisible()
+  // the start page has settled (/ → /s/1 and its first requests), so the menu is not re-rendered
+  // away between opening it and choosing Log out
+  await expect(page).toHaveURL(/\/s\/1$/)
+  await page.waitForLoadState('networkidle')
   await page.locator('#userAccountDropdown button').first().click()
   await page.getByRole('menuitem', { name: 'Log out' }).click()
   // ?old_usr=f01a_e2e refuses the same user: the 401 page

@@ -209,6 +209,9 @@ test('[p01-173d41] a tree request after the session is gone brings back the logi
 }) => {
   await login(page, USER, USER)
   await expect(item(page, 'database', DB)).toBeVisible()
+  // the page's own first requests finish first, so the tree request is the one that finds the
+  // session gone (otherwise one still in flight brings the login form back before the click)
+  await page.waitForLoadState('networkidle')
   await context.clearCookies()
   await expand(page, 'database', DB)
   await expect(page.locator('#login_form')).toBeVisible()

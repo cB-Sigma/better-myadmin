@@ -113,7 +113,10 @@ async function main() {
         onFound: (_p, c) => c.header('Cache-Control', 'public, max-age=31536000, immutable'),
       }),
     )
-    app.use('*', serveStatic({ root }))
+    // the other files (index.html at /, theme-init.js, theme screenshots) keep their names across
+    // releases: always revalidated, so a browser never reuses an older index.html (and its asset
+    // names) on its own heuristic once serveStatic sends Last-Modified
+    app.use('*', serveStatic({ root, onFound: (_p, c) => c.header('Cache-Control', 'no-cache') }))
     // base.twig / login/header.twig <noscript>, in the request's language (set by the page middleware)
     const noscript = 'Javascript must be enabled past this point!'
     app.get('*', (c) => {

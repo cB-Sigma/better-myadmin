@@ -55,8 +55,13 @@ test('digests: list, filter, sort, detail with EXPLAIN, reset confirmation', asy
   await table.locator('th[data-sort="count"] button').click()
   await expect(table.locator('th[data-sort="count"]')).toHaveAttribute('aria-sort', 'ascending')
   await expect(page).toHaveURL(/order=asc/)
-  const counts = await table.locator('tbody [data-col="count"]').allTextContents()
-  expect(counts.map(Number)).toEqual([...counts.map(Number)].sort((a, b) => a - b))
+  // the header follows the URL at once, the rows once the re-sorted list has loaded: wait for them
+  await expect
+    .poll(async () => {
+      const counts = (await table.locator('tbody [data-col="count"]').allTextContents()).map(Number)
+      return counts.every((n, i) => i === 0 || (counts[i - 1] ?? n) <= n)
+    })
+    .toBe(true)
 
   // detail: the formatted digest, the sample with its values, EXPLAIN on demand
   await row.locator('.slow-query-open').click()

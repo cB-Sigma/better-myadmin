@@ -16,6 +16,15 @@ import { useUiSettings } from '../settings.tsx'
 /** Only one AJAX notification exists at a time: every new one replaces the previous (same id). */
 export const AJAX_ID = 'ajax_message'
 
+/**
+ * The id of the notification on screen, or null once it is dismissed or has timed out. A new
+ * notification replaces a live one in place (its id); after a dismissal it gets a fresh id, since
+ * sonner removes a dismissed toast by id when its exit animation ends, which would take a new
+ * toast of the same id with it (a "Dropping …" right after the previous notice went away).
+ */
+let current: string | null = null
+let seq = 0
+
 /** The sonner host (`#loading_parent`), loaded with the first notification. */
 export default function SonnerHost() {
   // phones: at the bottom, above the console strip, clear of the top bar and the tab menu
@@ -34,19 +43,34 @@ export default function SonnerHost() {
 }
 
 export function show(num: number, policy: MessagePolicy, body: ReactNode): void {
+  seq += 1
+  const id = current ?? `${AJAX_ID}_${seq}`
+  current = id
+  const gone = () => {
+    if (current === id) current = null
+  }
   toast.custom(
-    (id) => (
+    () => (
       <Notification
         num={num}
         type={policy.type}
         spinner={policy.spinner}
         dismissable={policy.dismissable}
-        onDismiss={() => toast.dismiss(id)}
+        onDismiss={() => {
+          gone()
+          toast.dismiss(id)
+        }}
       >
         {body}
       </Notification>
     ),
-    { id: AJAX_ID, duration: policy.duration ?? Number.POSITIVE_INFINITY, dismissible: false },
+    {
+      id,
+      duration: policy.duration ?? Number.POSITIVE_INFINITY,
+      dismissible: false,
+      onAutoClose: gone,
+      onDismiss: gone,
+    },
   )
 }
 
@@ -55,7 +79,10 @@ const COPY_TO_CLIPBOARD = 'Copy to clipboard'
 const EDIT_QUERY = 'Edit query'
 
 export function dismiss(): void {
-  toast.dismiss(AJAX_ID)
+  if (current === null) return
+  const id = current
+  current = null
+  toast.dismiss(id)
 }
 
 function Notification(props: {

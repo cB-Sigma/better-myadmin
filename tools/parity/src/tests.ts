@@ -2,7 +2,7 @@
  * Tests and their results.
  *
  * Static side: every `describe`/`it`/`test` with a literal title in the Vitest projects
- * (vitest.workspace.ts) and the Playwright suites, with its describe chain. A checklist item is
+ * (vitest.config.ts) and the Playwright suites, with its describe chain. A checklist item is
  * linked to a test whose full title contains the item id (`p01-3f9a2c`) or the item's exact text.
  *
  * Dynamic side: the JSON reporter outputs saved under .data/parity-results/ by
