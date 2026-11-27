@@ -1,5 +1,10 @@
 # Imported from phpMyAdmin 8d3a2d5ddef22a2791122a427aac11cface1d65b resources/po/ta.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
+# Notices from the upstream file, kept as they are:
+# phpMyAdmin translation.
+# Copyright (C) 2003 - 2010 phpMyAdmin devel team
+# This file is distributed under the same license as the phpMyAdmin package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
 msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-22 00:26+0000\nPO-Revision-Date: 2026-07-28 04:01+0000\nLast-Translator: Rajkumar Ramadoss <lionrajkumar@gmail.com>\nLanguage-Team: Tamil <https://hosted.weblate.org/projects/phpmyadmin/master/ta/>\nLanguage: ta\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.8.dev0\n"
 

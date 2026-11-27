@@ -3,7 +3,9 @@
  *
  * Reads `$PMA_ROOT/resources/po/*.po` (phpMyAdmin's git tree, the same files Weblate commits) and writes
  *   - po/<code>.po                 the entries msgfmt compiles into the .mo phpMyAdmin loads (non-fuzzy,
- *                                  every msgstr filled, no obsolete `#~`), comments stripped. Only the
+ *                                  every msgstr filled, no obsolete `#~`), entry comments stripped; the
+ *                                  file's leading comments (translator copyright and licence notices)
+ *                                  are kept as they are, as the GPL requires. Only the
  *                                  locales a release ships: bin/remove-incomplete-mo deletes every .mo
  *                                  below 40 % translated (msgfmt --statistics) and LanguageManager only
  *                                  offers locales whose .mo exists.
@@ -42,6 +44,17 @@ const git = (...args: string[]) => {
 const commit = git('rev-parse', 'HEAD')
 const poCommit = git('log', '-1', '--format=%H', '--', 'resources/po')
 
+/** The comment lines before the first entry: translators' copyright and licence notices. */
+function leadingNotices(text: string): string {
+  const lines: string[] = []
+  for (const line of text.split('\n')) {
+    if (!line.startsWith('#')) break
+    lines.push(line.replace(/^# ?/, ''))
+  }
+  while (lines.length > 0 && lines[lines.length - 1]?.trim() === '') lines.pop()
+  return lines.length > 0 ? `\nNotices from the upstream file, kept as they are:\n${lines.join('\n')}` : ''
+}
+
 const files = readdirSync(poDir)
   .filter((f) => f.endsWith('.po'))
   .sort()
@@ -49,14 +62,15 @@ if (files.length === 0) throw new Error(`No .po files in ${poDir}`)
 rmSync(outDir, { recursive: true, force: true })
 mkdirSync(outDir, { recursive: true })
 
-const pot = parsePo(readFileSync(join(poDir, 'phpmyadmin.pot'), 'utf8'))
+const potText = readFileSync(join(poDir, 'phpmyadmin.pot'), 'utf8')
+const pot = parsePo(potText)
 // the template (msgids only) for `pnpm i18n:parity`
 writeFileSync(
   join(outDir, 'phpmyadmin.pot'),
   formatPo(
     pot.headerRaw,
     pot.entries,
-    `Imported from phpMyAdmin ${commit} resources/po/phpmyadmin.pot by packages/i18n/scripts/import-po.ts.`,
+    `Imported from phpMyAdmin ${commit} resources/po/phpmyadmin.pot by packages/i18n/scripts/import-po.ts.${leadingNotices(potText)}`,
   ),
 )
 const stats: Record<string, number> = {}
@@ -64,7 +78,8 @@ const shipped: string[] = []
 let shippedMessages = 0
 for (const file of files) {
   const code = file.slice(0, -3)
-  const po = parsePo(readFileSync(join(poDir, file), 'utf8'))
+  const text = readFileSync(join(poDir, file), 'utf8')
+  const po = parsePo(text)
   const st = poStatistics(po)
   const percent = Math.floor((100 * st.translated) / (st.translated + st.fuzzy + st.untranslated))
   stats[code] = percent
@@ -80,7 +95,7 @@ for (const file of files) {
     formatPo(
       po.headerRaw,
       entries,
-      `Imported from phpMyAdmin ${commit} resources/po/${file} by packages/i18n/scripts/import-po.ts.\nOnly the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.`,
+      `Imported from phpMyAdmin ${commit} resources/po/${file} by packages/i18n/scripts/import-po.ts.\nOnly the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.${leadingNotices(text)}`,
     ),
   )
   console.log(`${code}: ${entries.length} messages, ${percent}%`)

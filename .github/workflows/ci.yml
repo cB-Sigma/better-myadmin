@@ -186,3 +186,4 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm upstream:check --gate
       - run: pnpm upstream:credits --check
+      - run: pnpm licenses:check

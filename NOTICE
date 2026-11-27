@@ -33,7 +33,8 @@ What comes from phpMyAdmin:
   defaults, generated SQL and export formats, as specified in docs/features
   from phpMyAdmin's source code.
 - The translations in packages/i18n/po, made by phpMyAdmin's translators
-  and imported from phpMyAdmin's catalogues.
+  and imported from phpMyAdmin's catalogues. Each file keeps the
+  translators' notices from the top of the upstream file.
 - The look of the pmahomme, original, bootstrap, metro and other
   phpMyAdmin themes (apps/web/public/themes, packages/ui/src/themes).
 - The documentation in docs-site, adapted from phpMyAdmin's documentation.
@@ -92,5 +93,13 @@ MariaDB and MySQL Knowledge Base (williamdes/mariadb-mysql-kbs)
     packages/kbs/src/generated stay under that licence.
     https://github.com/williamdes/mariadb-mysql-kbs
 
+DOMPurify
+    Copyright (C) Cure53 and other contributors.
+    Offered under the Mozilla Public License 2.0 or the Apache License 2.0;
+    BetterMyAdmin uses it under the Mozilla Public License 2.0.
+    https://github.com/cure53/DOMPurify
+
 The npm packages BetterMyAdmin depends on are distributed under their own
 licences, which are listed in each package's directory under node_modules.
+`pnpm licenses:check` (run in CI) makes sure each one that ships is
+compatible with the GPL version 2.

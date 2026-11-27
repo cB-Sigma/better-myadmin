@@ -1,0 +1,8 @@
+{
+  "name": "@bettermyadmin/long",
+  "version": "1.0.35",
+  "private": true,
+  "license": "GPL-2.0-only",
+  "description": "The part of the long package that mysql2 uses (new Long(low, high, unsigned), toString, toNumber), on BigInt. Replaces long (Apache-2.0, which cannot be combined with GPL-2.0-only code) through a pnpm override.",
+  "main": "index.js"
+}

@@ -1,4 +1,11 @@
 # Imported from phpMyAdmin 8d3a2d5ddef22a2791122a427aac11cface1d65b resources/po/phpmyadmin.pot by packages/i18n/scripts/import-po.ts.
+# Notices from the upstream file, kept as they are:
+# phpMyAdmin translation.
+# Copyright (C) 2003 - 2026 phpMyAdmin devel team
+# This file is distributed under the same license as the phpMyAdmin package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+# , fuzzy
 msgid ""
 msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-22 00:26+0000\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nLanguage: \nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
