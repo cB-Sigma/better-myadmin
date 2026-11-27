@@ -1,4 +1,5 @@
 import iconv from 'iconv-lite'
+import support from './generated/charset-support.json' with { type: 'json' }
 import translit from './generated/translit.json' with { type: 'json' }
 
 /** pma: src/Charsets.php::$mysqlCharsetMap (file charset → MySQL charset for SET NAMES) */
@@ -97,14 +98,32 @@ export function recoding(settings: { RecodingEngine: string; IconvExtraParams: s
   }
 }
 
+const ICONV_NAMES = new Set(support.iconv)
+const MBSTRING_NAMES = new Set(support.mbstring)
+
 /**
- * Encoding::listEncodings(): AvailableCharsets without ISO-2022-CN-EXT (CVE-2024-2961).
- * (iconv engine: the configured list as is.)
+ * Whether the recoding engine can convert from `charset` (Encoding::isCharsetSupported):
+ * glibc's iconv_open upper-cases the name and keeps only letters, digits and `_-.,:` before its
+ * lookup; mbstring matches an encoding's name, MIME name or alias ignoring case.
  */
-export function listEncodings(available: readonly string[]): string[] {
+export function encodingSupported(charset: string, engine: Recoding['engine']): boolean {
+  if (engine === 'mbstring') return MBSTRING_NAMES.has(charset.toLowerCase())
+  return ICONV_NAMES.has(charset.toUpperCase().replace(/[^A-Z0-9_\-.,:]/g, ''))
+}
+
+/**
+ * Encoding::listEncodings(): the AvailableCharsets the engine can convert from (charset-support.json,
+ * glibc iconv's or mbstring's names, scripts/gen-charset-support.php), without ISO-2022-CN-EXT
+ * (CVE-2024-2961). With the default list, iconv lacks iso-8859-12, x-user-defined and
+ * ks_c_5601-1987; mbstring also lacks iso-8859-11, windows-1250/1256/1257 and tis-620.
+ */
+export function listEncodings(
+  available: readonly string[],
+  engine: Recoding['engine'] = DEFAULT_RECODING.engine,
+): string[] {
   return available.filter((charset) => {
     const n = charset.replace(/[^A-Za-z0-9\-/]/g, '').toUpperCase()
-    return !n.includes('ISO-2022-CN-EXT') && !n.includes('ISO2022CNEXT')
+    return !n.includes('ISO-2022-CN-EXT') && !n.includes('ISO2022CNEXT') && encodingSupported(charset, engine)
   })
 }
 

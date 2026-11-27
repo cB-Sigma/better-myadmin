@@ -1,3 +1,4 @@
+import { RecodeError } from '@bettermyadmin/export'
 import { type Translator, sprintf } from '@bettermyadmin/i18n'
 import { php } from '@bettermyadmin/mysql-types'
 import { backquote } from '@bettermyadmin/sql-gen'
@@ -165,6 +166,8 @@ export class Import {
   /** time() */
   now: () => number = () => Math.floor(Date.now() / 1000)
   charsetConversion = false
+  /** ImportSettings::$charsetOfFile */
+  charsetOfFile = ''
   importNotice = ''
   /** Current::$message */
   message: ImportMessage | null = null
@@ -273,7 +276,17 @@ export class Import {
       return Buffer.from(r, 'utf8')
     }
     if (this.file === null) return false
-    let result = this.file.read(size)
+    let result: Buffer
+    try {
+      result = this.file.read(size)
+    } catch (e) {
+      // Encoding::convertString throws EncodingConversionFailure: the file is not in that charset
+      if (!this.charsetConversion || !(e instanceof RecodeError)) throw e
+      // i18n-new: phpMyAdmin c916636459, its catalogue not refreshed yet
+      this.message = this.error('The file is not valid in the character set %s.', this.charsetOfFile)
+      this.hasError = true
+      return false
+    }
     this.finished = this.file.eof()
     this.offset += size
     this.onChunk?.(this.offset)

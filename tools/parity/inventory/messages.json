@@ -1,9 +1,9 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
-    "referenceCommit": "5add5a93adb56f421fe611eb09620773649bc7d1",
+    "referenceCommit": "8d3a2d5ddef22a2791122a427aac11cface1d65b",
     "source": "resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys)",
-    "count": 3444
+    "count": 3447
   },
   "items": [
     {
@@ -147,6 +147,7 @@
       "plural": null,
       "refs": [
         "src/Controllers/Import/ImportController.php:639",
+        "src/Controllers/Import/ImportController.php:642",
         "src/Controllers/Sql/SqlController.php:138"
       ]
     },
@@ -214,6 +215,7 @@
       "plural": null,
       "refs": [
         "src/Controllers/Import/ImportController.php:702",
+        "src/Controllers/Import/ImportController.php:705",
         "src/Sql.php:917"
       ]
     },
@@ -3989,7 +3991,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Import/Import.php:1213"
+        "src/Import/Import.php:1213",
+        "src/Import/Import.php:1224"
       ]
     },
     {
@@ -8662,7 +8665,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/HomeController.php:376",
         "src/Controllers/HomeController.php:377"
       ]
     },
@@ -10002,7 +10004,9 @@
       "plural": null,
       "refs": [
         "src/Import/Import.php:1178",
-        "src/Import/Import.php:1227"
+        "src/Import/Import.php:1189",
+        "src/Import/Import.php:1227",
+        "src/Import/Import.php:1238"
       ]
     },
     {
@@ -10011,7 +10015,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Import/Import.php:1214"
+        "src/Import/Import.php:1214",
+        "src/Import/Import.php:1225"
       ]
     },
     {
@@ -10764,6 +10769,7 @@
         "src/Controllers/Operations/ViewController.php:95",
         "src/Html/Generator.php:728",
         "src/Import/Import.php:121",
+        "src/Import/Import.php:122",
         "src/InsertEdit.php:414",
         "src/Message.php:104"
       ]
@@ -10774,7 +10780,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Dbal/DbiMysqli.php:116",
         "src/Dbal/DbiMysqli.php:117"
       ]
     },
@@ -11955,6 +11960,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Config/UserPreferencesHandler.php:225",
         "src/Dbal/DatabaseInterface.php:1108"
       ]
     },
@@ -13075,7 +13081,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Import/Import.php:1221"
+        "src/Import/Import.php:1221",
+        "src/Import/Import.php:1232"
       ]
     },
     {
@@ -13094,7 +13101,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Import/Import.php:1163"
+        "src/Import/Import.php:1163",
+        "src/Import/Import.php:1174"
       ]
     },
     {
@@ -13103,7 +13111,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Import/Import.php:1189"
+        "src/Import/Import.php:1189",
+        "src/Import/Import.php:1200"
       ]
     },
     {
@@ -13719,8 +13728,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Import/ImportController.php:567",
-        "src/Controllers/Import/ImportController.php:568"
+        "src/Controllers/Import/ImportController.php:568",
+        "src/Controllers/Import/ImportController.php:570"
       ]
     },
     {
@@ -14097,8 +14106,8 @@
       "context": null,
       "plural": "Import has been successfully finished, %d queries executed.",
       "refs": [
-        "src/Controllers/Import/ImportController.php:520",
-        "src/Controllers/Import/ImportController.php:521"
+        "src/Controllers/Import/ImportController.php:521",
+        "src/Controllers/Import/ImportController.php:523"
       ]
     },
     {
@@ -14298,7 +14307,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Import/ImportController.php:194"
+        "src/Controllers/Import/ImportController.php:194",
+        "src/Controllers/Import/ImportController.php:195"
       ]
     },
     {
@@ -16069,7 +16079,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/HomeController.php:280",
         "src/Controllers/HomeController.php:281"
       ]
     },
@@ -17237,6 +17246,7 @@
         "src/Controllers/Table/GetFieldController.php:109",
         "src/Database/Routines.php:997",
         "src/Import/Import.php:137",
+        "src/Import/Import.php:138",
         "src/InsertEdit.php:165",
         "src/Sql.php:903"
       ]
@@ -17699,7 +17709,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Import/ImportController.php:430",
         "src/Controllers/Import/ImportController.php:431"
       ]
     },
@@ -18911,8 +18920,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Import/Import.php:945",
-        "src/Import/Import.php:946"
+        "src/Import/Import.php:946",
+        "src/Import/Import.php:956"
       ]
     },
     {
@@ -19152,7 +19161,9 @@
         "resources/templates/database/routines/editor_form.twig:58",
         "resources/templates/table/structure/display_table_stats.twig:94",
         "src/Import/Import.php:1160",
-        "src/Import/Import.php:1218"
+        "src/Import/Import.php:1171",
+        "src/Import/Import.php:1218",
+        "src/Import/Import.php:1229"
       ]
     },
     {
@@ -19185,7 +19196,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/HomeController.php:197"
+        "src/Controllers/HomeController.php:197",
+        "src/Controllers/HomeController.php:198"
       ]
     },
     {
@@ -23010,7 +23022,8 @@
         "resources/templates/table/structure/display_structure.twig:221",
         "resources/templates/table/structure/display_table_stats.twig:116",
         "src/Controllers/Server/DatabasesController.php:267",
-        "src/Import/Import.php:132"
+        "src/Import/Import.php:132",
+        "src/Import/Import.php:133"
       ]
     },
     {
@@ -23309,8 +23322,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Import/ImportController.php:557",
-        "src/Controllers/Import/ImportController.php:558"
+        "src/Controllers/Import/ImportController.php:558",
+        "src/Controllers/Import/ImportController.php:560"
       ]
     },
     {
@@ -25243,7 +25256,9 @@
       "plural": null,
       "refs": [
         "src/Controllers/Import/ImportController.php:302",
-        "src/Controllers/Import/ImportController.php:513"
+        "src/Controllers/Import/ImportController.php:303",
+        "src/Controllers/Import/ImportController.php:513",
+        "src/Controllers/Import/ImportController.php:516"
       ]
     },
     {
@@ -25633,7 +25648,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Import/ImportController.php:257"
+        "src/Controllers/Import/ImportController.php:257",
+        "src/Controllers/Import/ImportController.php:258"
       ]
     },
     {
@@ -26425,8 +26441,8 @@
         "src/Config/Forms/User/ExportForm.php:53",
         "src/Config/Forms/User/ExportForm.php:98",
         "src/Controllers/JavaScriptMessagesController.php:699",
-        "src/Import/Import.php:1158",
         "src/Import/Import.php:1159",
+        "src/Import/Import.php:1169",
         "src/Menu.php:214",
         "src/Menu.php:322",
         "src/Navigation/Nodes/NodeColumn.php:38",
@@ -26496,7 +26512,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Import/Import.php:1171"
+        "src/Import/Import.php:1171",
+        "src/Import/Import.php:1182"
       ]
     },
     {
@@ -27614,7 +27631,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/HomeController.php:408",
         "src/Controllers/HomeController.php:409"
       ]
     },
@@ -27666,7 +27682,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/HomeController.php:391",
         "src/Controllers/HomeController.php:392"
       ]
     },
@@ -27789,7 +27804,9 @@
       "plural": null,
       "refs": [
         "src/Controllers/Import/ImportController.php:322",
-        "src/Controllers/Import/ImportController.php:509"
+        "src/Controllers/Import/ImportController.php:323",
+        "src/Controllers/Import/ImportController.php:509",
+        "src/Controllers/Import/ImportController.php:512"
       ]
     },
     {
@@ -27882,7 +27899,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/HomeController.php:318",
         "src/Controllers/HomeController.php:319"
       ]
     },
@@ -27892,7 +27908,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/HomeController.php:348",
         "src/Controllers/HomeController.php:349"
       ]
     },
@@ -27920,7 +27935,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/HomeController.php:328",
         "src/Controllers/HomeController.php:329"
       ]
     },
@@ -27930,7 +27944,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/HomeController.php:479",
         "src/Controllers/HomeController.php:480"
       ]
     },
@@ -28131,6 +28144,15 @@
       ]
     },
     {
+      "key": "The file is not valid in the character set %s.",
+      "msgid": "The file is not valid in the character set %s.",
+      "context": null,
+      "plural": null,
+      "refs": [
+        "src/Import/Import.php:333"
+      ]
+    },
+    {
       "key": "The first line of the file contains the table column names <i>(if this is unchecked, the first line will become part of the data)</i>",
       "msgid": "The first line of the file contains the table column names <i>(if this is unchecked, the first line will become part of the data)</i>",
       "context": null,
@@ -28178,8 +28200,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Import/Import.php:1209",
-        "src/Import/Import.php:1210"
+        "src/Import/Import.php:1210",
+        "src/Import/Import.php:1220"
       ]
     },
     {
@@ -28376,7 +28398,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/HomeController.php:461",
         "src/Controllers/HomeController.php:462"
       ]
     },
@@ -29419,7 +29440,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/HomeController.php:190",
         "src/Controllers/HomeController.php:191"
       ]
     },
@@ -29651,6 +29671,15 @@
       ]
     },
     {
+      "key": "The server does not support the character set %s.",
+      "msgid": "The server does not support the character set %s.",
+      "context": null,
+      "plural": null,
+      "refs": [
+        "src/Controllers/Import/ImportController.php:453"
+      ]
+    },
+    {
       "key": "The server is not responding (or the local server's socket is not correctly configured).",
       "msgid": "The server is not responding (or the local server's socket is not correctly configured).",
       "context": null,
@@ -29789,6 +29818,15 @@
       "plural": null,
       "refs": [
         "src/Identifiers/InvalidTableName.php:14"
+      ]
+    },
+    {
+      "key": "The text could not be converted from %s to %s.",
+      "msgid": "The text could not be converted from %s to %s.",
+      "context": null,
+      "plural": null,
+      "refs": [
+        "src/Encoding.php:164"
       ]
     },
     {
@@ -29947,7 +29985,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/HomeController.php:358",
         "src/Controllers/HomeController.php:359"
       ]
     },
@@ -32884,7 +32921,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Import/Import.php:1212"
+        "src/Import/Import.php:1212",
+        "src/Import/Import.php:1223"
       ]
     },
     {
@@ -34376,7 +34414,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Import/ImportController.php:168",
         "src/Controllers/Import/ImportController.php:169"
       ]
     },
@@ -34531,7 +34568,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/HomeController.php:260",
         "src/Controllers/HomeController.php:261"
       ]
     },
@@ -34550,7 +34586,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/HomeController.php:299",
         "src/Controllers/HomeController.php:300"
       ]
     },

@@ -1469,6 +1469,111 @@
       "status": "ported",
       "areas": ["features/06-server-level"],
       "notes": "sync 5add5a93ad: Monitor chart click: the analysis range ends at the last x tick instead of ticks[4]. monitorChart.ts now takes ticks.at(-1) (we always build five, so the range is unchanged)."
+    },
+    {
+      "commit": "c1fabadb4b0ce70baad5359463c69a9bbd2e7f18",
+      "subject": "Translated using Weblate (Czech)",
+      "status": "ported",
+      "areas": ["i18n"],
+      "notes": "sync 8d3a2d5dde: Czech translation, imported with pnpm i18n:import."
+    },
+    {
+      "commit": "887056ed84d1b159a3a40055eac0004c0b83433b",
+      "subject": "Translated using Weblate (French)",
+      "status": "ported",
+      "areas": ["i18n"],
+      "notes": "sync 8d3a2d5dde: French translation, imported with pnpm i18n:import."
+    },
+    {
+      "commit": "3f93e4e39c0373bddd9feb95eb3b6ec000fdcb20",
+      "subject": "Translated using Weblate (Swedish)",
+      "status": "ported",
+      "areas": ["i18n"],
+      "notes": "sync 8d3a2d5dde: Swedish translation, imported with pnpm i18n:import."
+    },
+    {
+      "commit": "97fa4c70801cc919f4c0e706500c03225bfa44b0",
+      "subject": "Fix bug with incorrectly set charset",
+      "status": "ported",
+      "areas": ["features/01-shell-navigation-auth", "features/07-export-import"],
+      "notes": "sync 8d3a2d5dde: postConnect sets `SET collation_connection = '<default>'` instead of SET NAMES (mysqli::set_charset now picks utf8mb4 on connect) and remembers the collation in effect (getCollationConnection, updated by a successful setCollation). The home page's connection-collation select marks that collation, no longer getDefaultCollation() (quirk Q42 retired); the import's charset reset goes back to it. pool-manager.ts postConnect (ServerInfo.collationConnection), shell/home.ts, import/service.ts; shell parity case updated (utf8mb4_bin selected, the default collation set first)."
+    },
+    {
+      "commit": "285cb31c35c27012b926e3253ca410fd639e40f0",
+      "subject": "Expose setCharset so we can use it in Import",
+      "status": "ported",
+      "areas": ["features/07-export-import"],
+      "notes": "sync 8d3a2d5dde: A file charset that is not converted switches the connection with DatabaseInterface::setCharset (mysqli::set_charset: `SET NAMES <name>` for a name mysqlnd knows) instead of SET NAMES '<charset>'; when that fails the import stops with \"The server does not support the character set %s.\". The reset uses setCharset(<default>). db/mysqlnd-charsets.ts (names probed by scripts/gen-mysqlnd-charsets.php), import/service.ts; parity cases for iso-8859-12 and x-user-defined, unit test."
+    },
+    {
+      "commit": "c91663645950d4729decbfc188eb3016708f213d",
+      "subject": "Improve iconv error handling",
+      "status": "ported",
+      "areas": ["features/07-export-import"],
+      "notes": "sync 8d3a2d5dde: Encoding::listEncodings lists only the AvailableCharsets the engine converts from (iconv: iso-8859-12, x-user-defined, ks_c_5601-1987 gone from the default list; mbstring also iso-8859-11, windows-1250/1256/1257, tis-620): packages/export charset.ts listEncodings(available, engine) with the names of scripts/gen-charset-support.php, used by the import and export pages and conversions. An import chunk that is not valid in the file's charset stops the import with \"The file is not valid in the character set %s.\" (Import::getNextChunk; packages/import import.ts, the in-memory file is now converted on its first read). Export keeps X52 (upstream: uncaught EncodingConversionFailure). Parity: the charset lists of both pages, an invalid euc-jp file; unit tests."
+    },
+    {
+      "commit": "031678a10b3b9316873c63ca08a2e535d7dc63f1",
+      "subject": "Fix invalid assignment",
+      "status": "not-applicable",
+      "areas": ["features/07-export-import"],
+      "notes": "sync 8d3a2d5dde: readLimit = intdiv(memoryLimit, 8) and an unused ParseAnalyze result: static-analysis fixes, same behaviour (our readLimit is already an integer)."
+    },
+    {
+      "commit": "69238fdeffc417944fe62fb8eecf4f129a1a603a",
+      "subject": "Make setCollation return bool",
+      "status": "not-applicable",
+      "areas": ["features/08-settings-preferences-pmadb"],
+      "notes": "sync 8d3a2d5dde: \"Failed to set configured collation connection!\" moves from setCollation to UserPreferencesHandler::setConnectionCollation, the only caller that reports it; our postConnect already reports it there (userErrors 'collation') and the import reset stays silent."
+    },
+    {
+      "commit": "599c77e9a16c2ad59c013ce161c409e4a9bd93f2",
+      "subject": "Inject ErrorHandler",
+      "status": "not-applicable",
+      "areas": ["features/08-settings-preferences-pmadb"],
+      "notes": "sync 8d3a2d5dde: Dependency injection of the ErrorHandler into UserPreferencesHandler, same behaviour."
+    },
+    {
+      "commit": "869a75ca9e2c886260191a7b7bfe4254d47ec5f7",
+      "subject": "Move TwoFactor class into Security namespace",
+      "status": "not-applicable",
+      "areas": ["features/01-shell-navigation-auth", "features/08-settings-preferences-pmadb"],
+      "notes": "sync 8d3a2d5dde: Namespace move (PhpMyAdmin\\Security\\TwoFactor), no behaviour change."
+    },
+    {
+      "commit": "374f2422945d5c9bf9db3d31bfbb2cbde9d3ba3c",
+      "subject": "Move WebAuthn classes into the Security namespace",
+      "status": "not-applicable",
+      "areas": ["features/01-shell-navigation-auth"],
+      "notes": "sync 8d3a2d5dde: Namespace move (PhpMyAdmin\\Security\\WebAuthn), no behaviour change."
+    },
+    {
+      "commit": "9ff29f71ee6eebd6c85fb1bcd39ddcde7abcbae1",
+      "subject": "Fix Export/Import Controller tests",
+      "status": "not-applicable",
+      "areas": ["tests"],
+      "notes": "sync 8d3a2d5dde: PHPUnit-only: drops two HTML fixtures of the database Export/Import controller tests."
+    },
+    {
+      "commit": "3c60638df93426c2cf6f9283563ba5da225b71ce",
+      "subject": "Update Psalm to 7.17",
+      "status": "not-applicable",
+      "areas": ["dependencies", "tooling"],
+      "notes": "sync 8d3a2d5dde: Static analysis tooling (dev dependency), no runtime change."
+    },
+    {
+      "commit": "cc231cc9624c6740f77c8374c75c659fba6d7f88",
+      "subject": "Add required extensions",
+      "status": "not-applicable",
+      "areas": ["dependencies", "tooling"],
+      "notes": "sync 8d3a2d5dde: composer.json declares ext-filter, ext-session, ext-simplexml and ext-xmlwriter (PHP extensions phpMyAdmin already used); n/a, no PHP runtime."
+    },
+    {
+      "commit": "798cc4784e6d1833058cb4f79d03f4e450883e24",
+      "subject": "Convert method into const",
+      "status": "not-applicable",
+      "areas": ["tooling", "tests"],
+      "notes": "sync 8d3a2d5dde: PHPUnit-only: a GisMultiPolygonTest data provider becomes a constant."
     }
   ]
 }

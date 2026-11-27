@@ -253,7 +253,7 @@ export async function prepareExport(env: ExportEnvironment, params: Params): Pro
     recodingSupported(config.RecodingEngine) &&
     charset !== null &&
     charset !== 'utf-8' &&
-    listEncodings(config.AvailableCharsets).includes(charset)
+    listEncodings(config.AvailableCharsets, recoding(config).engine).includes(charset)
       ? charset
       : null
 

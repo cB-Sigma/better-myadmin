@@ -31,10 +31,13 @@ const basic = (u: string, p: string) => ({
 /**
  * The session set-up statements of the last connection (X24: BetterMyAdmin runs them once per
  * pooled connection; phpMyAdmin per request, the login request of cookie auth redirecting before
- * the connection collation is set), compared as a sequence.
+ * the connection collation is set), compared as a sequence. `SET NAMES utf8mb4` is left out: it is
+ * mysqli::set_charset, sent by DbiMysqli::connect on every new connection (the user's, and a
+ * control link opened with the user's credentials, in between), where BetterMyAdmin negotiates
+ * utf8mb4 in the connection handshake (X24).
  */
 const SETUP =
-  /^(SELECT @@version, @@version_comment, @@sql_mode|SET NAMES |SET lc_messages |SET collation_connection |SET `time_zone` )/
+  /^(SELECT @@version, @@version_comment, @@sql_mode|SET lc_messages |SET collation_connection |SET `time_zone` )/
 const setup = (log: LogEntry[]) => {
   let out: string[] = []
   for (const e of log) {

@@ -41,6 +41,11 @@ export interface ServerInfo {
    * not be set): shown above the page on every request that uses such a connection.
    */
   userErrors: Array<'timezone' | 'collation'>
+  /**
+   * DatabaseInterface::getCollationConnection(): the connection collation in effect, the default
+   * one unless setCollation applied the configured one (adjusted to utf8 on an old server)
+   */
+  collationConnection: string
 }
 
 /**

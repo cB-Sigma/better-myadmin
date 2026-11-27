@@ -11,10 +11,12 @@ import {
   type ImportType,
   createImportPlugin,
 } from '@bettermyadmin/import'
+import { php } from '@bettermyadmin/mysql-types'
 import { backquote, quoteString } from '@bettermyadmin/sql-gen'
 import type { Context } from 'hono'
 import { gridHook, gridMeta } from '../browse/service.ts'
 import { resolveViewState } from '../browse/view-state.ts'
+import { setCharset } from '../db/mysqlnd-charsets.ts'
 import { openExportSession, userDir } from '../export/service.ts'
 import { MysqlError } from '../http/errors.ts'
 import { ImportRunner } from '../query/import.ts'
@@ -149,8 +151,9 @@ export async function runFileImport(
           'No data was received to import. Either no file name was submitted, or the file size exceeded the maximum upload size (MaxUploadSize).',
         ),
       )
-      // Current::$message (page header) and the same message added to the page
-      return out({ message: { type: 'error', html }, echoed: [html] })
+      // ImportController::errorResponse: the message once (upstream 285cb31c35 no longer sets
+      // Current::$message, which the page header showed a second time)
+      return out({ message: { type: 'error', html } })
     }
 
     const runner = new ImportRunner({
@@ -221,7 +224,7 @@ export async function runFileImport(
     // Convert the file's charset if necessary (Encoding::isSupported() is always true here, X52)
     let resetCharset = false
     const encodings = recodingSupported(settings.RecodingEngine)
-      ? listEncodings(settings.AvailableCharsets)
+      ? listEncodings(settings.AvailableCharsets, recoding(settings).engine)
       : []
     if (
       recodingSupported(settings.RecodingEngine) &&
@@ -230,10 +233,20 @@ export async function runFileImport(
       encodings.includes(charsetOfFile)
     ) {
       imp.charsetConversion = true
+      imp.charsetOfFile = charsetOfFile
       const rec = recoding(settings)
       file?.convert((b) => convertToUtf8(b, charsetOfFile, rec))
     } else if (charsetOfFile !== '' && charsetOfFile !== 'utf-8') {
-      await conn.query(`SET NAMES '${charsetOfFile}'`, 'import.set-names')
+      // DatabaseInterface::setCharset (mysqli::set_charset), refused for a name the server lacks
+      if (!(await setCharset(conn, charsetOfFile, 'import.set-names'))) {
+        file?.close()
+        return errorHtml(
+          sprintf(
+            __('The server does not support the character set %s.'), // i18n-new: phpMyAdmin 285cb31c35, its catalogue not refreshed yet
+            php.htmlspecialchars(charsetOfFile),
+          ),
+        )
+      }
       // We can not show query in this case, it is in different charset
       runner.sqlQueryDisabled = true
       resetCharset = true
@@ -270,11 +283,17 @@ export async function runFileImport(
     }
     // Reset charset back, if we did some changes
     if (resetCharset) {
-      await conn.query('SET CHARACTER SET utf8mb4', 'import.reset-charset')
-      await conn.query(
-        `SET collation_connection = ${quoteString(c.get('creds').collation ?? settings.DefaultConnectionCollation)}`,
-        'import.reset-collation',
-      )
+      const info = conn.serverInfo
+      await setCharset(conn, (info?.versionInt ?? 0) > 50503 ? 'utf8mb4' : 'utf8', 'import.reset-charset')
+      // DatabaseInterface::setCollation(getCollationConnection()), its failure is not reported
+      await conn
+        .query(
+          `SET collation_connection = ${quoteString(info?.collationConnection ?? 'utf8mb4_general_ci')};`,
+          'import.reset-collation',
+        )
+        .catch((e: unknown) => {
+          if (!(e instanceof MysqlError)) throw e
+        })
     }
     db = runner.st.db
     table = imp.table

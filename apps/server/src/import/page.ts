@@ -1,6 +1,6 @@
 import { lstatSync, readdirSync, statSync } from 'node:fs'
 import type { ImportPageResponse, ImportScope, PluginInfo } from '@bettermyadmin/contracts'
-import { Params, listEncodings, recodingSupported, withValues } from '@bettermyadmin/export'
+import { Params, listEncodings, recoding, recodingSupported, withValues } from '@bettermyadmin/export'
 import { getFormattedMaximumUploadSize, sprintf } from '@bettermyadmin/i18n'
 import { type ImportPageContext, listImportPlugins } from '@bettermyadmin/import'
 import { backquote, quoteString } from '@bettermyadmin/sql-gen'
@@ -133,7 +133,9 @@ export async function importPage(c: Context<ServerEnv>): Promise<ImportPageRespo
       uploadDir: settings.UploadDir,
       userUploadDir: uDir,
       localFiles,
-      encodings: encodingSupported ? listEncodings(settings.AvailableCharsets) : null,
+      encodings: encodingSupported
+        ? listEncodings(settings.AvailableCharsets, recoding(settings).engine)
+        : null,
       charsets,
       importCharset: String(imp.charset ?? ''),
       timeoutPassed,

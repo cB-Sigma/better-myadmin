@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 5add5a93adb56f421fe611eb09620773649bc7d1 resources/po/sv.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 8d3a2d5ddef22a2791122a427aac11cface1d65b resources/po/sv.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-22 00:26+0000\nPO-Revision-Date: 2026-09-19 07:51+0000\nLast-Translator: Daniel Nylander <yeagersthlm@gmail.com>\nLanguage-Team: Swedish <https://hosted.weblate.org/projects/phpmyadmin/master/sv/>\nLanguage: sv\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.10.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-22 00:26+0000\nPO-Revision-Date: 2026-11-24 14:51+0000\nLast-Translator: Daniel Nylander <yeagersthlm2@users.noreply.hosted.weblate.org>\nLanguage-Team: Swedish <https://hosted.weblate.org/projects/phpmyadmin/master/sv/>\nLanguage: sv\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.12.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript måste vara aktiverat efter detta!"
@@ -9866,10 +9866,10 @@ msgid "File upload functionality for TEXT columns. It does not have a textarea f
 msgstr "Filuppladdningsfunktion för TEXT-kolumner. Det finns inget textområde för inmatning."
 
 msgid "Displays an image and a link; the column contains the filename. The first option is a URL prefix like \"https://www.example.com/\". The second and third options are the width and the height in pixels."
-msgstr "Visar en bild och en länk; kolumnen innehåller filnamn. Det första alternativet är ett URL-prefix som \"https://www.example.com/\". Det andra och tredje alternativet är bredden och höjden i pixlar."
+msgstr "Visar en bild och en länk; kolumnen innehåller filnamn. Det första alternativet är ett URL-prefix som \"https://www.exempel.se/\". Det andra och tredje alternativet är bredden och höjden i pixlar."
 
 msgid "Displays a link; the column contains the filename. The first option is a URL prefix like \"https://www.example.com/\". The second option is a title for the link."
-msgstr "Visar en länk; kolumnen innehåller filnamn. Det första alternativet är en URL prefix som \"https://www.example.com/\". Det andra alternativet är en titel för länken."
+msgstr "Visar en länk; kolumnen innehåller filnamn. Det första alternativet är en URL prefix som \"https://www.exempel.se/\". Det andra alternativet är en titel för länken."
 
 msgid "Converts an Internet network address in (IPv4/IPv6) format to binary"
 msgstr "Konverterar en Internet nätverksadress (IPv4/IPv6) format till ett binärt"

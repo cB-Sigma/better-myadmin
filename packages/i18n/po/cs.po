@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 5add5a93adb56f421fe611eb09620773649bc7d1 resources/po/cs.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 8d3a2d5ddef22a2791122a427aac11cface1d65b resources/po/cs.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-22 00:26+0000\nPO-Revision-Date: 2026-11-06 14:51+0000\nLast-Translator: Adam Havránek <helak@users.noreply.hosted.weblate.org>\nLanguage-Team: Czech <https://hosted.weblate.org/projects/phpmyadmin/master/cs/>\nLanguage: cs\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\nX-Generator: Weblate 2026.11.2.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-22 00:26+0000\nPO-Revision-Date: 2026-11-24 14:51+0000\nLast-Translator: Adam Havránek <helak@users.noreply.hosted.weblate.org>\nLanguage-Team: Czech <https://hosted.weblate.org/projects/phpmyadmin/master/cs/>\nLanguage: cs\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\nX-Generator: Weblate 2026.12.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Pro použití phpMyAdmina musíte mít zapnutý Javascript!"
@@ -4640,6 +4640,10 @@ msgctxt "Collation"
 msgid "Cyrillic"
 msgstr "Cyrilice"
 
+msgctxt "Collation"
+msgid "Latin"
+msgstr "latina"
+
 msgctxt "Collation variant"
 msgid "case-insensitive"
 msgstr "nerozlišovat velikost písmen"
@@ -4757,6 +4761,10 @@ msgid "Thai"
 msgstr "Thajština"
 
 msgctxt "Collation"
+msgid "Bosnian"
+msgstr "Bosenský"
+
+msgctxt "Collation"
 msgid "Bulgarian"
 msgstr "Bulharština"
 
@@ -4781,6 +4789,10 @@ msgid "Estonian"
 msgstr "Estonština"
 
 msgctxt "Collation"
+msgid "Galician"
+msgstr "Galicijština"
+
+msgctxt "Collation"
 msgid "Hungarian"
 msgstr "Maďarština"
 
@@ -4801,8 +4813,20 @@ msgid "Lithuanian"
 msgstr "Litevština"
 
 msgctxt "Collation"
+msgid "Mongolian"
+msgstr "Mongolský"
+
+msgctxt "Collation"
 msgid "Burmese"
 msgstr "Barmština"
+
+msgctxt "Collation"
+msgid "Norwegian Bokmål"
+msgstr "Norština (Bokmål)"
+
+msgctxt "Collation"
+msgid "Norwegian Nynorsk"
+msgstr "Norština (nynorsk)"
 
 msgctxt "Collation"
 msgid "Persian"
@@ -4815,6 +4839,10 @@ msgstr "Polština"
 msgctxt "Collation"
 msgid "Romanian"
 msgstr "Rumunština"
+
+msgctxt "Collation"
+msgid "Serbian"
+msgstr "Srbština"
 
 msgctxt "Collation"
 msgid "Sinhalese"
@@ -6743,6 +6771,12 @@ msgstr "Konfigurační soubor potřebuje správný klíč pro zabezpečení soub
 
 msgid "The cookie encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc]."
 msgstr "Šifrovací klíč souboru cookie je v konfiguračním souboru je delší než je potřeba. Měl by být dlouhý pouze %d bytů. Prosím, opravte si ho v [doc@cfg_blowfish_secret]dokumentaci[/doc]."
+
+msgid "The configuration file needs a valid key for URL query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
+msgstr "Konfigurační soubor vyžaduje platný klíč pro šifrování dotazů v URL. Byl pro vás automaticky vygenerován dočasný klíč. Podívejte se prosím do [doc@cfg_URLQueryEncryptionSecretKey]dokumentace[/doc]."
+
+msgid "The URL query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
+msgstr "Šifrovací klíč pro dotazy v URL v konfiguračním souboru je delší, než je nutné. Měl by mít délku pouze %d bajtů. Podívejte se prosím do [doc@cfg_URLQueryEncryptionSecretKey]dokumentace[/doc]."
 
 msgid "Directory [code]config[/code], which is used by the setup script, still exists in your phpMyAdmin directory. It is strongly recommended to remove it once phpMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorized people downloading your configuration."
 msgstr "Adresář [code]config[/code], který používá nastavovací skript, pořád existuje v adresáři s phpMyAdminem. Měli byste ho odstranit, jakmile je phpMyAdmin nastaven. Pokud tak neučiníte, může být váš server ohrožen cizími lidmi přistupujícími k vašemu nastavení."
@@ -8907,6 +8941,9 @@ msgstr "Nahlásit"
 msgid "Event %1$s has been created."
 msgstr "Byla vytvořena událost %1$s."
 
+msgid "Event not found."
+msgstr "Událost nebyla nalezena."
+
 msgid "Sorry, we failed to restore the dropped event."
 msgstr "Bohužel se nepodařilo obnovit odstraněnou událost."
 
@@ -9071,19 +9108,19 @@ msgid "Ignoring unsupported language code."
 msgstr "Ignorován nepodporovaný jazykový kód."
 
 msgid "The database name must be a non-empty string."
-msgstr "Název databáze nesmí být prázdný."
+msgstr "Název databáze musí být neprázdný řetězec."
 
 msgid "The database name cannot be longer than %d characters."
-msgstr "Název databáze nesmí být delší než %d znaků."
+msgstr "Název databáze nesmí mít více než %d znaků."
 
 msgid "The database name cannot end with a space character."
-msgstr "Jména databáze nesmí být ukončena mezerou."
+msgstr "Název databáze nesmí končit mezerou."
 
 msgid "The table name must be a non-empty string."
-msgstr "Název tabulky nesmí být prázdný."
+msgstr "Název tabulky musí být neprázdný řetězec."
 
 msgid "The table name cannot be longer than %d characters."
-msgstr "Název tabulky nesmí být delší než %d znaků."
+msgstr "Název tabulky nesmí mít více než %d znaků."
 
 msgid "The table name cannot end with a space character."
 msgstr "Název tabulky nesmí končit mezerou."
@@ -10317,6 +10354,9 @@ msgstr "Verze %1$s vytvořena, sledování pro %2$s je zapnuté."
 
 msgid "Trigger %1$s has been created."
 msgstr "Byl vytvořen trigger %1$s."
+
+msgid "Trigger not found."
+msgstr "Spouštěč nebyl nalezen."
 
 msgid "Sorry, we failed to restore the dropped trigger."
 msgstr "Bohužel se nepodařilo obnovit odstraněný trigger."

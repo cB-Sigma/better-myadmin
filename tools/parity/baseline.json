@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:baseline`; the ratchet `pnpm parity:check` compares against",
-    "referenceCommit": "5add5a93adb56f421fe611eb09620773649bc7d1"
+    "referenceCommit": "8d3a2d5ddef22a2791122a427aac11cface1d65b"
   },
   "kinds": {
     "routes": {
@@ -1786,9 +1786,9 @@
       ]
     },
     "messages": {
-      "total": 3444,
-      "implemented": 3296,
-      "covered": 3443,
+      "total": 3447,
+      "implemented": 3298,
+      "covered": 3446,
       "coverage": 0.9997,
       "implementedKeys": [
         "- none -",
@@ -4466,6 +4466,7 @@
         "the exact phrase as substring",
         "the exact phrase as whole field",
         "The file is being processed, please be patient.",
+        "The file is not valid in the character set %s.",
         "The first line of the file contains the table column names <i>(if this is unchecked, the first line will become part of the data)</i>",
         "The first step of normalization is complete for table '%s'.",
         "The following actions will be performed:",
@@ -4621,6 +4622,7 @@
         "The selected columns do not match the columns in the table.",
         "The selected user was not found in the privilege table.",
         "The selected users have been deleted successfully.",
+        "The server does not support the character set %s.",
         "The server is not responding (or the local server's socket is not correctly configured).",
         "The server is not responding.",
         "The size is measured in MiB.",
@@ -5204,6 +5206,7 @@
         "The ini_get and/or ini_set functions are disabled in php.ini. phpMyAdmin requires these functions!",
         "The mbstring PHP extension was not found and you seem to be using a multibyte charset. Without the mbstring extension phpMyAdmin is unable to split strings correctly and it may result in unexpected results.",
         "The routing cache could not be written, you need to adjust permissions on the folder/file \"%s\"",
+        "The text could not be converted from %s to %s.",
         "The trigger name cannot be longer than %d characters.",
         "The trigger name cannot end with a space character.",
         "The trigger name must not be empty.",

@@ -5,7 +5,14 @@ import {
   ExportTemplateUpdate,
   type PluginInfo,
 } from '@bettermyadmin/contracts'
-import { Params, listEncodings, pageContext, pluginViews, recodingSupported } from '@bettermyadmin/export'
+import {
+  Params,
+  listEncodings,
+  pageContext,
+  pluginViews,
+  recoding,
+  recodingSupported,
+} from '@bettermyadmin/export'
 import { sprintf } from '@bettermyadmin/i18n'
 import { ExportTemplatesRepository } from '@bettermyadmin/metadata'
 import { backquote } from '@bettermyadmin/sql-gen'
@@ -222,7 +229,9 @@ exportPageRoutes.get('/page', async (c) => {
       asFile: !repopulate && truthy(exp.asfile),
       filenameTemplate: fileTemplate,
       rememberTemplate: truthy(exp.remember_file_template),
-      charsets: recodingSupported(settings.RecodingEngine) ? listEncodings(settings.AvailableCharsets) : null,
+      charsets: recodingSupported(settings.RecodingEngine)
+        ? listEncodings(settings.AvailableCharsets, recoding(settings).engine)
+        : null,
       charset: String(exp.charset ?? ''),
       compressions: [
         ...(settings.ZipDump ? (['zip'] as const) : []),

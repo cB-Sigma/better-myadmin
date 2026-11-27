@@ -86,6 +86,30 @@ for (const charset of ['iso-8859-1', 'windows-1251', 'utf-16', 'SHIFT_JIS', 'euc
     file: f('cs.sql', convertFromUtf8(Buffer.from(text), charset)),
   })
 }
+// a charset iconv cannot convert from is not listed, so the connection's charset is switched
+// instead (DatabaseInterface::setCharset, upstream 285cb31c35), which mysqli refuses for these
+for (const charset of ['iso-8859-12', 'x-user-defined']) {
+  cases.push({
+    name: `sql charset_of_file=${charset} (not an iconv charset)`,
+    form: 'database',
+    changes: { format: 'sql', charset_of_file: charset },
+    file: f('cs.sql', convertFromUtf8(Buffer.from("INSERT INTO t VALUES (2, 'déjà', 2);\n"), 'iso-8859-1')),
+  })
+}
+// bytes the file's charset does not define (upstream c916636459): the import stops with an error
+cases.push({
+  name: 'sql charset_of_file=euc-jp, not valid euc-jp',
+  form: 'database',
+  changes: { format: 'sql', charset_of_file: 'euc-jp' },
+  file: f(
+    'bad.sql',
+    Buffer.concat([
+      Buffer.from("INSERT INTO t VALUES (2, '"),
+      Buffer.from([0xff, 0xfe]),
+      Buffer.from("', 2);\n"),
+    ]),
+  ),
+})
 cases.push(
   {
     name: 'sql allow_interrupt off',
@@ -292,6 +316,24 @@ describe.skipIf(!pmaReachable)('import options parity', () => {
       for (const u of Object.values(USERS)) await root.query(`DROP USER IF EXISTS '${u}'@'%'`)
       await root.end()
     }
+  })
+
+  it('the file charset lists hold what iconv can convert (Encoding::listEncodings)', async () => {
+    const options = (html: string, name: string) => {
+      const select = new RegExp(`<select[^>]*name="${name}"[\\s\\S]*?</select>`).exec(html)?.[0] ?? ''
+      return [...select.matchAll(/<option value="([^"]*)"/g)].map((m) => m[1])
+    }
+    const pmaImport = options(await pma.getPage('/database/import', { db: DBS.pma }), 'charset_of_file')
+    const pmaExport = options(await pma.getPage('/database/export', { db: DBS.pma }), 'charset')
+    const imp = (await bma.req('GET', `/api/servers/1/import/page?db=${DBS.bma}`)).json as {
+      encodings: string[]
+    }
+    const exp = (await bma.req('GET', `/api/servers/1/export/page?db=${DBS.bma}`)).json as {
+      charsets: string[]
+    }
+    expect(pmaImport).not.toContain('iso-8859-12')
+    expect(imp.encodings).toEqual(pmaImport)
+    expect(exp.charsets).toEqual(pmaExport)
   })
 
   for (const c of cases) {

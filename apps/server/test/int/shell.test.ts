@@ -318,7 +318,8 @@ describe('GET /api/servers/:s/home (HomeController)', () => {
     const home = r.json as Record<string, any>
     expect(home.hasChangePasswordLink).toBe(true)
     expect(home.hasServerSelection).toBe(false)
-    expect(home.collation.selected).toBe('utf8mb4_general_ci')
+    // the collation in effect: DefaultConnectionCollation (utf8mb4_unicode_ci) was applied
+    expect(home.collation.selected).toBe('utf8mb4_unicode_ci')
     const utf8mb4 = home.collation.charsets.find((c: { name: string }) => c.name === 'utf8mb4')
     expect(utf8mb4.description).toBe('UTF-8 Unicode')
     // the server's default utf8mb4 collation varies by vendor/version (MySQL 8.x 0900, MariaDB 11.4+
@@ -380,8 +381,8 @@ describe('POST /api/servers/:s/session/collation (/collation-connection)', () =>
     const st = (q.json.statements as Array<{ result: { rows: unknown[][] } }>)[0]!
     expect(st.result.rows[0]).toEqual(['utf8mb4_bin'])
     const home = await t.req('GET', '/api/servers/1/home')
-    // phpMyAdmin keeps getDefaultCollation() selected in the list (quirk Q42)
-    expect(home.json.collation).toMatchObject({ selected: 'utf8mb4_general_ci', current: 'utf8mb4_bin' })
+    // the list marks the collation in effect (DatabaseInterface::getCollationConnection)
+    expect(home.json.collation).toMatchObject({ selected: 'utf8mb4_bin', current: 'utf8mb4_bin' })
   })
 })
 

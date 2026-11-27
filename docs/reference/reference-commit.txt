@@ -1,1 +1,1 @@
-5add5a93adb56f421fe611eb09620773649bc7d1  phpMyAdmin 6.0.0-dev  2026-11-23  https://github.com/phpmyadmin/phpmyadmin
+8d3a2d5ddef22a2791122a427aac11cface1d65b  phpMyAdmin 6.0.0-dev  2026-11-26  https://github.com/phpmyadmin/phpmyadmin
