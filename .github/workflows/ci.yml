@@ -185,3 +185,4 @@ jobs:
       - run: git clone --filter=blob:none --no-checkout https://github.com/phpmyadmin/phpmyadmin.git ../ref/pma
       - run: pnpm install --frozen-lockfile
       - run: pnpm upstream:check --gate
+      - run: pnpm upstream:credits --check

@@ -5,7 +5,7 @@ Copyright
 
 BetterMyAdmin is a port of phpMyAdmin to TypeScript and Node.js, derived from
 phpMyAdmin and distributed, like phpMyAdmin, under the GNU General Public
-License version 2 or (at your option) any later version (GPL-2.0-or-later).
+License version 2 (GPL-2.0-only).
 This documentation is adapted from phpMyAdmin's documentation, which is
 distributed under the same license.
 

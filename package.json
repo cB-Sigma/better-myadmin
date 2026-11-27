@@ -2,7 +2,7 @@
   "name": "bettermyadmin-monorepo",
   "version": "1.0.35",
   "private": true,
-  "license": "GPL-2.0-or-later",
+  "license": "GPL-2.0-only",
   "description": "A modern phpMyAdmin alternative for MySQL and MariaDB, rebuilt in TypeScript and React",
   "keywords": [
     "phpmyadmin",
@@ -43,6 +43,7 @@
     "i18n:import": "pnpm --filter @bettermyadmin/i18n run import",
     "i18n:parity": "pnpm --filter @bettermyadmin/i18n run parity",
     "upstream:check": "tsx tools/upstream/check.ts",
+    "upstream:credits": "tsx tools/upstream/credits.ts",
     "parity:inventory": "pnpm --filter @bettermyadmin/parity run inventory",
     "parity:report": "pnpm --filter @bettermyadmin/parity run report",
     "parity:check": "pnpm --filter @bettermyadmin/parity run check",

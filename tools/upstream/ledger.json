@@ -4,6 +4,7 @@
     {
       "commit": "a3fb345c4bb08afed055ddbf525400cc3c42f4c0",
       "subject": "Fix deprecation",
+      "author": "Liviu-Mihail Concioiu",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync a57149e1f6: .github/workflows/shellcheck.yml only (upstream CI)."
@@ -11,6 +12,7 @@
     {
       "commit": "da5edf1580f4e8261e18480dfd5443bd9f2708b2",
       "subject": "Avoid x-prefix",
+      "author": "Liviu-Mihail Concioiu",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync a57149e1f6: bin/internal/create-release.sh and upload-release (upstream release scripts)."
@@ -18,6 +20,7 @@
     {
       "commit": "39aa8625dd0044cb3613582e1e0f5eb74a0d1dfa",
       "subject": "Add double quote",
+      "author": "Liviu-Mihail Concioiu",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync a57149e1f6: bin/internal/create-release.sh quoting (upstream release script)."
@@ -25,6 +28,7 @@
     {
       "commit": "b4a09da529b5ffd8e55af22e93bc1084934ff4b9",
       "subject": "Remove duplicate .phpstorm.meta.php",
+      "author": "Liviu-Mihail Concioiu",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync a57149e1f6: bin/internal/check-release-excludes.sh (upstream release packaging)."
@@ -32,6 +36,7 @@
     {
       "commit": "8847e08639e97e47d6b4b14a7037b97a27535d1c",
       "subject": "Fix incorrect default value",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/04-table-level"],
       "notes": "sync a57149e1f6: Relation view ON DELETE / ON UPDATE options are now RESTRICT, NO ACTION, CASCADE, SET NULL. packages/sql-gen/src/relation.ts (FK_ACTIONS) already used this order (exception X38); X38 is retired, the UI parity map rule for the selects and the parity suite's RESTRICT workaround are removed (tests/parity/table-relation.parity.test.ts now posts phpMyAdmin's form as-is), docs/features/04-table-level.md lists the new order."
@@ -39,6 +44,7 @@
     {
       "commit": "8deb83ccb0a7627c9c514f0e0732dfd71cc55754",
       "subject": "Update Composer dependencies",
+      "author": "Maurício Meneghini Fauth",
       "status": "ported",
       "areas": ["dependencies", "tooling"],
       "notes": "sync a57149e1f6: phpmyadmin/sql-parser 6.0.0 -> 6.0.1 ported to packages/sql-lexer: Context OPERATORS gains -> and ->> (punctuation, flag 16); Formatter adds no space around -> / ->>; IntoKeyword::build escapes INTO columns with Context::escapeAll; AlterOperations no longer treats ASC / DESC of a key part as a statement start; SelectStatement::getTables skips unaliased tables in the alias map; Utils/Query getClause null keyword (our port was already null-safe); CustomJsonSerializer (setAccessible removal) has no TS counterpart. Fixtures regenerated with 6.0.1 (lexer, parser, split, lint, first-statement, format; the new parseAlterTableAddUniqueKey* corpus cases included), sql-gen fixtures re-stamped (no value changes). phpstan/phpstan-phpunit 2.1.1 and vimeo/psalm 6.19.2 are upstream dev tooling: not applicable."
@@ -46,6 +52,7 @@
     {
       "commit": "98641d6118765849947f0a55581ce5b1d4dfb9ed",
       "subject": "Update create-release.sh",
+      "author": "Liviu-Mihail Concioiu",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync a57149e1f6: bin/internal/create-release.sh (upstream release script)."
@@ -53,6 +60,7 @@
     {
       "commit": "3ff024fe9d520a26448aa2f726128243eb4e336c",
       "subject": "Get export_item param from ServerRequest object",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["tooling", "features/05-database-level"],
       "notes": "sync a57149e1f6: Events/RoutinesController read export_item / item_name / item_type through ServerRequest (string-typed, RoutineType::tryFrom) instead of $_GET; the export trigger becomes hasQueryParam('export_item') (an empty value now exports too). Our exports are dedicated endpoints (GET /api/servers/:s/databases/:db/routines/export?name=&type=, …/events/export?name=) with no export_item flag; definitions, titles ('Export of routine %s' / 'Export of event %s', backquoted name) and the not-found messages are unchanged, so nothing to port. phpstan/psalm baselines: upstream tooling."
@@ -60,6 +68,7 @@
     {
       "commit": "a57149e1f6273eb326b153487ad070893dd9e19c",
       "subject": "Update po files",
+      "author": "phpMyAdmin bot",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync a57149e1f6: pnpm i18n:import (PMA_ROOT=/home/user/ref/pma): 51 catalogues re-imported; the change is the POT creation date and source references, no msgid/msgstr of a shipped catalogue changed."
@@ -67,6 +76,7 @@
     {
       "commit": "563e59a378b48efbbba8583d99e43f341e1d9c09",
       "subject": "Add windows to CI for PHP and JS testing",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync 328b8d8003: Windows jobs in the upstream CI workflows."
@@ -74,6 +84,7 @@
     {
       "commit": "35d195b871d7ee17d024568ece824f3f3ec17079",
       "subject": "Update create-release.sh",
+      "author": "Liviu-Mihail Concioiu",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync 328b8d8003: upstream release script (scripts/create-release.sh)."
@@ -81,6 +92,7 @@
     {
       "commit": "ec35d89aec5cb1a4d4f92158ea86d294859b516f",
       "subject": "Sort files",
+      "author": "Liviu-Mihail Concioiu",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync 328b8d8003: upstream release script (scripts/create-release.sh), file list sorted."
@@ -88,6 +100,7 @@
     {
       "commit": "00418f6507a1fd0adc7ac8c5dd9778b1dd52d1dc",
       "subject": "Extract EventsControllerTest fixtures into files",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["tooling", "tests"],
       "notes": "sync 328b8d8003: PHPUnit EventsControllerTest fixtures moved into files; static-analysis baselines. No behaviour."
@@ -95,6 +108,7 @@
     {
       "commit": "fc3c643dc80c41ef98e0ed09736207cc36a34653",
       "subject": "Move Database\\EventsController to Events\\IndexController",
+      "author": "Maurício Meneghini Fauth",
       "status": "ported",
       "areas": ["features/05-database-level"],
       "notes": "sync 328b8d8003: The Events refactor (fc3c643dc8, 2b5b66989b, da70d30b75, 6bc9e8da1a, 5cb2daea60, 3727b25df4, 37b73b3e59) is ported as one change: Database\\EventsController becomes Events\\IndexController. Our API keeps GET/POST …/databases/:db/events; tools/parity/map/routes.yaml maps the new /events route."
@@ -102,6 +116,7 @@
     {
       "commit": "2b5b66989bc94c4fe94fb3a853252e8ef4e408d2",
       "subject": "Rename route /database/events to /events",
+      "author": "Maurício Meneghini Fauth",
       "status": "ported",
       "areas": ["features/05-database-level", "features/01-shell-navigation-auth"],
       "notes": "sync 328b8d8003: The Events refactor (fc3c643dc8, 2b5b66989b, da70d30b75, 6bc9e8da1a, 5cb2daea60, 3727b25df4, 37b73b3e59) is ported as one change: the route /database/events is now /events (Menu events tab, NodeEvent / NodeEventContainer links, SpecialSchemaLinks). routes.yaml, docs/features/01 and 05, docs/architecture/05-api-reference.md, the parity suite (tests/parity/database-programs.parity.test.ts) and the ui-parity case now use /events; the navigation nodes (Events container, New, each event) carry /events in apps/server/src/navigation/nodes.ts and the SPA maps it to /s/:s/db/:db/events (navHref, apps/web/src/features/navigation/links.ts); navigation parity 41/41."
@@ -109,6 +124,7 @@
     {
       "commit": "da70d30b7525a27fa56caaddf8637c0384abb08f",
       "subject": "Move js/database/events.ts to js/events.ts",
+      "author": "Maurício Meneghini Fauth",
       "status": "ported",
       "areas": ["features/05-database-level"],
       "notes": "sync 328b8d8003: The Events refactor (fc3c643dc8, 2b5b66989b, da70d30b75, 6bc9e8da1a, 5cb2daea60, 3727b25df4, 37b73b3e59) is ported as one change: resources/js/database/events.ts moves to resources/js/events.ts: the JS behaviour claims in apps/web/src/features/database/pma-controls.ts are renamed to js:events.ts."
@@ -116,6 +132,7 @@
     {
       "commit": "6bc9e8da1a41e7a062f35308e1b5dc8b19d26999",
       "subject": "Move class Database\\Events to Events\\Events",
+      "author": "Maurício Meneghini Fauth",
       "status": "ported",
       "areas": ["features/05-database-level", "features/07-export-import"],
       "notes": "sync 328b8d8003: The Events refactor (fc3c643dc8, 2b5b66989b, da70d30b75, 6bc9e8da1a, 5cb2daea60, 3727b25df4, 37b73b3e59) is ported as one change: Database\\Events becomes Events\\Events with STATUS/TYPE/INTERVAL constants; templates move to events/{index,row,editor-form}.twig (control claims renamed). ExportSql/ExportXml/Operations only change imports."
@@ -123,6 +140,7 @@
     {
       "commit": "3727b25df4e0a7d5c46f5f59424f98dbdca87fce",
       "subject": "Add unit tests for events export",
+      "author": "Maurício Meneghini Fauth",
       "status": "ported",
       "areas": ["features/05-database-level", "tests"],
       "notes": "sync 328b8d8003: The Events refactor (fc3c643dc8, 2b5b66989b, da70d30b75, 6bc9e8da1a, 5cb2daea60, 3727b25df4, 37b73b3e59) is ported as one change: PHPUnit tests for the export, and two lines in IndexController that the later commits replace."
@@ -130,6 +148,7 @@
     {
       "commit": "6bf47b5355fdc890bfabfaa37ad87fe90d96905c",
       "subject": "Translated using Weblate (Latvian)",
+      "author": "ℂ𝕠𝕠𝕠𝕝 (𝕘𝕚𝕥𝕙𝕦𝕓.𝕔𝕠𝕞/ℂ𝕠𝕠𝕠𝕝)",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync 328b8d8003: QA_5_2 Latvian translation, carried into master by the po update: pnpm i18n:import."
@@ -137,6 +156,7 @@
     {
       "commit": "0ff4ebe5a2b5a2a9a95421a3d6ba299cd21b2621",
       "subject": "Translated using Weblate (Latvian)",
+      "author": "ℂ𝕠𝕠𝕠𝕝 (𝕘𝕚𝕥𝕙𝕦𝕓.𝕔𝕠𝕞/ℂ𝕠𝕠𝕠𝕝)",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync 328b8d8003: Latvian translation: pnpm i18n:import."
@@ -144,6 +164,7 @@
     {
       "commit": "5cb2daea60344f60300d7bde6685d22ab52c5497",
       "subject": "Extract event export action into Events\\ExportController",
+      "author": "Maurício Meneghini Fauth",
       "status": "ported",
       "areas": ["features/05-database-level"],
       "notes": "sync 328b8d8003: The Events refactor (fc3c643dc8, 2b5b66989b, da70d30b75, 6bc9e8da1a, 5cb2daea60, 3727b25df4, 37b73b3e59) is ported as one change: the export action moves to Events\\ExportController on GET /events/export (no export_item flag). routes.yaml maps /events/export to GET …/databases/:db/events/export, our existing endpoint; the parity case \"list and export\" now calls /events/export. A missing or unknown db answers \"No database selected.\" on both routes (was \"No databases selected.\" / missing parameter): ported through withDb(noDatabase), parity case \"an unknown database\"."
@@ -151,6 +172,7 @@
     {
       "commit": "37b73b3e5922058aeaf24cdd797e8de9aa733f7f",
       "subject": "Add unit tests for create event action in Events\\IndexController",
+      "author": "Maurício Meneghini Fauth",
       "status": "ported",
       "areas": ["features/05-database-level", "tests"],
       "notes": "sync 328b8d8003: The Events refactor (fc3c643dc8, 2b5b66989b, da70d30b75, 6bc9e8da1a, 5cb2daea60, 3727b25df4, 37b73b3e59) is ported as one change: create event through getQueryFromRequest(request) / hasEventPrivilege; editor-form.twig only re-indents an {% if %} (same output)."
@@ -158,6 +180,7 @@
     {
       "commit": "05917fbe4ed9a0e75b8e120069b9d0ac99cd668d",
       "subject": "Refactor Events::getQueryFromRequest",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/05-database-level"],
       "notes": "sync 328b8d8003: Events::getQueryFromRequest reads the body through ServerRequest: every check is now \"non-empty string\" instead of PHP empty(), so an interval value of 0 is accepted (EVERY 0 …, refused by the server) and item_interval_field no longer has to be non-empty before the list check. Ported in apps/server/src/database/events.ts (the \"0\" exclusion dropped; the other fields already used non-empty-string checks); golden parity case \"interval value 0 reaches the server\"."
@@ -165,6 +188,7 @@
     {
       "commit": "030ac2744850f297b863da53710323d277ec99c3",
       "subject": "Translated using Weblate (Latvian)",
+      "author": "ℂ𝕠𝕠𝕠𝕝 (𝕘𝕚𝕥𝕙𝕦𝕓.𝕔𝕠𝕞/ℂ𝕠𝕠𝕠𝕝)",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync 328b8d8003: QA_5_2 Latvian translation: pnpm i18n:import."
@@ -172,6 +196,7 @@
     {
       "commit": "0fc9b38ced359453d827f407e955d60092a7bac6",
       "subject": "Translated using Weblate (Latvian)",
+      "author": "ℂ𝕠𝕠𝕠𝕝 (𝕘𝕚𝕥𝕙𝕦𝕓.𝕔𝕠𝕞/ℂ𝕠𝕠𝕠𝕝)",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync 328b8d8003: Latvian translation: pnpm i18n:import."
@@ -179,6 +204,7 @@
     {
       "commit": "15fea63d5312d51cfc8c39a5a1240e7c35dde097",
       "subject": "Translated using Weblate (Chinese (Simplified Han script))",
+      "author": "Lesterbor",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync 328b8d8003: QA_5_2 Chinese (Simplified) translation: pnpm i18n:import."
@@ -186,6 +212,7 @@
     {
       "commit": "8b007f5a1fea5d07f9d842e236fa71a1aa718ad0",
       "subject": "Translated using Weblate (Chinese (Simplified Han script))",
+      "author": "Lesterbor",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync 328b8d8003: Chinese (Simplified) translation: pnpm i18n:import."
@@ -193,6 +220,7 @@
     {
       "commit": "d284996d6b3f3d259f4b83b07749169a2b6ecacb",
       "subject": "Fix event scheduler toggle in Bootstrap theme",
+      "author": "Maurício Meneghini Fauth",
       "status": "ported",
       "areas": ["features/05-database-level"],
       "notes": "sync 328b8d8003: QA_5_2, merged by 19958e00b0: the Bootstrap theme styles .toggle-container (was .container), and the merge makes events/index.twig mark the switch \"on\" only for scheduler_state == ON. Our switch (EventsPage.tsx) is on only for schedulerState ON; parity case \"the list: scheduler state and its toggle\" checks the class on MySQL (ON) and in the MariaDB spot check (OFF). The theme CSS itself: our UI has its own styles."
@@ -200,6 +228,7 @@
     {
       "commit": "99e7f2db71604e91c058c216381cb39c4dec6ccd",
       "subject": "Disable Events page when event scheduler is disabled",
+      "author": "Maurício Meneghini Fauth",
       "status": "ported",
       "areas": ["features/05-database-level"],
       "notes": "sync 328b8d8003: QA_5_2, merged by 19958e00b0 into Events\\IndexController / ExportController: with event_scheduler DISABLED (server started with --event-scheduler=DISABLED, error 1577 otherwise) the list, the editor and the export do nothing and the page shows \"The event scheduler is disabled.\". Ported: getEventSchedulerStatus returns ON/OFF/DISABLED (EventsListResponse.schedulerState), the list is empty and editor/save/export answer the notice, EventsPage shows only the notice. Golden parity cases run on a MySQL 8.4 started with --event-scheduler=DISABLED and its own reference instance (all events cases pass there), docs/features/05 updated with a checklist item."
@@ -207,6 +236,7 @@
     {
       "commit": "5d720115861ec329a1aa15a3158fb43e79d312b0",
       "subject": "Refactor CollationsController",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/06-server-level", "tests"],
       "notes": "sync 328b8d8003: CollationsController reads the charsets and collations in __invoke instead of the constructor: the same queries in the same order, the same page. Server Charsets parity unchanged."
@@ -214,6 +244,7 @@
     {
       "commit": "3b3ef210332e8b578d19c6ee4d5ce623ee766d30",
       "subject": "Pass Config to ResponseRenderer so that we don't rely on Global state",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["tooling", "tests"],
       "notes": "sync 328b8d8003: Config passed to the test ResponseRenderer stub; PHPUnit and static-analysis baselines only, no output change."
@@ -221,6 +252,7 @@
     {
       "commit": "2e0eb3216e5d6ad75eddb278aedf662003cd6939",
       "subject": "Fix error in mutation-tests.yml CI workflow",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync 328b8d8003: upstream CI workflow (mutation tests)."
@@ -228,6 +260,7 @@
     {
       "commit": "5e5fe6a72fc9d1ff996278e63d7f3d02e74aa2d0",
       "subject": "Update testGetSysInfo",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["tests"],
       "notes": "sync 328b8d8003: PHPUnit SysInfo test only."
@@ -235,6 +268,7 @@
     {
       "commit": "2a22f984c643981e6514b8eef18197d7151395c9",
       "subject": "Remove nodejs's experimental flag for yarn test command",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["tooling", "dependencies"],
       "notes": "sync 328b8d8003: the yarn test script and CI: no dependency version change."
@@ -242,6 +276,7 @@
     {
       "commit": "328b8d80039c6edc237598e7a6fc039065f42010",
       "subject": "Update po files",
+      "author": "phpMyAdmin bot",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync 328b8d8003: pnpm i18n:import (PMA_ROOT=/home/user/ref/pma): new msgid \"The event scheduler is disabled.\", the moved source references, the Latvian and Chinese (Simplified) translations."
@@ -249,6 +284,7 @@
     {
       "commit": "8e6af1a04f9c1d9344313fcb8ebfedeaf21bd5a3",
       "subject": "Refactor Sanitize::convertBBCode()",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["features/01-shell-navigation-auth", "tests"],
       "notes": "refactor, same output: the replace pairs become a constant and [dochelpicon] gets its own strtr pass after them; no pair overlaps it or produces it, so one pass and two give the same text (ours: packages/i18n/src/bbcode.ts, apps/web/src/features/shell/bbcode.tsx). sync a15cd540cf: packages/i18n/test/fixtures/bbcode.json regenerated identical (all locales); generate-fixtures.php only resets the removed static on older trees."
@@ -256,6 +292,7 @@
     {
       "commit": "c13712b3d62308f88ebee5fdbb58925f158282d2",
       "subject": "Refactor updatePassword",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/06-server-level", "tests"],
       "notes": "sync ef2fcd20e2: internal refactor of Server\\Privileges::updatePassword (SET PASSWORD / ALTER USER builder); same emitted SQL and messages, so no change to our apps/server/src/privileges. phpstan/psalm baselines only otherwise."
@@ -263,6 +300,7 @@
     {
       "commit": "ea3c53e199b940477f2a42eb51ed94be76da7b5f",
       "subject": "Remove ajax_request",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": [
         "features/01-shell-navigation-auth",
@@ -274,6 +312,7 @@
     {
       "commit": "44769c9f574642a78c0138c1f8315a7a158d0bdb",
       "subject": "Translated using Weblate (Hebrew)",
+      "author": "Yaron Shahrabani",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync ef2fcd20e2: pnpm i18n:import (PMA_ROOT=/home/user/ref/pma): he catalogue updated (packages/i18n/po/he.po, gettext fixture 1503->1505 messages)."
@@ -281,6 +320,7 @@
     {
       "commit": "7168a6fe1bbc47997083e20bbd3e35dfd06a7591",
       "subject": "Translated using Weblate (Indonesian)",
+      "author": "Zahid Rizky Fakhri",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync ef2fcd20e2: pnpm i18n:import: id catalogue updated (3426->3428 messages)."
@@ -288,6 +328,7 @@
     {
       "commit": "703ced15e44b5933d6f07ed44aa9014bbc8780ae",
       "subject": "Translated using Weblate (Russian)",
+      "author": "Andrei Stepanov",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync ef2fcd20e2: pnpm i18n:import: ru catalogue updated (3426->3428 messages)."
@@ -295,6 +336,7 @@
     {
       "commit": "f078acc9c816ad34936d93fc8206e468aff60c70",
       "subject": "Translated using Weblate (Turkish)",
+      "author": "Burak Yavuz",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync ef2fcd20e2: pnpm i18n:import: tr catalogue updated (now 100%)."
@@ -302,6 +344,7 @@
     {
       "commit": "a11a556152d249f5a45cdf89d00b1d194b9b3f1c",
       "subject": "Translated using Weblate (Ukrainian)",
+      "author": "Hotripak",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync ef2fcd20e2: pnpm i18n:import: uk catalogue updated (now 100%)."
@@ -309,6 +352,7 @@
     {
       "commit": "b42ba11315d5a26079f480e041ab35fedb4b6f82",
       "subject": "Fix missing db parameters errors",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/05-database-level"],
       "notes": "sync ef2fcd20e2: upstream makes CentralColumns / MultiTableQuery / database Privileges controllers return a 400 missingParameterError('db') when the db GET/POST param is absent or an invalid name (previously: throw / stale Current::$database / generic message). We carry db as a mandatory URL path segment (/s/:server/db/:db/… and /databases/:db/…): an absent or empty segment never matches the Hono route (verified: /databases//privileges -> 404, //central-columns -> 404), so there is no crash/stale-db gap to close. withDb(select:true) additionally guards a selected-but-missing db with \"No database selected.\" The MultiTableQuery Current::$database -> DatabaseName change is moot for us (db comes from the path via withDb, never a global)."
@@ -316,6 +360,7 @@
     {
       "commit": "ef60f1df380306019185511456b33dbccc5effca",
       "subject": "New respondWithErrorMessage()",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": [
         "features/03-insert-edit-transformations",
@@ -329,6 +374,7 @@
     {
       "commit": "2c66fc86b6dda1bf53047a335254d881e27498fb",
       "subject": "Translated using Weblate (Dutch)",
+      "author": "dingo thirteen",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync 2c66fc86b6: pnpm i18n:import (PMA_ROOT=/home/user/ref/pma): nl catalogue updated (100%)."
@@ -336,6 +382,7 @@
     {
       "commit": "7b3a113703d260f1b6a85ae5cacc6af8e99af068",
       "subject": "Translated using Weblate (Hebrew)",
+      "author": "Yaron Shahrabani",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync 6eba7ba9ad: resources/po (Hebrew): imported with pnpm i18n:import."
@@ -343,6 +390,7 @@
     {
       "commit": "dd971976ed33da02fee991ef0228ffea009af98f",
       "subject": "Translated using Weblate (Turkish)",
+      "author": "Burak Yavuz",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync 6eba7ba9ad: resources/po (Turkish): imported with pnpm i18n:import."
@@ -350,6 +398,7 @@
     {
       "commit": "f53451897f5be92c4470e1a5b1e3553cbe3eefef",
       "subject": "Update po files",
+      "author": "phpMyAdmin bot",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync 6eba7ba9ad: resources/po regenerated: imported with pnpm i18n:import."
@@ -357,6 +406,7 @@
     {
       "commit": "466bc44ee479b7dbf1147b055ef1ccf298b04800",
       "subject": "Translated using Weblate (Dutch)",
+      "author": "dingo thirteen",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync 6eba7ba9ad: resources/po (Dutch): imported with pnpm i18n:import."
@@ -364,6 +414,7 @@
     {
       "commit": "b08760836c4f1bc4a2d1bdcc5e8017855a799536",
       "subject": "Translated using Weblate (Turkish)",
+      "author": "Burak Yavuz",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync 6eba7ba9ad: resources/po (Turkish): imported with pnpm i18n:import."
@@ -371,6 +422,7 @@
     {
       "commit": "d19a739eca3866cd7174491e405dab51a398c9fc",
       "subject": "Translated using Weblate (Ukrainian)",
+      "author": "Hotripak",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync 6eba7ba9ad: resources/po (Ukrainian): imported with pnpm i18n:import."
@@ -378,6 +430,7 @@
     {
       "commit": "217f16533c04472f5e519cc82736cd07342935fb",
       "subject": "Translated using Weblate (Indonesian)",
+      "author": "Zahid Rizky Fakhri",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync 6eba7ba9ad: resources/po (Indonesian): imported with pnpm i18n:import."
@@ -385,6 +438,7 @@
     {
       "commit": "3f1d573e4731bbcb95f8d310a7f0c7ae85fbaa3c",
       "subject": "docs: credit Daniel Hinostroza, MD as a Spanish translator",
+      "author": "William Desportes",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync 6eba7ba9ad: docs/credits.rst (translator credits)."
@@ -392,6 +446,7 @@
     {
       "commit": "e2624b571219bd04d8e3897039588c8877f4ded5",
       "subject": "docs: drop the Deleted User placeholder from the credits",
+      "author": "William Desportes",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync 6eba7ba9ad: docs/credits.rst (translator credits)."
@@ -399,6 +454,7 @@
     {
       "commit": "7b7809fa3a8ce30fce4a53e339a73326f70ec7e5",
       "subject": "Fix locales-contributors never listing a contributor",
+      "author": "William Desportes",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync 6eba7ba9ad: bin/internal/locales-contributors (upstream maintainer script)."
@@ -406,6 +462,7 @@
     {
       "commit": "d59788207f44725ecb1afbf816930a5b1653740a",
       "subject": "locales-contributors: add --update and pass shellcheck",
+      "author": "William Desportes",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync 6eba7ba9ad: bin/internal/locales-contributors (upstream maintainer script)."
@@ -413,6 +470,7 @@
     {
       "commit": "9db6360685388798c3b21f74c6f86fb258976f0d",
       "subject": "docs: update credits using \"locales-contributors --update\"",
+      "author": "William Desportes",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync 6eba7ba9ad: docs/credits.rst regenerated by locales-contributors."
@@ -420,6 +478,7 @@
     {
       "commit": "c348bc2e60b65532dceffd8be056479f90efebf5",
       "subject": "Add collation description for uca1400 collations",
+      "author": "Maurício Meneghini Fauth",
       "status": "ported",
       "areas": ["tooling", "features/04-table-level"],
       "notes": "sync 6eba7ba9ad: QA_5_2 libraries/classes/Charsets/Collation.php: uca1400 → \"UCA 14.0.0\"; merged into src/Charsets/Collation.php by 45ce5ba4d9. Ported to packages/mysql-types/src/charsets.ts (VARIANTS); collations.json and collation-descriptions.json regenerated (utf8mb4_uca1400_* now UCA 14.0.0)."
@@ -427,6 +486,7 @@
     {
       "commit": "b409476bd07189d98bbd51b56d392a3edba18263",
       "subject": "Add ChangeLog entries",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["docs"],
       "notes": "sync 6eba7ba9ad: ChangeLog only."
@@ -434,6 +494,7 @@
     {
       "commit": "c797aa8f624e9bfcab41158766ed44b76a93e254",
       "subject": "docs: update credits using \"locales-contributors --update\"",
+      "author": "William Desportes",
       "status": "not-applicable",
       "areas": ["docs"],
       "notes": "sync 6eba7ba9ad: docs/credits.rst regenerated by locales-contributors."
@@ -441,6 +502,7 @@
     {
       "commit": "345cd6f758f0d0318a72df2382851a5ff882ddfd",
       "subject": "Add ChangeLog entry for #20544",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["docs"],
       "notes": "sync 6eba7ba9ad: ChangeLog only."
@@ -448,6 +510,7 @@
     {
       "commit": "edcb9727c9ff369561169d5269d69db54abb1605",
       "subject": "Fix detection of the bundled documentation",
+      "author": "Магда М.Г.",
       "status": "not-applicable",
       "areas": ["features/01-shell-navigation-auth"],
       "notes": "sync 6eba7ba9ad: MySQLDocumentation::getDocumentationLink looks for the bundled docs in public/docs/html: BetterMyAdmin bundles no phpMyAdmin HTML docs and always links to docs.phpmyadmin.net (packages/i18n/src/bbcode.ts, packages/ui/src/lib/doc-urls.ts)."
@@ -455,6 +518,7 @@
     {
       "commit": "a3c0e86066e4c0b797d736d0cfffe812f6e97ad4",
       "subject": "Make the documentation directory configurable in vendor_config.php",
+      "author": "Магда М.Г.",
       "status": "not-applicable",
       "areas": ["features/01-shell-navigation-auth"],
       "notes": "sync 6eba7ba9ad: vendor_config docsHtmlDir / DOCS_HTML_DIR for the bundled docs check: no bundled docs (see edcb9727c9)."
@@ -462,6 +526,7 @@
     {
       "commit": "a585a5c2eeeedacd55b54cbcda6360946e8d8a95",
       "subject": "Make hardcoded UI strings translatable",
+      "author": "Магда М.Г.",
       "status": "ported",
       "areas": [
         "features/05-database-level",
@@ -475,6 +540,7 @@
     {
       "commit": "a1e4edef2d5cf9d83bf4ab58595c23c945026c25",
       "subject": "Update po files",
+      "author": "phpMyAdmin bot",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync c7bb2a19e5: po files regenerated upstream (new .pot extraction): pnpm i18n:import; the stale plural msgid \"No databases selected.\" left the pot, its messages.yaml n/a entry was dropped."
@@ -482,6 +548,7 @@
     {
       "commit": "1a1c10130a4873a75ebc1e6056144e62d119ccb8",
       "subject": "Translated using Weblate (Turkish)",
+      "author": "Burak Yavuz",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync c7bb2a19e5: Turkish translation: pnpm i18n:import."
@@ -489,6 +556,7 @@
     {
       "commit": "2907d1fa8cd7ce8d8b5b2962377e87dade0f68a1",
       "subject": "Translated using Weblate (Ukrainian)",
+      "author": "Hotripak",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync c7bb2a19e5: Ukrainian translation: pnpm i18n:import."
@@ -496,6 +564,7 @@
     {
       "commit": "beb3fc4578d5c311e6de35a17e3334e73b461c84",
       "subject": "Translated using Weblate (Korean)",
+      "author": "kim8ccf3a4116ec4691",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync c7bb2a19e5: Korean translation: pnpm i18n:import."
@@ -503,6 +572,7 @@
     {
       "commit": "c2e56e6ec6078ba45f4086220d372fdb7a551e4f",
       "subject": "Translated using Weblate (French)",
+      "author": "kjo-sdds",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync c7bb2a19e5: French translation: pnpm i18n:import."
@@ -510,6 +580,7 @@
     {
       "commit": "ee077aa2ac9dcef03321fbed75feeb96038f8768",
       "subject": "docs: withdraw obsolete browser FAQ entries and fix demo link",
+      "author": "Can Akyüz",
       "status": "ported",
       "areas": ["docs"],
       "notes": "sync c7bb2a19e5: FAQ 5.8 and 5.9 withdrawn and the demo link fixed in docs-site/faq.rst."
@@ -517,6 +588,7 @@
     {
       "commit": "8fe98a1b05c4771ad51d28e62b4ac8953e477da4",
       "subject": "docs: fix FAQ typo and clarify compress option",
+      "author": "Can Akyüz",
       "status": "ported",
       "areas": ["docs"],
       "notes": "sync c7bb2a19e5: FAQ typo (\"more than one\") and the compress option text in docs-site/config.rst."
@@ -524,6 +596,7 @@
     {
       "commit": "7e1292d3d8643cbbf146c85ab2b137f1df9f656c",
       "subject": "Fix the FAQ 3.10 wording about duplicate values",
+      "author": "William Desportes",
       "status": "ported",
       "areas": ["docs"],
       "notes": "sync c7bb2a19e5: FAQ 3.10 wording (\"more than one row\") in docs-site/faq.rst."
@@ -531,6 +604,7 @@
     {
       "commit": "20fd4203a4d38a44cdcb5b78bc31bd3fca1f909f",
       "subject": "Add ResponseRendererAjaxSetting",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync c7bb2a19e5: ResponseRendererAjaxSetting middleware: sets ResponseRenderer::setAjax from the request; BetterMyAdmin is a JSON API with a React client, there is no ajax/non-ajax page rendering split."
@@ -538,6 +612,7 @@
     {
       "commit": "499f30824a807aeafe433b89a56552e10a44c317",
       "subject": "Refactor Events\\IndexController",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/05-database-level"],
       "notes": "sync c7bb2a19e5: Events\\IndexController refactor: the failed-query errors of events, routines and triggers are now one getErrorForFailedQuery (query, one break, \"MySQL said:\"), where add mode had a double break: our failed() helpers in apps/server/src/database/{events,routines,triggers}.ts lose the separator argument (test: table-triggers.test.ts). The event rows come from events/row.twig (claims moved), the non-JS \"Change to %s\" button is gone (controls.yaml n/a dropped), the one-time/recurring rows are toggled by CSS :has instead of JS (EventsPage.tsx already renders them by type), the new events/export.twig textarea is claimed by the export dialog, and the new-row fade-in is removed (we never had one). Parity baseline re-recorded."
@@ -545,6 +620,7 @@
     {
       "commit": "897dc800d54027b6ddc156012da0318e238cd88e",
       "subject": "Use DI for ThemeManager",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync c7bb2a19e5: ThemeManager through the DI container: same themes and cookie; BetterMyAdmin has its own theme registry (packages/ui)."
@@ -552,6 +628,7 @@
     {
       "commit": "abf7b1357927ac03c754610c15e2d2c073bcfe2a",
       "subject": "Improve ErrorHandlerTest::testUniqueness() test",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["tests"],
       "notes": "sync c7bb2a19e5: ErrorHandlerTest::testUniqueness: PHP error handler, no counterpart."
@@ -559,6 +636,7 @@
     {
       "commit": "7ba996c591142e0244c016d1d94355d3d9e7cf16",
       "subject": "Remove DisableIS from Import",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/07-export-import"],
       "notes": "sync c7bb2a19e5: Remove DisableIS from Import: our import never consulted DisableIS."
@@ -566,6 +644,7 @@
     {
       "commit": "c55c43c2fcfdd0f4144fd6ed44d27db820b4603d",
       "subject": "Move getMimeType to ExportPluginProperties",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/07-export-import"],
       "notes": "sync c7bb2a19e5: getMimeType moved to ExportPluginProperties: the import/schema plugins never used it; same MIME types for the exports (packages/export properties.mimeType)."
@@ -573,6 +652,7 @@
     {
       "commit": "1ac66470b0d6271c9b846ccf917e47ff82c8d66d",
       "subject": "Fix getValuesForCsvTable()",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/05-database-level"],
       "notes": "sync c7bb2a19e5: getValuesForCsvTable: the CSV size estimate maps \\r to \"rn\" as well as \\n to \"nl\", and drops the SET SESSION group_concat_max_len (fetchResultSimple, which we already used): apps/server/src/database/structure.ts."
@@ -580,6 +660,7 @@
     {
       "commit": "d27d4c465e2060cd435e4b7c96ee62e8f38c7bff",
       "subject": "Fix IPv4 CIDR matching in AllowDeny rules",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/01-shell-navigation-auth"],
       "notes": "sync c7bb2a19e5: IPv4 CIDR matching in AllowDeny rules: cidrMatch compares the packed addresses with a byte mask instead of ip2long arithmetic (the 31-bit quirk is gone): apps/server/src/auth/ip-allow-deny.ts; fixtures regenerated (ip-allow-deny.json, 711 cases)."
@@ -587,6 +668,7 @@
     {
       "commit": "910322373f14ed4601c85234858f630f127569ef",
       "subject": "Check CSRF token on config and http login",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/01-shell-navigation-auth"],
       "notes": "sync c7bb2a19e5: CSRF token checked on config and http login: our API requires the CSRF header on every non-GET request, logins included."
@@ -594,6 +676,7 @@
     {
       "commit": "951f6c9344d3b7b76f9f36c3b58e5a07ac46b024",
       "subject": "PluginFactory",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/07-export-import"],
       "notes": "sync c7bb2a19e5: PluginFactory replaces Plugins static helpers: same plugin availability and order (inventories unchanged)."
@@ -601,6 +684,7 @@
     {
       "commit": "5c6485ed876a67ae8dc743366df1207e0880fe9d",
       "subject": "ExportType and singleTable",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/07-export-import"],
       "notes": "sync c7bb2a19e5: ExportType and singleTable as instance fields: our PluginContext already carries exportType and singleTable per export."
@@ -608,6 +692,7 @@
     {
       "commit": "4c780eae5212c7dc5c72d767d8bf4314792a3092",
       "subject": "Refactor Pdf to narrow down types",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/07-export-import"],
       "notes": "sync c7bb2a19e5: Pdf helper type narrowing: same output."
@@ -615,6 +700,7 @@
     {
       "commit": "a993e75d61faff1ec5d0ba57a4a4594aaf0b1bb7",
       "subject": "Add test for Pdf::getTableDef() column layout",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["tests"],
       "notes": "sync c7bb2a19e5: Pdf::getTableDef column layout test: ported as packages/export/test/pdf.test.ts \"the structure table: the comments under their title\"."
@@ -622,6 +708,7 @@
     {
       "commit": "acbb64ea40a1971a1a105c254e29b9f4c2a22212",
       "subject": "Fix bug I introduced in the past",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/07-export-import"],
       "notes": "sync c7bb2a19e5: Pdf::getTableDef: the optional Links to / Comments / Media type columns are laid out in order, so the comments land under their title without relations: packages/export/src/plugins/pdf.ts."
@@ -629,6 +716,7 @@
     {
       "commit": "7a202008ab497283f621073440678640f931d3f6",
       "subject": "Fix more type issues",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/07-export-import"],
       "notes": "sync c7bb2a19e5: Pdf::getTableDef: the Media type cell needs the browser transformation feature as well as doMime: packages/export/src/plugins/pdf.ts."
@@ -636,6 +724,7 @@
     {
       "commit": "889b269b98c972fb1380ac28d2b66464ea96ae59",
       "subject": "Make $results local",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/07-export-import"],
       "notes": "sync c7bb2a19e5: Pdf $results made local: same output."
@@ -643,6 +732,7 @@
     {
       "commit": "0181b04315a6753f0523b5679aa1d7419e34476f",
       "subject": "Translated using Weblate (Korean)",
+      "author": "kim8ccf3a4116ec4691",
       "status": "not-applicable",
       "areas": ["i18n"],
       "notes": "sync 6016908886: QA_5_2 branch commit merged into master (a880333a04 / f34ca07728): Korean po/ko.po of the 5.2 tree; master's resources/po is unchanged by it."
@@ -650,6 +740,7 @@
     {
       "commit": "5fd0e9ba56d4e1061a10d74788da532729759c49",
       "subject": "Translated using Weblate (French)",
+      "author": "kjo-sdds",
       "status": "not-applicable",
       "areas": ["i18n"],
       "notes": "sync 6016908886: QA_5_2 branch commit merged into master (a880333a04 / f34ca07728): French po/fr.po of the 5.2 tree; master's resources/po is unchanged by it."
@@ -657,6 +748,7 @@
     {
       "commit": "faea1b46c8147f602a6218631746af89c27155fc",
       "subject": "Fix IPv4 CIDR matching in AllowDeny rules",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/01-shell-navigation-auth"],
       "notes": "sync 6016908886: QA_5_2 branch commit merged into master (a880333a04 / f34ca07728): the 5.2 backport of d27d4c465e (IPv4 CIDR matching), ported in sync c7bb2a19e5."
@@ -664,6 +756,7 @@
     {
       "commit": "8bea9d92b46a6f6129a3519d54f46ca54eb6fbc8",
       "subject": "Add ChangeLog entry for #20576",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["docs"],
       "notes": "sync 6016908886: ChangeLog entry for #20576 (the CIDR fix): BetterMyAdmin keeps its own CHANGELOG (1.0.16)."
@@ -671,6 +764,7 @@
     {
       "commit": "49ef98f90430e97df12a8af94f3e97cce40ceff7",
       "subject": "Fix SqlController missing parameter check",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["features/09-sql-editor-query-pipeline"],
       "notes": "sync 6016908886: QA_5_2 branch commit merged into master (a880333a04 / f34ca07728): SqlController in the 5.2 tree (libraries/classes) answers a missing sql_query with a 400 \"Missing parameter: sql_query\" instead of Util::checkParameters; on master only its test lands (SqlControllerTest). Our query endpoint rejects a request without its statement through the request schema."
@@ -678,6 +772,7 @@
     {
       "commit": "ea1119dc31ed0dbaf6f5038d64d8813940eca317",
       "subject": "Add ChangeLog entry for #20577",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["docs"],
       "notes": "sync 6016908886: ChangeLog entry for #20577: our own CHANGELOG."
@@ -685,6 +780,7 @@
     {
       "commit": "da43fc46875e714d1fa4c732c95eed7330d9defc",
       "subject": "Translated using Weblate (Spanish)",
+      "author": "Salvador Peña",
       "status": "not-applicable",
       "areas": ["i18n"],
       "notes": "sync 6016908886: QA_5_2 branch commit merged into master (a880333a04 / f34ca07728): Spanish po/es.po of the 5.2 tree; master's Spanish update is cc6ed3b9ee."
@@ -692,6 +788,7 @@
     {
       "commit": "cc6ed3b9eee1f7de35ed3160f497024c96c2341a",
       "subject": "Translated using Weblate (Spanish)",
+      "author": "Salvador Peña",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync 6016908886: Spanish translation: pnpm i18n:import."
@@ -699,6 +796,7 @@
     {
       "commit": "3710262a6b20ebfc8dadd9395806d208ae6f5835",
       "subject": "Translated using Weblate (Indonesian)",
+      "author": "Zahid Rizky Fakhri",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync 6016908886: Indonesian translation: pnpm i18n:import."
@@ -706,6 +804,7 @@
     {
       "commit": "3f3852040e9e31319a5dbabf859b483587be4eee",
       "subject": "Fix cases where an invalid include will cause an error",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["features/03-insert-edit-transformations", "features/07-export-import"],
       "notes": "sync 6016908886: invalid include: InsertEdit::getGotoInclude no longer takes a goto of the form *.php to include, ReplaceController falls back to /table/sql, ImportController drops the include branch (Import::$result is a result object or false, so it was unreachable). BetterMyAdmin never includes a goto script: the save response says where to go back (apps/server/src/insert-edit/save.ts backTarget)."
@@ -713,6 +812,7 @@
     {
       "commit": "b6b849380f8f1196c7ebcf8b1c7afc53b74d60e6",
       "subject": "Add change log entry for #20578",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["docs"],
       "notes": "sync 6016908886: ChangeLog entry for #20578: our own CHANGELOG."
@@ -720,6 +820,7 @@
     {
       "commit": "bab805a40f4071e28fe76a4598d75a6723dfb88f",
       "subject": "Align all page titles to the same style",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/05-database-level", "features/06-server-level", "features/04-table-level"],
       "notes": "sync 6016908886: page titles aligned: get_image + the title (whatever ActionLinksMode) and the my-3 margin on the container. The Routines / Triggers / Events heading followed ActionLinksMode through IconText; it now renders PmaIcon + the title (apps/web/src/features/database/programs.tsx, test tests/e2e/program-titles.e2e.ts, docs/features/05-database-level.md). The other headings (databases, privileges, user accounts, export/import, check relations, chart, show create) already used PageHeader, which always shows its icon; UI-parity unchanged."
@@ -727,6 +828,7 @@
     {
       "commit": "dedf56d2875c0d0e3a9b110a9ee7eec5d943dfb4",
       "subject": "Update po files",
+      "author": "phpMyAdmin bot",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 6f240a8f64: po/pot refresh: pnpm i18n:import; the same 3436 msgids (only their order and source references moved)."
@@ -734,6 +836,7 @@
     {
       "commit": "3b559d0d1be5c6fd51da110609b93ee042657458",
       "subject": "Translated using Weblate (Spanish)",
+      "author": "Salvador Peña",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 6f240a8f64: Spanish translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -741,6 +844,7 @@
     {
       "commit": "bd5d471c4ffcceebe0bda9e7a36bd054f6df78c5",
       "subject": "Translated using Weblate (Spanish)",
+      "author": "Salvador Peña",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 6f240a8f64: Spanish translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -748,6 +852,7 @@
     {
       "commit": "7d7826caee74f00f0f727b53c2638a3b0fb51e8c",
       "subject": "Translated using Weblate (Uyghur)",
+      "author": "Abduqadir Abliz",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 6f240a8f64: Uyghur translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -755,6 +860,7 @@
     {
       "commit": "372718a7071f3132959c27d483fef22fc2962d93",
       "subject": "Translated using Weblate (Uyghur)",
+      "author": "Abduqadir Abliz",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 6f240a8f64: Uyghur translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -762,6 +868,7 @@
     {
       "commit": "0d213e8801e03399c9f7c64fff6c5dcf048f13d6",
       "subject": "Translated using Weblate (Uyghur)",
+      "author": "Maurício Meneghini Fauth",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 6f240a8f64: Uyghur translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -769,6 +876,7 @@
     {
       "commit": "a2e0282658e2c9a14894e0e39ca92d9561f0c54e",
       "subject": "Translated using Weblate (Uyghur)",
+      "author": "Maurício Meneghini Fauth",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 6f240a8f64: Uyghur translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -776,6 +884,7 @@
     {
       "commit": "be091e471911ef261d7ab3b8338cac4698b73764",
       "subject": "Update Psalm to 7.0",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["tooling", "dependencies", "features/06-server-level"],
       "notes": "sync 6f240a8f64: Psalm 7 and its CI workflow (dev tooling, no PHP runtime dependency changed but symfony/polyfill-mbstring 1.43.0->1.43.3 and symfony/filesystem 7.4.18->7.4.21 patch releases, which feed none of our fixtures; the reference keeps its installed vendor). The one code line, Privileges::getUsersOverview initialising $groupAssignment before the configurable-menus check, avoids an undefined PHP variable when user groups are off: our users overview builds the user group column from the user groups query result and shows no column without the feature."
@@ -783,6 +892,7 @@
     {
       "commit": "a9bb7defd870c6c9b57803136b789a6f9046644a",
       "subject": "Reset Routing::$route for token mismatch as well",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["features/01-shell-navigation-auth"],
       "notes": "sync 6f240a8f64: Follow-up to 910322373f (not-applicable): on a token mismatch phpMyAdmin also resets the static Routing::$route to \"/\". We keep no global route: a request without a valid CSRF header is refused before any route runs."
@@ -790,6 +900,7 @@
     {
       "commit": "99f5ed6475de3fb7e4c6585034ebc7662a05ec8f",
       "subject": "Fix #20525 - Undefined global variable $maxsize",
+      "author": "HawkForge",
       "status": "not-applicable",
       "areas": ["features/07-export-import"],
       "notes": "sync 6f240a8f64: QA_5_2 fix merged into master: Export::exportDatabase reads $maxsize ?? ''. Our export already takes a missing maxsize parameter as the empty string (packages/export/src/export.ts), so every table is exported whatever its size."
@@ -797,6 +908,7 @@
     {
       "commit": "28a671db4c8e55bfb6422bf473e1f72803281315",
       "subject": "Add change log entry for #20587",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["docs"],
       "notes": "sync 6f240a8f64: ChangeLog entry for #20587: our own CHANGELOG."
@@ -804,6 +916,7 @@
     {
       "commit": "8f0a106f2ab8fcfdfac8847a8f704aead0b348a2",
       "subject": "Translated using Weblate (Czech)",
+      "author": "Adam Havránek",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync f2beb4ceee: Czech translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -811,6 +924,7 @@
     {
       "commit": "4e7a2ecbd95ab642807002be70bf665e1a369744",
       "subject": "Translated using Weblate (Portuguese (Brazil))",
+      "author": "Maurício Meneghini Fauth",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync f2beb4ceee: Brazilian Portuguese translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -818,6 +932,7 @@
     {
       "commit": "1d0362d214490512967f1d1ec2a7d036269c787c",
       "subject": "Update po files",
+      "author": "phpMyAdmin bot",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync f2beb4ceee: po/pot refresh: pnpm i18n:import; the same 3436 msgids (the pot's source references follow the TokenRequestParamChecking change of the previous sync)."
@@ -825,6 +940,7 @@
     {
       "commit": "a00710c390fe3e7ae22672b3ba9ff6bedd76944b",
       "subject": "Translated using Weblate (Spanish)",
+      "author": "Salvador Peña",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync f2beb4ceee: Spanish translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -832,6 +948,7 @@
     {
       "commit": "f2beb4ceee0cc5fbfee145ee4d88db8acdb01784",
       "subject": "Translated using Weblate (French)",
+      "author": "Marc Delisle",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync f2beb4ceee: French translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -839,6 +956,7 @@
     {
       "commit": "9f736d15d40cef4a6447c71b1e9de8cf0dbb215d",
       "subject": "Translated using Weblate (Czech)",
+      "author": "Adam Havránek",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync f4aeb7801c: Czech translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -846,6 +964,7 @@
     {
       "commit": "324551a1049553a8ba4cbaf6a12884da208ca4a2",
       "subject": "Specify that the query in query encryption is the URL query",
+      "author": "Maurício Meneghini Fauth",
       "status": "ported",
       "areas": ["tooling"],
       "notes": "sync f4aeb7801c: The home page warnings say \"URL query encryption\" (apps/server/src/shell/home.ts and its int test); the old msgids are mapped n/a as stale catalogue entries until the po refresh."
@@ -853,6 +972,7 @@
     {
       "commit": "822de796ab95e9f048d9d254d09e38f64d9c5646",
       "subject": "Translated using Weblate (Portuguese (Brazil))",
+      "author": "Maurício Meneghini Fauth",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync f4aeb7801c: Portuguese (Brazil) translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -860,6 +980,7 @@
     {
       "commit": "7183338d58ed53842959021a254bf47aaa411e9c",
       "subject": "Update po files",
+      "author": "phpMyAdmin bot",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync f4aeb7801c: po/pot refresh: pnpm i18n:import; the same 3436 msgids."
@@ -867,6 +988,7 @@
     {
       "commit": "8cbcc43fafe38fce49ecb32b27e3dfb3b260455d",
       "subject": "Translated using Weblate (Dutch)",
+      "author": "dingo thirteen",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync f4aeb7801c: Dutch translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -874,6 +996,7 @@
     {
       "commit": "ab6c826c70dff44fbc2eb1ef437837c093da288d",
       "subject": "Translated using Weblate (Portuguese (Brazil))",
+      "author": "Maurício Meneghini Fauth",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync f4aeb7801c: Portuguese (Brazil) translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -881,6 +1004,7 @@
     {
       "commit": "f80b055de44d0803a9b762c256ecd9eb394a63b2",
       "subject": "Translated using Weblate (Turkish)",
+      "author": "Burak Yavuz",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync f4aeb7801c: Turkish translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -888,6 +1012,7 @@
     {
       "commit": "7470c9844976150dbcb62918cede76257159e103",
       "subject": "Translated using Weblate (Ukrainian)",
+      "author": "Hotripak",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync f4aeb7801c: Ukrainian translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -895,6 +1020,7 @@
     {
       "commit": "27996b3076b51fb02e41db91a3b8419ecd4d04f6",
       "subject": "Translated using Weblate (Spanish)",
+      "author": "Salvador Peña",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync f4aeb7801c: Spanish translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -902,6 +1028,7 @@
     {
       "commit": "0e01a17cb1f6228252d9467e868a9c7625e62d4c",
       "subject": "Translated using Weblate (French)",
+      "author": "Marc Delisle",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync f4aeb7801c: French translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -909,6 +1036,7 @@
     {
       "commit": "594fcfe3ec0badeff9d7d1bb1e027138480ca1ac",
       "subject": "Upgrading vimeo/psalm (7.0.0 => 7.2.0)",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["dependencies", "tooling", "features/09-sql-editor-query-pipeline"],
       "notes": "sync f4aeb7801c: Psalm 7.2 and its baseline: static analysis only."
@@ -916,6 +1044,7 @@
     {
       "commit": "0744a2eff49f7bff22ae0c42204ff91aa4a8a00d",
       "subject": "Narrow return type of getUiProp()",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["tooling", "features/09-sql-editor-query-pipeline", "features/04-table-level"],
       "notes": "sync f4aeb7801c: Table::getUiProp() return type narrowed: refactor, our TableUiPrefs already returns typed values."
@@ -923,6 +1052,7 @@
     {
       "commit": "aee2cbdee1bf86a440bc50ab7637f9df96aa0a83",
       "subject": "Refactor getColumnParams()",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["tooling", "features/04-table-level", "features/02-browse-results-grid"],
       "notes": "sync f4aeb7801c: Results::getColumnParams: a col_order without one entry per field, or with an index < 0 or >= the field count, is now removed and not applied (before, an out-of-range entry was removed but still used). apps/server/src/browse/grid.ts; docs/features/02."
@@ -930,6 +1060,7 @@
     {
       "commit": "a2598a8d52ab6baafbe29c1e0d611eb32fb3a077",
       "subject": "Create UiPreferences VO",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": [
         "tooling",
@@ -943,6 +1074,7 @@
     {
       "commit": "6112f42f2fa31e869893cf6d4243dddd3e77ccc2",
       "subject": "Add sortedColumnExists",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/04-table-level", "tests"],
       "notes": "sync f4aeb7801c: Table::sortedColumnExists: the remembered sort is parsed as SELECT * FROM t ORDER BY <sorted_col> and every item must be a column of the table, unqualified or qualified by the table, never by a database (before: the first word only, matched as a suffix of db.table.col). packages/metadata/src/uiprefs.ts with @bettermyadmin/sql-lexer; the table info columns() returns bare names (apps/server/src/metadata/table-info.ts); unit test; docs/features/02 and 08."
@@ -950,6 +1082,7 @@
     {
       "commit": "3bd9ebe86884a972de915ab9a4202bda090b8dba",
       "subject": "Update Composer dependencies",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["dependencies"],
       "notes": "sync f4aeb7801c: Composer dependency refresh (symfony, phpstan, psalm, guzzle, league/uri, …): phpmyadmin/sql-parser, motranslator, twig and mariadb-mysql-kbs did not move, so nothing to port to packages/sql-lexer or packages/kbs; the reference checkout was reinstalled."
@@ -957,6 +1090,7 @@
     {
       "commit": "cd5cf48843c4b25d165a93726c60316821b7d070",
       "subject": "Refactoring of Triggers and bug fix",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["tooling", "features/04-table-level", "tests"],
       "notes": "sync f4aeb7801c: Triggers::getQueryFromRequest reads the body through ServerRequest; its bug fix (empty() rejected a name, table or definition \"0\") never applied to us: our checks compare with the empty string."
@@ -964,6 +1098,7 @@
     {
       "commit": "c0b799f02907025f014402d6edfb02d76a138296",
       "subject": "Refactor Triggers/IndexController",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": [
         "features/01-shell-navigation-auth",
@@ -977,6 +1112,7 @@
     {
       "commit": "3b603728559cc99d3f183484b8a38853b2904123",
       "subject": "Add not found error message",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["tooling", "features/04-table-level", "features/05-database-level"],
       "notes": "sync f4aeb7801c: Editing a trigger or an event whose original no longer exists: \"Trigger not found.\" / \"Event not found.\" in the error list and nothing is dropped (apps/server/src/database/triggers.ts, events.ts; i18n-new until the catalogue refresh). Golden parity cases in tests/parity/database-programs.parity.test.ts; docs/features/04 and 05."
@@ -984,6 +1120,7 @@
     {
       "commit": "6709c38231095ba9a384218f340f7572b86e2fd8",
       "subject": "Clear Collation::$suffixesCache in CollationTest",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["tests"],
       "notes": "sync f4aeb7801c: PHPUnit: the Collation suffix cache is cleared between tests."
@@ -991,6 +1128,7 @@
     {
       "commit": "dab9f6b68b1d0f3ce8e529f6e3e7c29626b6d746",
       "subject": "Make StatusController final",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/07-export-import"],
       "notes": "sync f4aeb7801c: StatusController made final: PHP class modifier."
@@ -998,6 +1136,7 @@
     {
       "commit": "3082709b0c21d7a791e0826210e96f1e05a9b17c",
       "subject": "Add typed Ajax::getHandler()",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["tooling", "features/07-export-import", "tests"],
       "notes": "sync f4aeb7801c: Ajax::getHandlerFromSession: typed lookup of the upload progress handler; our chunked upload has no PHP upload progress handlers."
@@ -1005,6 +1144,7 @@
     {
       "commit": "8fd2cbdcb2cb54fe21a476d1ef4987af4d51cd1d",
       "subject": "Extract shared import page logic to ImportForm",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": [
         "features/01-shell-navigation-auth",
@@ -1020,6 +1160,7 @@
     {
       "commit": "68cb4ae87b0447b0534fcad8ee7bac91de4a5c8a",
       "subject": "Report error message on Browse",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/09-sql-editor-query-pipeline"],
       "notes": "sync f4aeb7801c: Sql::handleQueryExecuteError: a goto-file request that is not AJAX now gets the mysqlDie error card instead of an empty JSON body. Our pipeline has no goto file and always answers with the error card."
@@ -1027,6 +1168,7 @@
     {
       "commit": "3e46bcca8a61f8ef2f68611c46bca4ba45dac749",
       "subject": "Revert bf9fc416fe5 and keep the dual check",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/03-insert-edit-transformations", "tests"],
       "notes": "sync f4aeb7801c: DbTableExists::hasTable asks SHOW TABLES FROM `db` LIKE '<table>' first (metadata only, so a broken view still counts) and falls back to SELECT 1 for temporary tables. apps/server/src/metadata/service.ts tableExists; the regenerated repository fixtures replay the new statements; docs/features/03."
@@ -1034,6 +1176,7 @@
     {
       "commit": "b6143f28ab06a720ab76feedf90b01525a1d9572",
       "subject": "Move duplicated setStringValue() to ExportPlugin",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/07-export-import"],
       "notes": "sync f4aeb7801c: setStringValue() moved to ExportPlugin with the same result (the request value, else the configuration value); ours is already shared (packages/export/src/plugin.ts)."
@@ -1041,6 +1184,7 @@
     {
       "commit": "a9e2976019206ee26012b47906f3e29621d8d7f1",
       "subject": "Report export plugin failures instead of ignoring them",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/07-export-import"],
       "notes": "sync f4aeb7801c: An ExportException is reported (Current::$message) instead of ignored: Save on server answers the plugin's error instead of \"Dump has been saved to file %s.\" (packages/export/src/export.ts run() returns the failure, apps/server/src/routes/export.ts); docs/features/07."
@@ -1048,6 +1192,7 @@
     {
       "commit": "d48ac88e8e5981cb860677e92d8c0b21f4a6633e",
       "subject": "Move duplicated getIdParam() to SetupHelper::getServerId()",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/08-settings-preferences-pmadb", "tests"],
       "notes": "sync f4aeb7801c: SetupHelper::getServerId(): the duplicated id parsing of the setup controllers, same result."
@@ -1055,6 +1200,7 @@
     {
       "commit": "ba4349f8198c4840ecac391f33ce23cb7955ceb4",
       "subject": "Extract shared table search form logic to SearchForm",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/01-shell-navigation-auth", "tooling", "features/04-table-level", "tests"],
       "notes": "sync f4aeb7801c: SearchForm extracts the shared table search / zoom search form logic: refactor (the table search parity cases pass against the new reference)."
@@ -1062,6 +1208,7 @@
     {
       "commit": "d352f990345ae520fc3bcb8d893ed8fcacb1f564",
       "subject": "Extract duplicated formatVariable() to VariableFormatter",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/01-shell-navigation-auth", "tooling", "features/06-server-level", "tests"],
       "notes": "sync f4aeb7801c: VariableFormatter extracts the duplicated formatVariable() of the server variables controllers: same output."
@@ -1069,6 +1216,7 @@
     {
       "commit": "4369fb800df68dd6b2973e0a14fd830831719c88",
       "subject": "Update TriggersTest.php",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["tests"],
       "notes": "sync f4aeb7801c: PHPUnit TriggersTest update; our golden parity cases cover the trigger editor."
@@ -1076,6 +1224,7 @@
     {
       "commit": "85950f94aa2a460e24eace8c53f6d9ca8f2bd3f6",
       "subject": "Fix double escaped table name in the visual query builder",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync f4aeb7801c: The designer template escaped the table name twice, so the visual query builder produced HTML entities. Our designer passes raw names and React escapes on render (history included): nothing was double-escaped."
@@ -1083,6 +1232,7 @@
     {
       "commit": "121f5064956ef30b7ea32915beb856aee352933f",
       "subject": "Add change log entry for #20594",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["docs"],
       "notes": "sync f4aeb7801c: ChangeLog entry for upstream #20594."
@@ -1090,6 +1240,7 @@
     {
       "commit": "be7a5ae8808c90dadaf5e3e0e23d07afb4ab2ff2",
       "subject": "Update Yarn dependencies",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["dependencies"],
       "notes": "sync f4aeb7801c: Yarn refresh (Bootstrap 5.3.9, Babel, autoprefixer) of phpMyAdmin's own front end; our UI has its own dependencies. The reference checkout was reinstalled."
@@ -1097,6 +1248,7 @@
     {
       "commit": "31959fa9e7114facb73b800366c0cbdbe507e576",
       "subject": "Fix Collation descriptions for MariaDB",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/04-table-level", "tests"],
       "notes": "sync f4aeb7801c: Collation descriptions for MariaDB: a language after the variant is read (utf8mb4_uca1400_swedish_ai_ci → \"Swedish (UCA 14.0.0), …\"). packages/mysql-types/src/charsets.ts follows the rewritten buildDescription; fixtures regenerated (collations.json with the upstream test names, collation-descriptions.json, apps/server server-admin.json); docs/features/06."
@@ -1104,6 +1256,7 @@
     {
       "commit": "060fd18bf61bb06386803bcc16d4766d8b794bd5",
       "subject": "Add MySQL languages",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/04-table-level", "tests"],
       "notes": "sync f4aeb7801c: MySQL 8 collation languages and scripts: Bosnian, Galician, Mongolian, Norwegian Bokmål / Nynorsk, Serbian, \" (Cyrillic)\" / \" (Latin)\", and cs right after the charset is Czech (packages/mysql-types/src/charsets.ts; the new msgids are annotated i18n-new until the catalogue refresh)."
@@ -1111,6 +1264,7 @@
     {
       "commit": "fb1bc7c3d917cdaac626035aacc458d93d2b23e0",
       "subject": "Remove unused fields",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/04-table-level", "tests"],
       "notes": "sync f4aeb7801c: Charsets::loadCollations no longer reads ID, IS_COMPILED and SORTLEN (and MariaDB no longer joins COLLATIONS): the same trimmed query in apps/server/src/server-admin/charsets.ts, shell/home.ts and table/read.ts (the database structure, databases list and collations parity cases compare the reads)."
@@ -1118,6 +1272,7 @@
     {
       "commit": "3357821218fac971d1bcc8861416491276805066",
       "subject": "Improve performance of Database/Structure",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/04-table-level"],
       "notes": "sync f4aeb7801c: Collation: the description is built lazily (Database/Structure performance); same text."
@@ -1125,6 +1280,7 @@
     {
       "commit": "b6c7fe282e31288a45cd29e7ff4520aa4c696be4",
       "subject": "Refactor collation parsing",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/04-table-level"],
       "notes": "sync f4aeb7801c: Collation parsing refactor (charset name, language and suffix lookups): ported together with 31959fa9e7 and 060fd18bf6."
@@ -1132,6 +1288,7 @@
     {
       "commit": "05d6e0e031c0ba1de6cdcbffbf7653cbfd749415",
       "subject": "Refactor the parser loop",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/04-table-level", "tests"],
       "notes": "sync f4aeb7801c: Collation parser loop: the tokens are no longer read in fixed levels; ported with 31959fa9e7 and 060fd18bf6."
@@ -1139,6 +1296,7 @@
     {
       "commit": "3fbc737733bd3dd2b34f9d770839e206bd4eb25a",
       "subject": "Inline buildName() again",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/04-table-level"],
       "notes": "sync f4aeb7801c: Collation buildName() inlined again: refactor."
@@ -1146,6 +1304,7 @@
     {
       "commit": "fd0e66b74c8e86012b4f68f390f765aa51b137dc",
       "subject": "Translated using Weblate (Czech)",
+      "author": "Adam Havránek",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 291fcadb42: Czech translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -1153,6 +1312,7 @@
     {
       "commit": "0c9539c127370774263db8ef2141d1ac152c7c82",
       "subject": "Translated using Weblate (English (United Kingdom))",
+      "author": "Andi Chandler",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 291fcadb42: English (United Kingdom) translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -1160,6 +1320,7 @@
     {
       "commit": "7c5a39e558d867c79866f07abe55599c7f261437",
       "subject": "Translated using Weblate (English (United Kingdom))",
+      "author": "Andi Chandler",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 291fcadb42: English (United Kingdom) translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -1167,6 +1328,7 @@
     {
       "commit": "9ddcb164c38c82b34f4ca2ce3fb12c49aa6913f7",
       "subject": "Update po files",
+      "author": "phpMyAdmin bot",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 291fcadb42: po files refreshed from the pot: imported by pnpm i18n:import."
@@ -1174,6 +1336,7 @@
     {
       "commit": "d05c36dfd7ff57edc8d02ad758285638fd33e0e3",
       "subject": "Translated using Weblate (French)",
+      "author": "kjo-sdds",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 291fcadb42: French translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -1181,6 +1344,7 @@
     {
       "commit": "f3c7ceef44719d7be6bbfebbc7041892340afe88",
       "subject": "Translated using Weblate (Turkish)",
+      "author": "Burak Yavuz",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 291fcadb42: Turkish translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -1188,6 +1352,7 @@
     {
       "commit": "e68adb31b040e19f7b8cd7bb853430e136940118",
       "subject": "Translated using Weblate (Ukrainian)",
+      "author": "Hotripak",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 291fcadb42: Ukrainian translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -1195,6 +1360,7 @@
     {
       "commit": "7347f94cd15d376297d8d6266ebda40dca991263",
       "subject": "Translated using Weblate (French)",
+      "author": "kjo-sdds",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 291fcadb42: French translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -1202,6 +1368,7 @@
     {
       "commit": "cea88b050101ad2c45520d4494a1dd59f4a66977",
       "subject": "Translated using Weblate (Ukrainian)",
+      "author": "Hotripak",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 291fcadb42: Ukrainian translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -1209,6 +1376,7 @@
     {
       "commit": "0e56aeffada03ccfe3dc1cd8dd01051feb18dd54",
       "subject": "Update Psalm to 7.6.0",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["dependencies", "tooling"],
       "notes": "sync 291fcadb42: Psalm 7.6.0: static analysis only."
@@ -1216,6 +1384,7 @@
     {
       "commit": "21aff9f73f94c1689da807ec0ddb8d5a510a4e71",
       "subject": "Create IniReader",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/03-insert-edit-transformations", "features/07-export-import"],
       "notes": "sync 291fcadb42: IniReader service replaces Util::getUploadSizeInBytes and the arg separator ini lookup: refactor. The upload limit now ignores a post_max_size of 0 (unlimited) instead of yielding 0; BetterMyAdmin has a single MaxUploadSize (no php.ini), so nothing to port. generate-fixtures.php (sql-gen) passes the new InsertEdit IniReader argument."
@@ -1223,6 +1392,7 @@
     {
       "commit": "3340a5ba1b527ce233713ceca9acc4a6786167dd",
       "subject": "getMemoryLimitInBytes",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/07-export-import"],
       "notes": "sync 291fcadb42: getMemoryLimitInBytes moved to IniReader: refactor; BetterMyAdmin does not read memory_limit."
@@ -1230,6 +1400,7 @@
     {
       "commit": "6265cfb892b5b1475a81e4e83746aef58cf99656",
       "subject": "Remove unused reference",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/07-export-import"],
       "notes": "sync 291fcadb42: PDF schema: an unused by-reference parameter dropped; no behaviour change."
@@ -1237,6 +1408,7 @@
     {
       "commit": "ee6603f4c12990e42440653eab84fc2c2e18c39c",
       "subject": "Fix bug with missing delimiter",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/09-sql-editor-query-pipeline"],
       "notes": "sync 291fcadb42: The SQL box Delimiter field is required (query.twig) and ImportController asserts a non-empty sql_delimiter before handleRollbackRequest: SqlPage.tsx marks #id_sql_delimiter required (on a phone the folded options open when it is empty); the API already refused an empty delimiter (contracts/query.ts min(1)). Feature doc 09 updated."
@@ -1244,6 +1416,7 @@
     {
       "commit": "9268000ffdd36b66cdc2ca0d64b19e63886b1e26",
       "subject": "Add support for webmozart/assert v2",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["dependencies"],
       "notes": "sync 291fcadb42: webmozart/assert v2 accepted by composer.json: PHP dependency constraint only."
@@ -1251,6 +1424,7 @@
     {
       "commit": "29639419347934b25db39603f756ba063ebc38aa",
       "subject": "Add change log entry for #20638",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["docs"],
       "notes": "sync 291fcadb42: ChangeLog entry for #20638 (webmozart/assert v2)."
@@ -1258,6 +1432,7 @@
     {
       "commit": "6abf9c72e41dead231d3cc15b5b1c779548c959b",
       "subject": "Update po files",
+      "author": "phpMyAdmin bot",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 291fcadb42: po files refreshed from the pot: imported by pnpm i18n:import."
@@ -1265,6 +1440,7 @@
     {
       "commit": "80756993d55692f00bf392a7d48dadb64803b669",
       "subject": "Lay out the navigation panel with CSS",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/01-shell-navigation-auth"],
       "notes": "sync 291fcadb42: Navigation panel laid out with CSS (--navigation-width on body, sticky #floating_menubar holding the breadcrumb, overlay on narrow screens closed on load, resizer observer leak fixed): BetterMyAdmin already lays the shell out with CSS in React (ShellLayout: sticky .bma-topbar with #floating_menubar and the breadcrumb, nav width from NavigationWidth, phone drawer closed on load), so the visible result is unchanged and there is no JavaScript to remove."
@@ -1272,6 +1448,7 @@
     {
       "commit": "051907960822cae536ebb52bfb80c3b215ca1553",
       "subject": "Update Composer dependencies",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["dependencies"],
       "notes": "sync 291fcadb42: Composer refresh (guzzlehttp/psr7, paragonie, phpstan, psalm plugins, web-auth): no runtime library BetterMyAdmin ports moved."
@@ -1279,6 +1456,7 @@
     {
       "commit": "3f05829fb92d9a7396b5f35b04fe2f889d7162a4",
       "subject": "Update Composer dependencies",
+      "author": "Maurício Meneghini Fauth",
       "status": "ported",
       "areas": [
         "dependencies",
@@ -1291,6 +1469,7 @@
     {
       "commit": "00721b59993b9e0dc6b718a4bedda4ef08910f56",
       "subject": "Translated using Weblate (Spanish)",
+      "author": "Salvador Peña",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 291fcadb42: Spanish translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -1298,6 +1477,7 @@
     {
       "commit": "e5168efc2af9f12d64964beb948ac9f3dfa98330",
       "subject": "Translated using Weblate (Russian)",
+      "author": "Roman Serov",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 291fcadb42: Russian translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -1305,6 +1485,7 @@
     {
       "commit": "771d4a7c579ddfb95391c6d54b60707a558eb850",
       "subject": "Translated using Weblate (Turkish)",
+      "author": "Burak Yavuz",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 291fcadb42: Turkish translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -1312,6 +1493,7 @@
     {
       "commit": "291fcadb4293a09b7c3037a07afe7612b020b9e4",
       "subject": "Translated using Weblate (Ukrainian)",
+      "author": "Hotripak",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 291fcadb42: Ukrainian translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
@@ -1319,6 +1501,7 @@
     {
       "commit": "478f7f318e1d67deb9a27593abb8c04be8866709",
       "subject": "Translated using Weblate (Spanish)",
+      "author": "Salvador Peña",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 5add5a93ad: Spanish translations from Weblate on QA_5_2 (po/es.po), merged into master; master's resources/po brought in by pnpm i18n:import."
@@ -1326,6 +1509,7 @@
     {
       "commit": "8922b3a280ba4013cc815e088e9d1f1f2408623c",
       "subject": "Translated using Weblate (Russian)",
+      "author": "Roman Serov",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 5add5a93ad: Russian translations from Weblate on QA_5_2, merged into master; imported by pnpm i18n:import."
@@ -1333,6 +1517,7 @@
     {
       "commit": "0b92a2ae6c825ed697ef3620106692ee72c0f231",
       "subject": "Translated using Weblate (Turkish)",
+      "author": "Burak Yavuz",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 5add5a93ad: Turkish translations from Weblate on QA_5_2, merged into master; imported by pnpm i18n:import."
@@ -1340,6 +1525,7 @@
     {
       "commit": "f3f112049abde01f724204c7ec8c35bca8fabb34",
       "subject": "Translated using Weblate (Ukrainian)",
+      "author": "Hotripak",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 5add5a93ad: Ukrainian translations from Weblate on QA_5_2, merged into master; imported by pnpm i18n:import."
@@ -1347,6 +1533,7 @@
     {
       "commit": "da6e317253a75077a212582a178ed4b8ca38312d",
       "subject": "Update po files",
+      "author": "phpMyAdmin bot",
       "status": "ported",
       "areas": ["translations"],
       "notes": "sync 5add5a93ad: po refresh (source references); imported by pnpm i18n:import, the parity messages inventory regenerated (only source line references moved)."
@@ -1354,6 +1541,7 @@
     {
       "commit": "2c144b711e30f0dbc7456a1493cf213ef57bfe69",
       "subject": "Only require the SQL delimiter for rollback queries",
+      "author": "Lazizbek Ergashev",
       "status": "ported",
       "areas": ["features/09-sql-editor-query-pipeline"],
       "notes": "sync 5add5a93ad: ImportController asserts a non-empty sql_delimiter only when rollback_query is posted. query.twig keeps the field required, so the form (Go, Ctrl+Enter, the phone layout) is unchanged. API: contracts/query.ts no longer refuses an empty delimiter (was min(1)); routes/query.ts answers \"Invalid request.\" only for an empty delimiter with rollback. An empty delimiter makes the whole text one query (BufferedQuery never splits; splitSql matches). Golden parity cases \"empty delimiter: ...\" in tests/parity/sql-box.parity.test.ts, int test in apps/server/test/int/sql-tab.test.ts, feature doc 09 row updated."
@@ -1361,6 +1549,7 @@
     {
       "commit": "02117087fb378906d36d51f85f28842b563e9b19",
       "subject": "Add missing param types in ServerRequest",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["tooling"],
       "notes": "sync 5add5a93ad: Native parameter types in ServerRequest; no behaviour change."
@@ -1368,6 +1557,7 @@
     {
       "commit": "a23b5cbab789d0c0631d8fe01144ba24209476c7",
       "subject": "Update Psalm to 7.13.1",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["dependencies", "tooling"],
       "notes": "sync 5add5a93ad: Psalm 7.13.1 (dev dependency)."
@@ -1375,6 +1565,7 @@
     {
       "commit": "9eefe160f36a970e252a8b10373c0178ba0a0428",
       "subject": "Refactor arrayRemove",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/08-settings-preferences-pmadb"],
       "notes": "sync 5add5a93ad: Core::arrayRemove rewritten recursively; same result for every path the config code removes."
@@ -1382,6 +1573,7 @@
     {
       "commit": "3186b67c8f02be235eb0da987019d5fb96aa69be",
       "subject": "Refactor arrayWrite",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/08-settings-preferences-pmadb"],
       "notes": "sync 5add5a93ad: Core::arrayWrite rewritten recursively (a scalar on the path is now replaced by an array instead of erroring); no reachable behaviour change for our config writer."
@@ -1389,6 +1581,7 @@
     {
       "commit": "7c565c7569ec6e2015e7b3000567b86ececf54c9",
       "subject": "Make functions pure",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/08-settings-preferences-pmadb"],
       "notes": "sync 5add5a93ad: arrayWrite/arrayRemove return the array instead of writing through a reference; callers updated; no behaviour change."
@@ -1396,6 +1589,7 @@
     {
       "commit": "6d4ceb5c3a566310b102f960deb32d77d2064661",
       "subject": "Split off into a new class",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/08-settings-preferences-pmadb"],
       "notes": "sync 5add5a93ad: The nested-array helpers move from Core to Utils\\NestedArray; no behaviour change. config fixtures regenerated, unchanged apart from the pin."
@@ -1403,6 +1597,7 @@
     {
       "commit": "a0d57f567b464dd05e6367d725ca215a6de2df50",
       "subject": "Fix double escaping view name",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/05-database-level"],
       "notes": "sync 5add5a93ad: Show create: a view's name was escaped twice and SHOW CREATE went through mimeDefaultFunction (&nbsp;, <br>); now plain text. DbStructurePage.tsx already rendered both as plain React text (no double escaping), which is what phpMyAdmin now does."
@@ -1410,6 +1605,7 @@
     {
       "commit": "70049f9bab255cd4ca45c61b753ae560cb66b506",
       "subject": "Fix data corruption with consecutive spaces",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/02-browse-results-grid"],
       "notes": "sync 5add5a93ad: Core::mimeDefaultFunction removed: grid cells are plain htmlspecialchars (pre_wrap shows spaces and newlines), and makegrid no longer adds <br> after an inline edit. GridTable.tsx MimeText now renders the text as is (it put no-break spaces for double spaces and <br> for newlines, so a copied cell had U+00A0). Our editor already read the raw value, so saving never corrupted data. e2e: browse-extras.e2e.ts checks a cell with two spaces and a newline keeps them, with no <br>. Feature doc 02 updated."
@@ -1417,6 +1613,7 @@
     {
       "commit": "bd0be2b34cfd1c40a0a8299828ccffa1f987c63e",
       "subject": "Remove unused clear method",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["tests"],
       "notes": "sync 5add5a93ad: Removes an unused test helper method; no runtime code."
@@ -1424,6 +1621,7 @@
     {
       "commit": "5f87df115220b2962d0ac7f342771561ee358681",
       "subject": "Remove unused valuesForOBGzipProvider method",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["tests"],
       "notes": "sync 5add5a93ad: Removes an unused PHPUnit data provider; no runtime code."
@@ -1431,6 +1629,7 @@
     {
       "commit": "89bc5f3d160f8f3d9bdd44cef1bf936657542628",
       "subject": "Adjust type hint in PDF",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/04-table-level"],
       "notes": "sync 5add5a93ad: PDF type hint only."
@@ -1438,6 +1637,7 @@
     {
       "commit": "1fd7b517076e044caf00edc19b2f0a406f9f484c",
       "subject": "Fix normalization test",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/04-table-level"],
       "notes": "sync 5add5a93ad: Normalization return-type annotations and test fixes; no behaviour change."
@@ -1445,6 +1645,7 @@
     {
       "commit": "aa3016a6fe76e390285b14970aeeb10e82410522",
       "subject": "Move htmlspecialchars to Twig",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/04-table-level"],
       "notes": "sync 5add5a93ad: Index::isPacked returns raw and the templates escape it instead: same output. Our index tables render it as React text."
@@ -1452,6 +1653,7 @@
     {
       "commit": "16be61da51d76315340c7ea464a2a54da05223c3",
       "subject": "Fix warning when an image transformation gets invalid image data",
+      "author": "Lazizbek Ergashev",
       "status": "not-applicable",
       "areas": ["features/03-insert-edit-transformations"],
       "notes": "sync 5add5a93ad: QA_5_2 ImageWrapper::fromString suppresses imagecreatefromstring's warning on invalid image data; master already had the @ and returns null. Our apps/server/src/insert-edit/image.ts already returns null for data that is not an image, without a warning."
@@ -1459,6 +1661,7 @@
     {
       "commit": "0ea1ab3b631b00ae8cd482186752ca1530fc5220",
       "subject": "Add change log entry for #20596",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["docs"],
       "notes": "sync 5add5a93ad: ChangeLog entry for #20596 (the QA_5_2 image warning fix)."
@@ -1466,6 +1669,7 @@
     {
       "commit": "d83e729796ac8799f54cb3967323d81f06d10d7f",
       "subject": "Fix monitor chart click error when the chart has fewer than 5 ticks",
+      "author": "Lazizbek Ergashev",
       "status": "ported",
       "areas": ["features/06-server-level"],
       "notes": "sync 5add5a93ad: Monitor chart click: the analysis range ends at the last x tick instead of ticks[4]. monitorChart.ts now takes ticks.at(-1) (we always build five, so the range is unchanged)."
@@ -1473,6 +1677,7 @@
     {
       "commit": "c1fabadb4b0ce70baad5359463c69a9bbd2e7f18",
       "subject": "Translated using Weblate (Czech)",
+      "author": "Adam Havránek",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync 8d3a2d5dde: Czech translation, imported with pnpm i18n:import."
@@ -1480,6 +1685,7 @@
     {
       "commit": "887056ed84d1b159a3a40055eac0004c0b83433b",
       "subject": "Translated using Weblate (French)",
+      "author": "kjo-sdds",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync 8d3a2d5dde: French translation, imported with pnpm i18n:import."
@@ -1487,6 +1693,7 @@
     {
       "commit": "3f93e4e39c0373bddd9feb95eb3b6ec000fdcb20",
       "subject": "Translated using Weblate (Swedish)",
+      "author": "Daniel Nylander",
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync 8d3a2d5dde: Swedish translation, imported with pnpm i18n:import."
@@ -1494,6 +1701,7 @@
     {
       "commit": "97fa4c70801cc919f4c0e706500c03225bfa44b0",
       "subject": "Fix bug with incorrectly set charset",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/01-shell-navigation-auth", "features/07-export-import"],
       "notes": "sync 8d3a2d5dde: postConnect sets `SET collation_connection = '<default>'` instead of SET NAMES (mysqli::set_charset now picks utf8mb4 on connect) and remembers the collation in effect (getCollationConnection, updated by a successful setCollation). The home page's connection-collation select marks that collation, no longer getDefaultCollation() (quirk Q42 retired); the import's charset reset goes back to it. pool-manager.ts postConnect (ServerInfo.collationConnection), shell/home.ts, import/service.ts; shell parity case updated (utf8mb4_bin selected, the default collation set first)."
@@ -1501,6 +1709,7 @@
     {
       "commit": "285cb31c35c27012b926e3253ca410fd639e40f0",
       "subject": "Expose setCharset so we can use it in Import",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/07-export-import"],
       "notes": "sync 8d3a2d5dde: A file charset that is not converted switches the connection with DatabaseInterface::setCharset (mysqli::set_charset: `SET NAMES <name>` for a name mysqlnd knows) instead of SET NAMES '<charset>'; when that fails the import stops with \"The server does not support the character set %s.\". The reset uses setCharset(<default>). db/mysqlnd-charsets.ts (names probed by scripts/gen-mysqlnd-charsets.php), import/service.ts; parity cases for iso-8859-12 and x-user-defined, unit test."
@@ -1508,6 +1717,7 @@
     {
       "commit": "c91663645950d4729decbfc188eb3016708f213d",
       "subject": "Improve iconv error handling",
+      "author": "Kamil Tekiela",
       "status": "ported",
       "areas": ["features/07-export-import"],
       "notes": "sync 8d3a2d5dde: Encoding::listEncodings lists only the AvailableCharsets the engine converts from (iconv: iso-8859-12, x-user-defined, ks_c_5601-1987 gone from the default list; mbstring also iso-8859-11, windows-1250/1256/1257, tis-620): packages/export charset.ts listEncodings(available, engine) with the names of scripts/gen-charset-support.php, used by the import and export pages and conversions. An import chunk that is not valid in the file's charset stops the import with \"The file is not valid in the character set %s.\" (Import::getNextChunk; packages/import import.ts, the in-memory file is now converted on its first read). Export keeps X52 (upstream: uncaught EncodingConversionFailure). Parity: the charset lists of both pages, an invalid euc-jp file; unit tests."
@@ -1515,6 +1725,7 @@
     {
       "commit": "031678a10b3b9316873c63ca08a2e535d7dc63f1",
       "subject": "Fix invalid assignment",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/07-export-import"],
       "notes": "sync 8d3a2d5dde: readLimit = intdiv(memoryLimit, 8) and an unused ParseAnalyze result: static-analysis fixes, same behaviour (our readLimit is already an integer)."
@@ -1522,6 +1733,7 @@
     {
       "commit": "69238fdeffc417944fe62fb8eecf4f129a1a603a",
       "subject": "Make setCollation return bool",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/08-settings-preferences-pmadb"],
       "notes": "sync 8d3a2d5dde: \"Failed to set configured collation connection!\" moves from setCollation to UserPreferencesHandler::setConnectionCollation, the only caller that reports it; our postConnect already reports it there (userErrors 'collation') and the import reset stays silent."
@@ -1529,6 +1741,7 @@
     {
       "commit": "599c77e9a16c2ad59c013ce161c409e4a9bd93f2",
       "subject": "Inject ErrorHandler",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["features/08-settings-preferences-pmadb"],
       "notes": "sync 8d3a2d5dde: Dependency injection of the ErrorHandler into UserPreferencesHandler, same behaviour."
@@ -1536,6 +1749,7 @@
     {
       "commit": "869a75ca9e2c886260191a7b7bfe4254d47ec5f7",
       "subject": "Move TwoFactor class into Security namespace",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["features/01-shell-navigation-auth", "features/08-settings-preferences-pmadb"],
       "notes": "sync 8d3a2d5dde: Namespace move (PhpMyAdmin\\Security\\TwoFactor), no behaviour change."
@@ -1543,6 +1757,7 @@
     {
       "commit": "374f2422945d5c9bf9db3d31bfbb2cbde9d3ba3c",
       "subject": "Move WebAuthn classes into the Security namespace",
+      "author": "Maurício Meneghini Fauth",
       "status": "not-applicable",
       "areas": ["features/01-shell-navigation-auth"],
       "notes": "sync 8d3a2d5dde: Namespace move (PhpMyAdmin\\Security\\WebAuthn), no behaviour change."
@@ -1550,6 +1765,7 @@
     {
       "commit": "9ff29f71ee6eebd6c85fb1bcd39ddcde7abcbae1",
       "subject": "Fix Export/Import Controller tests",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["tests"],
       "notes": "sync 8d3a2d5dde: PHPUnit-only: drops two HTML fixtures of the database Export/Import controller tests."
@@ -1557,6 +1773,7 @@
     {
       "commit": "3c60638df93426c2cf6f9283563ba5da225b71ce",
       "subject": "Update Psalm to 7.17",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["dependencies", "tooling"],
       "notes": "sync 8d3a2d5dde: Static analysis tooling (dev dependency), no runtime change."
@@ -1564,6 +1781,7 @@
     {
       "commit": "cc231cc9624c6740f77c8374c75c659fba6d7f88",
       "subject": "Add required extensions",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["dependencies", "tooling"],
       "notes": "sync 8d3a2d5dde: composer.json declares ext-filter, ext-session, ext-simplexml and ext-xmlwriter (PHP extensions phpMyAdmin already used); n/a, no PHP runtime."
@@ -1571,6 +1789,7 @@
     {
       "commit": "798cc4784e6d1833058cb4f79d03f4e450883e24",
       "subject": "Convert method into const",
+      "author": "Kamil Tekiela",
       "status": "not-applicable",
       "areas": ["tooling", "tests"],
       "notes": "sync 8d3a2d5dde: PHPUnit-only: a GisMultiPolygonTest data provider becomes a constant."

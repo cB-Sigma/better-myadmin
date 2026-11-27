@@ -31,6 +31,7 @@ COPY --from=build /app/apps/web/package.json ./apps/web/package.json
 COPY --from=build /app/apps/web/dist ./apps/web/dist
 COPY --from=build /app/packages ./packages
 COPY --from=build /app/tools ./tools
+COPY --from=build /app/LICENSE /app/NOTICE ./
 RUN --mount=type=secret,id=ca,required=false NODE_EXTRA_CA_CERTS=/run/secrets/ca \
     pnpm install --frozen-lockfile --prod --filter "@bettermyadmin/server..." \
  && rm -rf /root/.cache /root/.local/share/pnpm \

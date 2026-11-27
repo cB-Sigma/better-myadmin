@@ -8,7 +8,7 @@ No PHP, no Apache: one Node.js process or one Docker image. Ready for AI agents,
 [![Release](https://img.shields.io/github/v/release/cB-Sigma/better-myadmin?style=flat-square)](https://github.com/cB-Sigma/better-myadmin/releases)
 [![Docker image](https://img.shields.io/badge/docker-ghcr.io%2Fcb--sigma%2Fbetter--myadmin-2496ED?style=flat-square&logo=docker&logoColor=white)](https://github.com/cB-Sigma/better-myadmin/pkgs/container/better-myadmin)
 [![Docs](https://img.shields.io/badge/docs-cb--sigma.github.io-0F766E?style=flat-square)](https://cb-sigma.github.io/better-myadmin/)
-[![License: GPL-2.0-or-later](https://img.shields.io/badge/license-GPL--2.0--or--later-blue?style=flat-square)](LICENSE)
+[![License: GPL-2.0-only](https://img.shields.io/badge/license-GPL--2.0--only-blue?style=flat-square)](LICENSE)
 
 [**Documentation**](https://cb-sigma.github.io/better-myadmin/) ·
 [Install](https://cb-sigma.github.io/better-myadmin/setup.html) ·
@@ -143,6 +143,6 @@ Scripts can call the same operations as plain JSON at `/api/agent/v1/servers/1/�
 
 ## License
 
-GPL-2.0-or-later, like phpMyAdmin, from which BetterMyAdmin is derived. See [LICENSE](LICENSE).
+GPL-2.0-only, the same licence as phpMyAdmin, from which BetterMyAdmin is derived. See [LICENSE](LICENSE), and [NOTICE](NOTICE) for what comes from phpMyAdmin and the people it credits.
 
 <sub>BetterMyAdmin is an independent project and is not affiliated with or endorsed by the phpMyAdmin project. The name "phpMyAdmin" is used only to describe compatibility.</sub>

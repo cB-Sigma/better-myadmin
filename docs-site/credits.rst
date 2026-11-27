@@ -4,7 +4,7 @@ Credits
 =======
 
 BetterMyAdmin is a port of phpMyAdmin, and this documentation is adapted from
-phpMyAdmin's documentation (GPL-2.0-or-later). BetterMyAdmin would not exist
+phpMyAdmin's documentation (GPL-2.0-only). BetterMyAdmin would not exist
 without the work of the phpMyAdmin developers, translators and contributors
 credited below; the list is phpMyAdmin's, kept as it is. BetterMyAdmin's own
 contributors are listed in the `BetterMyAdmin repository

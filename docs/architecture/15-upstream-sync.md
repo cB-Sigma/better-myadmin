@@ -25,9 +25,10 @@ BetterMyAdmin is specified against one phpMyAdmin commit (`docs/reference/refere
 3. Update the reference: check out the new commit in the reference phpMyAdmin (`docker/pma-ref` build arg `PMA_COMMIT`, or the local checkout), then run `composer install` and `yarn install`.
 4. Regenerate everything derived from phpMyAdmin's code: each package's `scripts/*.php` fixtures, `pnpm parity:inventory`, and `pnpm i18n:import`. Any fixture diff is a behaviour change: port it, or explain it in the ledger.
 5. Run `pnpm test`, `pnpm test:int` and `pnpm test:parity` against the new reference instance, plus `pnpm parity:check`.
-6. Write a `tools/upstream/ledger.json` entry for every commit between the old and the new pin, `ported` or `not-applicable` with notes.
-7. Update `docs/reference/reference-commit.txt` **and the `PMA_COMMIT` default** in `docker/pma-ref/Dockerfile` and the `x-pma-commit` anchor in `docker/dev.compose.yml` (they must equal the pin), then commit `chore(upstream): sync to <sha>`.
+6. Write a `tools/upstream/ledger.json` entry for every commit between the old and the new pin, with its `author` (as `pnpm upstream:check` prints it), `ported` or `not-applicable`, and notes. Then run `pnpm upstream:credits`, which rewrites the list of credited phpMyAdmin contributors in `NOTICE` from the ledger.
+7. Credit upstream in the release: the CHANGELOG entry for the sync names each ported phpMyAdmin commit and its author (for example `ported from phpMyAdmin 97fa4c7080 by Kamil Tekiela`). When upstream changes `docs/credits.rst`, bring the change into `docs-site/credits.rst`. When a sync brings in something new from phpMyAdmin or another project (a theme, a translation, vendored data), add it to `NOTICE`.
+8. Update `docs/reference/reference-commit.txt` **and the `PMA_COMMIT` default** in `docker/pma-ref/Dockerfile` and the `x-pma-commit` anchor in `docker/dev.compose.yml` (they must equal the pin), then commit `chore(upstream): sync to <sha>`.
 
 ## Gate
 
-`pnpm upstream:check --gate` (CI) fails when a commit between the original pin and the current pin has no ledger entry. The pin cannot move without a decision for every upstream commit it skips over.
+`pnpm upstream:check --gate` (CI) fails when a commit between the original pin and the current pin has no ledger entry, or an entry has no author. The pin cannot move without a decision for every upstream commit it skips over. `pnpm upstream:credits --check` (CI) fails when the credits in `NOTICE` do not match the ledger.

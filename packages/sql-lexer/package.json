@@ -2,7 +2,7 @@
   "name": "@bettermyadmin/sql-lexer",
   "version": "1.0.35",
   "private": true,
-  "license": "GPL-2.0-or-later",
+  "license": "GPL-2.0-only",
   "type": "module",
   "exports": { ".": "./src/index.ts" },
   "scripts": { "typecheck": "tsc -p tsconfig.json" }

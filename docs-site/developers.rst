@@ -3,7 +3,7 @@
 Developers Information
 ======================
 
-BetterMyAdmin is free software (GPL-2.0-or-later), so you're invited to
+BetterMyAdmin is free software (GPL-2.0-only), so you're invited to
 contribute to it. The code and the developer documentation live in the
 `BetterMyAdmin repository <https://github.com/cB-Sigma/better-myadmin>`_;
 its :file:`docs/` folder is the place to start:

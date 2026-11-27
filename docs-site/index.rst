@@ -1,5 +1,5 @@
 .. BetterMyAdmin documentation master file, adapted from phpMyAdmin's
-   documentation (GPL-2.0-or-later).
+   documentation (GPL-2.0-only).
 
 BetterMyAdmin documentation
 ===========================

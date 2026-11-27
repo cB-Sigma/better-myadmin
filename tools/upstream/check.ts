@@ -25,6 +25,8 @@ const repo = resolve(here, '../..')
 export interface LedgerEntry {
   commit: string
   subject: string
+  /** The upstream commit's author (`git log --format=%an`), credited in NOTICE when ported. */
+  author: string
   status: 'ported' | 'not-applicable'
   areas: string[]
   notes: string
@@ -39,6 +41,7 @@ export interface PendingCommit {
   commit: string
   date: string
   subject: string
+  author: string
   kinds: Kind[]
   areas: string[]
   files: string[]
@@ -62,19 +65,21 @@ export function commitsBetween(pma: string, from: string, to: string): PendingCo
     'log',
     '--no-merges',
     '--reverse',
-    '--format=%H%x09%ad%x09%s',
+    '--format=%H%x09%ad%x09%an%x09%s',
     '--date=short',
     `${from}..${to}`,
   )
   if (out === '') return []
   return out.split('\n').map((line) => {
-    const [commit = '', date = '', subject = ''] = line.split('\t')
+    const [commit = '', date = '', author = '', ...rest] = line.split('\t')
+    const subject = rest.join('\t')
     const files = git(pma, 'show', '--format=', '--name-only', commit).split('\n').filter(Boolean)
     const cls = files.map(classify)
     return {
       commit,
       date,
       subject,
+      author,
       files,
       kinds: [...new Set(cls.map((c) => c.kind))],
       areas: [...new Set(cls.map((c) => c.area))],
@@ -136,6 +141,8 @@ function main() {
   const reviewed = new Set(ledger.entries.map((e) => e.commit))
   const behindPin = commitsBetween(pma, ledger.origin, pinned)
   const missing = behindPin.filter((c) => !reviewed.has(c.commit))
+  // every entry names its author: ported work is credited from it (pnpm upstream:credits)
+  const noAuthor = ledger.entries.filter((e) => typeof e.author !== 'string' || e.author.trim() === '')
 
   // 2. what is new upstream after the pin
   const pending = commitsBetween(pma, pinned, values.ref)
@@ -163,14 +170,20 @@ function main() {
     for (const [k, cs] of byKind) {
       console.log(`\n${k} (${cs.length})`)
       for (const c of cs)
-        console.log(`  ${c.commit.slice(0, 10)} ${c.date} ${c.subject}  [${c.areas.join(', ')}]`)
+        console.log(
+          `  ${c.commit.slice(0, 10)} ${c.date} ${c.subject} (${c.author})  [${c.areas.join(', ')}]`,
+        )
     }
     if (missing.length > 0) {
       console.log(`\nledger: ${missing.length} commit(s) behind the pin have no ledger entry:`)
       for (const c of missing) console.log(`  ${c.commit.slice(0, 10)} ${c.subject}`)
     }
+    if (noAuthor.length > 0) {
+      console.log(`\nledger: ${noAuthor.length} entr(y/ies) without an author:`)
+      for (const e of noAuthor) console.log(`  ${e.commit.slice(0, 10)} ${e.subject}`)
+    }
   }
-  if (values.gate && missing.length > 0) process.exit(1)
+  if (values.gate && (missing.length > 0 || noAuthor.length > 0)) process.exit(1)
 }
 
 if (process.argv[1] !== undefined && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main()
