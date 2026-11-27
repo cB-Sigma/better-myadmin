@@ -2,6 +2,21 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.36 (2026-11-27)
+
+### Licence and credits
+
+- BetterMyAdmin is now declared GPL-2.0-only, the licence phpMyAdmin is released under (it was
+  marked "version 2 or later", which a work derived from phpMyAdmin cannot offer).
+- New `NOTICE` file crediting phpMyAdmin's authors, translators and contributors, with what comes
+  from phpMyAdmin and from other projects, and the names of the phpMyAdmin contributors whose
+  changes have been ported (kept up to date from the upstream ledger). The Docker image now
+  includes `NOTICE` and `LICENSE`, so the License page now works in the Docker image too.
+- Translations keep the translators' notices from the top of each phpMyAdmin catalogue.
+- Two Apache-2.0 packages, which cannot be combined with GPL v2 code, are gone from the app: the
+  button styles are built in-house, and the 64-bit integer reader that the MySQL driver uses is
+  BetterMyAdmin's own. Nothing changes for users; BIGINT values read exactly as before.
+
 ## 1.0.35 (2026-11-27)
 
 ### Fixes
