@@ -68,6 +68,8 @@ data:
     - paths: [setup.*.name]
       at: apps/server/src/setup/service.ts::setupPages
 msgids:
+  The text could not be converted from %s to %s.:
+    exception: X52
   Loading:
     n/a: 'the placeholder title in modal markup (export, designer, preview SQL, index, insert, relation): phpMyAdmin JS sets the real title, or strLoading "Loading…", before showing it; BetterMyAdmin opens its dialogs with their title'
   Could not load export plugins, please check your installation!:

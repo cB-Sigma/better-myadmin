@@ -232,7 +232,7 @@ function GeneralSettings(props: {
               name="collation_connection"
               id="collationConnectionSelect"
               className="autosubmit"
-              // home/index.twig marks getDefaultCollation() as selected, whatever is in effect (quirk Q42)
+              // home/index.twig marks the collation in effect (getCollationConnection) as selected
               value={home.collation.selected}
               onChange={(e) => void setCollation(e.target.value)}
               data-current={home.collation.current}

@@ -164,7 +164,7 @@ export const HomeResponse = z.object({
   /** auth_type !== 'config' && ShowChgPassword */
   hasChangePasswordLink: z.boolean(),
   collation: z.object({
-    /** The `selected` option: DatabaseInterface::getDefaultCollation() (quirk Q42) */
+    /** The `selected` option: DatabaseInterface::getCollationConnection(), the collation in effect */
     selected: z.string(),
     /** The connection collation actually in effect (DefaultConnectionCollation) */
     current: z.string(),

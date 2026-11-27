@@ -209,7 +209,7 @@ describe.skipIf(!reachable)(
             `Server charset: ${d.charset}`,
           ].map(mapUser),
         )
-        // the collation select: every charset/collation, getDefaultCollation() selected (quirk Q42)
+        // the collation select: every charset/collation, the collation in effect selected
         const select = html.match(/<select[^>]*id="collationConnectionSelect"[\s\S]*?<\/select>/)![0]
         const pmaOptions = [...select.matchAll(/<option value="([^"]*)" title="([^"]*)"( selected)?>/g)].map(
           (m) => ({
@@ -247,7 +247,7 @@ describe.skipIf(!reachable)(
       }
     })
 
-    it('connection collation: same SET collation_connection, list still shows getDefaultCollation()', async () => {
+    it('connection collation: same SET collation_connection, the list marks the collation in effect', async () => {
       const pma = new PmaClient(PMA_URL)
       const bma = testApp(bmaConfig())
       try {
@@ -265,8 +265,19 @@ describe.skipIf(!reachable)(
         // (the general log shows statements without the trailing delimiter)
         expect(await set(user('pb', 'su'))).toContain("SET collation_connection = 'utf8mb4_bin'")
         expect(await set(user('pa', 'su'))).toContain("SET collation_connection = 'utf8mb4_bin'")
-        expect(html).toMatch(/<option value="utf8mb4_general_ci" title="[^"]*" selected>/)
-        expect(home.collation.selected).toBe('utf8mb4_general_ci')
+        // upstream 97fa4c7080: getCollationConnection(), no longer getDefaultCollation()
+        expect(html).toMatch(/<option value="utf8mb4_bin" title="[^"]*" selected>/)
+        expect(home.collation.selected).toBe('utf8mb4_bin')
+        // postConnect sets the default collation first (SET NAMES is mysqli::set_charset, the
+        // handshake charset here, X24)
+        const first = (u: string) =>
+          log
+            .since(u, since)
+            .then((l) =>
+              l.map((e) => e.sql.replace(/;$/, '')).find((s) => s.startsWith('SET collation_connection')),
+            )
+        expect(await first(user('pa', 'su'))).toBe("SET collation_connection = 'utf8mb4_general_ci'")
+        expect(await first(user('pb', 'su'))).toBe(await first(user('pa', 'su')))
         // restore the reference user's preference (stored in phpMyAdmin's pmadb userconfig)
         await pma.postPage('/index.php?route=/collation-connection', {
           collation_connection: 'utf8mb4_unicode_ci',

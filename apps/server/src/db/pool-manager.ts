@@ -95,8 +95,10 @@ export function versionInt(version: string): number {
 }
 
 /**
- * Connection set-up, in phpMyAdmin's order: postConnect (version probe, SET NAMES with the default
+ * Connection set-up, in phpMyAdmin's order: postConnect (version probe, the default connection
  * collation, lc_messages, time zone) then setCollation with the configured connection collation.
+ * The character set (utf8mb4, utf8 before MySQL 5.5.3) is negotiated in the handshake, where
+ * DbiMysqli::connect calls mysqli::set_charset.
  * pma: src/Dbal/DatabaseInterface.php::postConnect, ::setCollation,
  *      src/Config/UserPreferencesHandler.php::setConnectionCollation
  */
@@ -114,10 +116,9 @@ export async function postConnect(
   const userErrors: ServerInfo['userErrors'] = []
   const isMariaDb = version.toLowerCase().includes('mariadb')
   const charset = v > 50503 ? 'utf8mb4' : 'utf8'
-  await conn.query(
-    `SET NAMES '${charset}' COLLATE '${v > 50503 ? 'utf8mb4_general_ci' : 'utf8_general_ci'}';`,
-    'connect.names',
-  )
+  const defaultCollation = v > 50503 ? 'utf8mb4_general_ci' : 'utf8_general_ci'
+  await conn.query(`SET collation_connection = '${defaultCollation}';`, 'connect.names')
+  let collationConnection = defaultCollation
   if (mysqlLocale !== '')
     await conn.query(`SET lc_messages = '${mysqlLocale}';`, 'connect.locale').catch(() => {})
   if (server.SessionTimeZone !== '') {
@@ -125,15 +126,17 @@ export async function postConnect(
       .query(`SET \`time_zone\` = ${quoteString(server.SessionTimeZone)}`, 'connect.tz')
       .catch(() => userErrors.push('timezone'))
   }
-  // UserPreferencesHandler::setConnectionCollation: nothing to do for '' or the SET NAMES collation
-  const defaultCollation = v > 50503 ? 'utf8mb4_general_ci' : 'utf8_general_ci'
+  // UserPreferencesHandler::setConnectionCollation: nothing to do for '' or the default collation
   if (collation !== '' && collation !== defaultCollation) {
     // automatically adjust collation if not supported by server
     const coll =
       charset === 'utf8' && collation.startsWith('utf8mb4_') ? `utf8_${collation.slice(8)}` : collation
-    await conn
-      .query(`SET collation_connection = ${quoteString(coll)};`, 'connect.collation')
-      .catch(() => userErrors.push('collation'))
+    await conn.query(`SET collation_connection = ${quoteString(coll)};`, 'connect.collation').then(
+      () => {
+        collationConnection = coll
+      },
+      () => userErrors.push('collation'),
+    )
   }
   return {
     version,
@@ -144,6 +147,7 @@ export async function postConnect(
     sqlMode,
     context: createServerContext(v, isMariaDb, sqlMode),
     userErrors,
+    collationConnection,
   }
 }
 

@@ -193,6 +193,8 @@ export class ImportFile {
   #source: FileSource | null = null
   /** Encoding conversion of a file read from disk, applied to each chunk (as phpMyAdmin does) */
   #convertChunk: ((b: Buffer) => Buffer) | null = null
+  /** Encoding conversion of a file held in memory, applied whole on the first read */
+  #pendingConvert: ((b: Buffer) => Buffer) | null = null
   /** the translator (`__`) */
   readonly #t: (s: string) => string
 
@@ -338,6 +340,11 @@ export class ImportFile {
 
   /** File::read (zip content is cut at a UTF-8 character boundary: mb_strcut) */
   read(size: number): Buffer {
+    if (this.#pendingConvert !== null) {
+      const fn = this.#pendingConvert
+      this.#pendingConvert = null
+      this.#content = fn(this.#content)
+    }
     if (this.#source !== null) {
       const b = this.#source.read(size)
       return this.#convertChunk === null ? b : this.#convertChunk(b)
@@ -362,10 +369,14 @@ export class ImportFile {
     return this.#offset >= this.#content.length
   }
 
-  /** Converts the content from `charset` (Encoding::convertString, applied per chunk in pma). */
+  /**
+   * Converts the content from `charset` (Encoding::convertString, applied per chunk in pma). A file
+   * held in memory is converted whole on the first read, so a conversion failure surfaces where
+   * phpMyAdmin's does, in Import::getNextChunk.
+   */
   convert(fn: (b: Buffer) => Buffer): void {
     if (this.#source !== null) this.#convertChunk = fn
-    else this.#content = fn(this.#content)
+    else this.#pendingConvert = fn
   }
 
   /** Closes the file and removes a temporary decompressed copy. */

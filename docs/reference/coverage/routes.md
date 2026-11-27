@@ -206,21 +206,21 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
-| ✅ | `GET, POST /database/export` | `Database/ExportController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:52)<br>UI /s/:server/db/:db/export (apps/web/src/routes/s/$server/db/$db/export.tsx) |  |
+| ✅ | `GET, POST /database/export` | `Database/ExportController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:59)<br>UI /s/:server/db/:db/export (apps/web/src/routes/s/$server/db/$db/export.tsx) |  |
 | ✅ | `GET, POST /database/import` | `Database/ImportController` | API GET /api/servers/:s/import/page (apps/server/src/routes/import.ts:61)<br>UI /s/:server/db/:db/import (apps/web/src/routes/s/$server/db/$db/import.tsx) |  |
 | 🔀 | `GET, POST /export` | `Export/ExportController` | API POST /api/servers/:s/export (apps/server/src/routes/export.ts:46)<br>API GET /api/servers/:s/export/:id} (apps/server/src/routes/export.ts:140) | X10 — streaming (prepare + one-shot download) |
 | 🔀 | `GET /export/check-time-out` | `Export/CheckTimeOutController` | API GET /api/servers/:s/export/check-time-out (apps/server/src/routes/export.ts:182) | X10 — streaming |
-| ✅ | `POST /export/tables` | `Export/TablesController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:52)<br>UI /s/:server/db/:db/export (apps/web/src/routes/s/$server/db/$db/export.tsx) | selected_tbl[] in the search params |
-| ✅ | `POST /export/template/create` | `Export/Template/CreateController` | API POST /api/servers/:s/export/templates (apps/server/src/export/page.ts:307) |  |
-| ✅ | `POST /export/template/delete` | `Export/Template/DeleteController` | API POST /api/servers/:s/export/templates/:id/delete (apps/server/src/export/page.ts:346) |  |
-| ✅ | `POST /export/template/load` | `Export/Template/LoadController` | API GET /api/servers/:s/export/templates/:id (apps/server/src/export/page.ts:324) |  |
-| ✅ | `POST /export/template/update` | `Export/Template/UpdateController` | API POST /api/servers/:s/export/templates/:id (apps/server/src/export/page.ts:334) |  |
+| ✅ | `POST /export/tables` | `Export/TablesController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:59)<br>UI /s/:server/db/:db/export (apps/web/src/routes/s/$server/db/$db/export.tsx) | selected_tbl[] in the search params |
+| ✅ | `POST /export/template/create` | `Export/Template/CreateController` | API POST /api/servers/:s/export/templates (apps/server/src/export/page.ts:316) |  |
+| ✅ | `POST /export/template/delete` | `Export/Template/DeleteController` | API POST /api/servers/:s/export/templates/:id/delete (apps/server/src/export/page.ts:355) |  |
+| ✅ | `POST /export/template/load` | `Export/Template/LoadController` | API GET /api/servers/:s/export/templates/:id (apps/server/src/export/page.ts:333) |  |
+| ✅ | `POST /export/template/update` | `Export/Template/UpdateController` | API POST /api/servers/:s/export/templates/:id (apps/server/src/export/page.ts:343) |  |
 | 🔀 | `GET, POST /import` | `Import/ImportController` | API POST /api/servers/:s/import/uploads (apps/server/src/routes/import.ts:64)<br>API PATCH /api/servers/:s/import/uploads/:id} (apps/server/src/routes/import.ts:89)<br>API POST /api/servers/:s/import/jobs (apps/server/src/routes/import.ts:121) | X9 — chunked upload + SSE progress (the SQL box path is POST /api/servers/:s/query) |
 | 🔀 | `GET, POST /import-status` | `Import/StatusController` | API GET /api/servers/:s/import/jobs/:id}/events (apps/server/src/routes/import.ts:145) | X9 — chunked upload + SSE progress |
-| ✅ | `GET, POST /server/export` | `Server/ExportController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:52)<br>UI /s/:server/export (apps/web/src/routes/s/$server/export.tsx) |  |
+| ✅ | `GET, POST /server/export` | `Server/ExportController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:59)<br>UI /s/:server/export (apps/web/src/routes/s/$server/export.tsx) |  |
 | ✅ | `GET, POST /server/import` | `Server/ImportController` | API GET /api/servers/:s/import/page (apps/server/src/routes/import.ts:61)<br>UI /s/:server/import (apps/web/src/routes/s/$server/import.tsx) |  |
-| ✅ | `GET, POST /table/export` | `Table/ExportController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:52)<br>UI /s/:server/db/:db/t/:table/export (apps/web/src/routes/s/$server/db/$db/t/$table/export.tsx) |  |
-| ✅ | `POST /table/export/rows` | `Table/ExportRowsController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:52)<br>UI /s/:server/db/:db/t/:table/export (apps/web/src/routes/s/$server/db/$db/t/$table/export.tsx) | where_clause[] in the search params |
+| ✅ | `GET, POST /table/export` | `Table/ExportController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:59)<br>UI /s/:server/db/:db/t/:table/export (apps/web/src/routes/s/$server/db/$db/t/$table/export.tsx) |  |
+| ✅ | `POST /table/export/rows` | `Table/ExportRowsController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:59)<br>UI /s/:server/db/:db/t/:table/export (apps/web/src/routes/s/$server/db/$db/t/$table/export.tsx) | where_clause[] in the search params |
 | ✅ | `GET, POST /table/import` | `Table/ImportController` | API GET /api/servers/:s/import/page (apps/server/src/routes/import.ts:61)<br>UI /s/:server/db/:db/t/:table/import (apps/web/src/routes/s/$server/db/$db/t/$table/import.tsx) |  |
 
 ## 08 settings preferences pmadb — 9/9 (100.0%) covered, 9/9 implemented
@@ -244,7 +244,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `GET, POST /database/sql` | `Database/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:31)<br>UI /s/:server/db/:db/sql (apps/web/src/routes/s/$server/db/$db/sql.tsx) |  |
 | ✅ | `POST /database/sql/autocomplete` | `Database/SqlAutoCompleteController` | API GET /api/servers/:s/sql/autocomplete (apps/server/src/routes/sql.ts:86) | AJAX of the SQL editors (SQL tab, console): tables and columns of ?db= |
 | ✅ | `POST /database/sql/format` | `Database/SqlFormatController` | API POST /api/servers/:s/sql/format (apps/server/src/routes/sql.ts:70) | AJAX of the SQL tab's Format / Format as a single line |
-| 🔀 | `POST /import/simulate-dml` | `Import/SimulateDmlController` | API POST /api/servers/:s/query/simulate (apps/server/src/routes/query.ts:159) | X9 — chunked upload + SSE progress |
+| 🔀 | `POST /import/simulate-dml` | `Import/SimulateDmlController` | API POST /api/servers/:s/query/simulate (apps/server/src/routes/query.ts:163) | X9 — chunked upload + SSE progress |
 | ✅ | `GET, POST /lint` | `LintController` | API POST /api/servers/:s/sql/lint (apps/server/src/routes/sql.ts:53) | client-side lint (SQL tokenizer in the browser) +  fallback |
 | ✅ | `GET, POST /server/sql` | `Server/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:31)<br>UI /s/:server/sql (apps/web/src/routes/s/$server/sql.tsx) |  |
 | ✅ | `GET, POST /sql` | `Sql/SqlController` | API POST /api/servers/:s/browse (apps/server/src/routes/browse.ts:47)<br>API POST /api/servers/:s/query (apps/server/src/routes/query.ts:31)<br>UI /s/:server/db/:db/t/:table/browse (apps/web/src/routes/s/$server/db/$db/t/$table/browse.tsx) | browse path (Browse tab, sort/page/options links, Refresh, row Delete, FK links); the SQL tab runs /import |

@@ -2,6 +2,25 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.35 (2026-11-27)
+
+### Fixes
+
+- Home page: the "Server connection collation" list shows the collation the connection really
+  uses (the one chosen there, or the configured default), instead of always utf8mb4_general_ci.
+- Import, "Character set of the file": a file that is not valid in the chosen character set now
+  stops with "The file is not valid in the character set …" instead of a generic error. A
+  character set the server cannot use stops with "The server does not support the character
+  set …", and the connection's collation is restored correctly afterwards.
+- Import and export: the character set lists offer only the sets that can actually be converted
+  (iso-8859-12, x-user-defined and ks_c_5601-1987 are gone with the default settings).
+
+### Upstream
+
+- Synced to phpMyAdmin 8d3a2d5dde (15 commits): the connection character set and import charset
+  fixes above, Czech, French and Swedish translations, and refactors that need no change here
+  (see `tools/upstream/ledger.json`).
+
 ## 1.0.34 (2026-11-26)
 
 ### Security

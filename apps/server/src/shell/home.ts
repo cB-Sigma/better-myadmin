@@ -193,7 +193,9 @@ export async function homeData(ctx: ShellCtx, env: HomeEnv): Promise<HomeRespons
     const cs = r.Charset ?? ''
     collations.set(cs, [...(collations.get(cs) ?? []), r.Collation ?? ''])
   }
-  const defaultCollation = versionInt > 50503 ? 'utf8mb4_general_ci' : 'utf8_general_ci'
+  // the collation the connection has (DatabaseInterface::getCollationConnection)
+  const collationConnection =
+    si?.collationConnection ?? (versionInt > 50503 ? 'utf8mb4_general_ci' : 'utf8_general_ci')
   const charsets = [...charsetDesc.keys()].sort(byteSort).map((name) => ({
     name,
     description: charsetDesc.get(name) ?? '',
@@ -270,7 +272,7 @@ export async function homeData(ctx: ShellCtx, env: HomeEnv): Promise<HomeRespons
     displayServersList: cfg.DisplayServersList,
     hasChangePasswordLink: server.auth_type !== 'config' && cfg.ShowChgPassword,
     collation: {
-      selected: defaultCollation,
+      selected: collationConnection,
       current: env.connectionCollation,
       charsets,
     },

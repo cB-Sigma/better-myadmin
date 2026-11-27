@@ -37,6 +37,11 @@ export const PER_REQUEST: AllowedDiff[] = [
     pattern: '^SELECT `PLUGIN_NAME`, `PLUGIN_DESCRIPTION` FROM `information_schema`\\.`PLUGINS`',
     why: 'Authentication plugins listed by the change-password form phpMyAdmin renders on every page; not part of these pages.',
   },
+  {
+    tool: 'pma',
+    pattern: '^SET NAMES utf8mb4$',
+    why: 'mysqli::set_charset, sent by DbiMysqli::connect on every new connection; BetterMyAdmin negotiates utf8mb4 in the connection handshake (X24).',
+  },
 ]
 
 export interface Harness {
